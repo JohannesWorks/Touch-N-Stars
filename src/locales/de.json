@@ -196,7 +196,7 @@
           "showGuiderAfGraph": "Autofokus-Diagramm anzeigen"
         }
       },
-    "running": "WIRD AUSGEFÜHRT"
+      "running": "WIRD AUSGEFÜHRT"
     },
     "mount": {
       "title": "Montierung",
