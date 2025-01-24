@@ -286,6 +286,7 @@
       "capture_running": "Prise de vue en cours",
       "image_loading": "Chargement de l'image...",
       "start_capture": "Lancer la prise de vue...",
+      "cancel": "Annuler",
       "exposure_time": "Durée d'exposition:",
       "gain_iso": "Gain / ISO:",
       "name": "Nom de la camera",
@@ -304,8 +305,7 @@
       "camera_cooling": "Refroidissement Camera en cours",
       "target_temperature": "Température choisie",
       "warm_up_time": "Délai de réchauffement",
-      "cooling_time": "Délai de refroidissement",
-      "cancel": "Annuler"
+      "cooling_time": "Délai de refroidissement"
     },
     "tppa": {
       "title": "Alignement Polaire Trois Points",
@@ -388,6 +388,10 @@
       "wind": "Vent",
       "humidity": "Humidité",
       "pressure": "Pression"
+    },
+    "switch": {
+      "gauges": "Gauges",
+      "switch": "Switch"
     }
   }
 }
