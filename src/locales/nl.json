@@ -49,7 +49,10 @@
         "delete": "Delete instance"
       },
       "errors": {
-        "emptyFields": "Please fill in all fields"
+        "emptyFields": "Please fill in all fields",
+        "instanceNameRequired": "Instance name required",
+        "invalidIPFormat": "Invalid IP format",
+        "invalidPortRange": "Invalid Port"
       },
       "showTutorial": "Show Tutorial"
     },
@@ -61,6 +64,14 @@
       "search": {
         "title": "Search",
         "placeholder": "Enter a search term..."
+      },
+      "openFraminingModal": "Open in framing-assistant",
+      "fovSettings": {
+        "fov": "Field of View",
+        "focalLengthM": "Focal length (mm)",
+        "pixelSizeM": "Camerapixel size (µm)",
+        "sensorHeightPx": "Camerasensor height (px)",
+        "sensorWidthPx": "Camerasensor width (px)"
       }
     },
     "connectEquipment": {
