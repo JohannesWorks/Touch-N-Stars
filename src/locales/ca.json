@@ -51,7 +51,7 @@
       "errors": {
         "emptyFields": "Please fill in all fields",
         "instanceNameRequired": "Instance name required",
-        "invalidIPFormat": "Invalid IP format",
+        "invalidIPFormat": "Please provide IP or FQDN",
         "invalidPortRange": "Invalid Port"
       },
       "showTutorial": "Show Tutorial"
