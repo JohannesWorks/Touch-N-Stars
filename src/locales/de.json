@@ -67,11 +67,8 @@
       },
       "openFraminingModal": "Open in framing-assistant",
       "fovSettings": {
-        "fov": "Field of View",
-        "focalLengthM": "Focal length (mm)",
-        "pixelSizeM": "Camerapixel size (µm)",
-        "sensorHeightPx": "Camerasensor height (px)",
-        "sensorWidthPx": "Camerasensor width (px)"
+        "rotationAngle": "Camera rotation",
+        "fov": "Field of View"
       }
     },
     "connectEquipment": {
