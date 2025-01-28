@@ -69,6 +69,11 @@
       "fovSettings": {
         "rotationAngle": "Camera rotation",
         "fov": "Field of View"
+      },
+      "getImageRotation": {
+        "startCapture": "Determine rotation from camera",
+        "SolveRun": "Platesolve",
+        "SolveError": "Error solving image"
       }
     },
     "connectEquipment": {
