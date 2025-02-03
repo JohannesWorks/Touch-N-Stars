@@ -16,8 +16,9 @@
   },
   "app": {
     "title": "Touch'N'Stars",
-    "unreachable": "NINA-API is unreachable or the version is too old",
-    "connecting": "Attempting to establish connection"
+    "unreachable": "NINA-API is unreachable",
+    "connecting": "Attempting to establish connection",
+    "api_version_incompatible": "Advanced-API version incompatible current: { current } required: { required }"
   },
   "setup": {
     "welcome": "Welcome to Touch'N'Stars",
@@ -159,9 +160,6 @@
       "vnc": "VNC"
     },
     "language": {
-      "en": "English",
-      "de": "German",
-      "fr": "France",
       "select": "Select language"
     },
     "equipment": {
