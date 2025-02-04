@@ -249,7 +249,9 @@
       "startWithCal": "Starting with calibration",
       "stop": "Stop",
       "rms_error": "RMS Error",
-      "title": "Guider"
+      "title": "Guider",
+      "running": "RUNNING",
+      "notes": "* This graph displays guiding data according to N.I.N.A.'s settings."
     },
     "focuser": {
       "title": "Focuser",
