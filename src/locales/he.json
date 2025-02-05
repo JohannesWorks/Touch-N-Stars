@@ -405,7 +405,11 @@
       "cloudCover": "Cloud Cover",
       "wind": "Wind",
       "humidity": "Humidity",
-      "pressure": "Pressure"
+      "pressure": "Pressure",
+      "skyTemperature": "Sky temperature",
+      "skyQuality": "Sky quality",
+      "rainRate": "Rain rate",
+      "dewPoint": "Dewpoint"
     },
     "switch": {
       "gauges": "Gauges",
