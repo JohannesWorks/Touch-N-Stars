@@ -55,7 +55,11 @@
         "invalidIPFormat": "Please provide IP or FQDN",
         "invalidPortRange": "Invalid Port"
       },
-      "showTutorial": "Show Tutorial"
+      "showTutorial": "Show Tutorial",
+      "system": {
+        "title": "System Controls",
+        "description": "Click an icon to restart or shutdown the system"
+      }
     },
     "framing": {
       "confirmSetTargetTitle": "Confirm Target Selection",
