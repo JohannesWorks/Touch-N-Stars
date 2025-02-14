@@ -332,7 +332,8 @@
       "warm_up_time": "Warm-up time",
       "cooling_time": "Cooling time",
       "binning_mode": "Binning",
-      "readout_mode": "Readout Mode"
+      "readout_mode": "Readout Mode",
+      "set_use_platesolve": "Use Platesolve"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
