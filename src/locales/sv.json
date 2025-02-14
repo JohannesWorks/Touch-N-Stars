@@ -62,6 +62,10 @@
         "confirmShutdown": "Are you sure you want to shutdown the system?",
         "confirmRestart": "Are you sure you want to restart the system?",
         "confirmation": "Confirmation"
+      },
+      "image": {
+        "title": "Images settings",
+        "quality": "Quality in % "
       }
     },
     "framing": {
