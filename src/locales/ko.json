@@ -384,7 +384,8 @@
         "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s",
         "apiResponseError": "Error in API response:",
         "mountInfoError": "Error fetching mount information:"
-      }
+      },
+      "visibleStars": "Visible Star Search"
     },
     "filterwheel": {
       "filter": "Filter:",
