@@ -355,7 +355,14 @@
       "down": "Down",
       "up": "Up",
       "not_available": "Not available",
-      "running": "RUNNING"
+      "running": "RUNNING",
+      "plate_solve_start": "Platesolve start",
+      "plate_solve_ok": "Platesolve successful",
+      "plate_solve_error": "Platesolve error",
+      "slewing_first_position": "Slewing to first position",
+      "slewing_next_position": "Slewing to next position",
+      "capture_running": "Exposure running",
+      "last_messages": "Last messages"
     },
     "logs": {
       "loading": "Loading data...",
@@ -412,6 +419,26 @@
         "open": "open cover"
       },
       "title": "Flatpanel"
+    },
+    "flatassistant": {
+      "title": "Flat assistant",
+      "count": "Count",
+      "exposure_time": "Exposure time",
+      "min_exposure_time": "Min exposure time",
+      "max_exposure_time": "Max exposure time",
+      "brightness": "Brightness",
+      "min_brightness": "Min brightness",
+      "max_brightness": "Max brightness",
+      "histogram_mean_target": "Histogram mean target",
+      "mean_tolerance": "Mean tolerance",
+      "completed_recordings": "Completed recordings:",
+      "start_auto_exposure": "Start auto exposure",
+      "start_auto_brightness": "Start autobrightness",
+      "start_sky_flat": "Start sky flat",
+      "stop": "Stop",
+      "auto_exposure": "Auto exposure",
+      "auto_brightness": "Auto brightness",
+      "skyflat": "Skyflat"
     },
     "weatherModal": {
       "weatherInformation": "Weather Information",
