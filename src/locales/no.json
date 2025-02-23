@@ -221,7 +221,10 @@
           "showGuiderAfGraph": "Show autofocus-chart"
         }
       },
-      "running": "RUNNING"
+      "running": "RUNNING",
+      "imageHistory": "Image History",
+      "duration": "Duration",
+      "temperatureShort": "Temp"
     },
     "mount": {
       "title": "Mount",
