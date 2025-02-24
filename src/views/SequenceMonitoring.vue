@@ -62,12 +62,12 @@
         class="flex flex-col w-full max-w-4xl justify-center items-center space-y-4"
       >
         <div class="mt-5 w-full">
-          <LastSequenceImg />
+          <LastSequenceImg  />
         </div>
 
         <div
-          v-if="settingsStore.monitorViewSetting.showImgStatsGraph"
-          class="w-full min-h-60 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
+          v-if="settingsStore.monitorViewSetting.showImgStatsGraph "
+          class=" w-full min-w-[80vw] min-h-60 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
         >
           <SequenzGraph />
         </div>
@@ -117,6 +117,7 @@ const currentTab = ref('showStats');
 const store = apiStore();
 const settingsStore = useSettingsStore();
 const showSettingsModal = ref(false);
+
 </script>
 
 <style>

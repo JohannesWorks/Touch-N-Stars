@@ -35,19 +35,31 @@
               </p>
               <p>{{ showAltitudeError }}</p>
               <div v-if="showAltitudeError">
-                <div v-if="altitudeCorDirectionTop && !isSouthernHemisphere" class="flex flex-row space-x-2">
+                <div
+                  v-if="altitudeCorDirectionTop && !isSouthernHemisphere"
+                  class="flex flex-row space-x-2"
+                >
                   <ArrowUpIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.up') }}</p>
                 </div>
-                <div v-if="!altitudeCorDirectionTop && !isSouthernHemisphere" class="flex flex-row space-x-2">
+                <div
+                  v-if="!altitudeCorDirectionTop && !isSouthernHemisphere"
+                  class="flex flex-row space-x-2"
+                >
                   <ArrowDownIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.down') }}</p>
                 </div>
-                <div v-if="!altitudeCorDirectionTop && isSouthernHemisphere" class="flex flex-row space-x-2">
+                <div
+                  v-if="!altitudeCorDirectionTop && isSouthernHemisphere"
+                  class="flex flex-row space-x-2"
+                >
                   <ArrowUpIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.up') }}</p>
                 </div>
-                <div v-if="altitudeCorDirectionTop && isSouthernHemisphere" class="flex flex-row space-x-2">
+                <div
+                  v-if="altitudeCorDirectionTop && isSouthernHemisphere"
+                  class="flex flex-row space-x-2"
+                >
                   <ArrowDownIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.down') }}</p>
                 </div>
@@ -59,19 +71,31 @@
               </p>
               <p>{{ showAzimuthError }}</p>
               <div v-if="showAzimuthError">
-                <div v-if="azimuthCorDirectionLeft && !isSouthernHemisphere" class="flex flex-row space-x-2">
+                <div
+                  v-if="azimuthCorDirectionLeft && !isSouthernHemisphere"
+                  class="flex flex-row space-x-2"
+                >
                   <ArrowLeftIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.west') }}</p>
                 </div>
-                <div v-if="!azimuthCorDirectionLeft && !isSouthernHemisphere"  class="flex flex-row space-x-2">
+                <div
+                  v-if="!azimuthCorDirectionLeft && !isSouthernHemisphere"
+                  class="flex flex-row space-x-2"
+                >
                   <ArrowRightIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.east') }}</p>
                 </div>
-                <div v-if="!azimuthCorDirectionLeft && isSouthernHemisphere" class="flex flex-row space-x-2">
+                <div
+                  v-if="!azimuthCorDirectionLeft && isSouthernHemisphere"
+                  class="flex flex-row space-x-2"
+                >
                   <ArrowRightIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.west') }}</p>
                 </div>
-                <div v-if="azimuthCorDirectionLeft && isSouthernHemisphere"  class="flex flex-row space-x-2">
+                <div
+                  v-if="azimuthCorDirectionLeft && isSouthernHemisphere"
+                  class="flex flex-row space-x-2"
+                >
                   <ArrowLeftIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.east') }}</p>
                 </div>
@@ -258,7 +282,7 @@ function formatMessage(message) {
     } else if (typeof message.Response === 'object') {
       startStop.value = false;
       const { AzimuthError, AltitudeError, TotalError } = message.Response;
-      
+
       if (AzimuthError !== undefined && AltitudeError !== undefined && TotalError !== undefined) {
         const azimuthErrorDMS = decimalToDMS(AzimuthError);
         const altitudeErrorDMS = decimalToDMS(AltitudeError);
@@ -272,7 +296,6 @@ function formatMessage(message) {
         altitudeCorDirectionTop.value = AltitudeError < 0 ? true : false;
         // Prüfe, ob sich der Nutzer auf der Südhalbkugel befindet
         isSouthernHemisphere.value = store.profileInfo.AstrometrySettings.Latitude < 0;
-
       } else {
         return t('components.tppa.error_values_missing');
       }
@@ -283,7 +306,6 @@ function formatMessage(message) {
     return JSON.stringify(message, null, 2);
   }
 }
-
 
 async function startAlignment() {
   await unparkMount();

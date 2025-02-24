@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [1.0.2.2] - 2025-02-23
+### Added
+- Create a new SequenceImageHistory view that loads all the images from the history using the SequenceImage component.
+- Add this new SequenceImageHistory view as a new tab of the "Sequence Monitoring" page.
+
+### Changed
+- Extract the sequence image loading logic into a new SequenceImage component. This component is in charge of displaying the image + stats + opening the modal for the full preview.
+
+### Fixed
+- Plugin null exception error
+- Small UI fixes in the "Sequence Monitoring" page.
+- Added a new script to add a new entry to all locale files. Very handy when creating a new entry to avoid going to all the files individually.
+- TPPA fix display error
 
 ## [1.0.2.0] - 2025-02-21
 ### Added
