@@ -83,7 +83,7 @@
       },
       "getImageRotation": {
         "SolveError": "Chyba při řešení snímku",
-        "SolveRun": "Astrometrie",
+        "SolveRun": "Řešení",
         "startCapture": "Určení rotace z kamerya"
       },
       "moveRotator": "Otáčení kamery",
@@ -222,9 +222,9 @@
         }
       },
       "running": "BĚŽÍCÍ",
-      "imageHistory": "Image History",
-      "duration": "Duration",
-      "temperatureShort": "Temp"
+      "imageHistory": "Historie Snímků",
+      "duration": "Trvání",
+      "temperatureShort": "Teplota"
     },
     "mount": {
       "title": "Montáž",
@@ -279,7 +279,7 @@
       "autofocus_error": "AutoOstření chyba",
       "please_connect_focuser": "Připojte ostření",
       "current_position": "Současná pozice:",
-      "temperature": "Teploty:",
+      "temperature": "Teplota:",
       "moving": "V pohybu",
       "stopped": "Zastaveno",
       "autofocus_active": "AutoOstření aktivní",
@@ -359,13 +359,13 @@
       "up": "Nahoru",
       "not_available": "Není k dispozici",
       "running": "PROBÍHÁ",
-      "capture_running": "Exposure running",
-      "last_messages": "Last messages",
-      "plate_solve_error": "Platesolve error",
-      "plate_solve_ok": "Platesolve successful",
-      "plate_solve_start": "Platesolve start",
-      "slewing_first_position": "Slewing to first position",
-      "slewing_next_position": "Slewing to next position"
+      "capture_running": "Expozice probíhá",
+      "last_messages": "Poslední zprávy",
+      "plate_solve_error": "Chyba řešení",
+      "plate_solve_ok": "Řešení úspěšné",
+      "plate_solve_start": "Zahájit řešení",
+      "slewing_first_position": "Přesun na první polohu",
+      "slewing_next_position": "Přesun na další polohu"
     },
     "logs": {
       "loading": "Načítání dat...",
@@ -442,24 +442,24 @@
       "switch": "Přepínač"
     },
     "flatassistant": {
-      "auto_brightness": "Auto brightness",
-      "auto_exposure": "Auto exposure",
-      "brightness": "Brightness",
-      "completed_recordings": "Completed recordings:",
-      "count": "Count",
-      "exposure_time": "Exposure time",
-      "histogram_mean_target": "Histogram mean target",
-      "max_brightness": "Max brightness",
-      "max_exposure_time": "Max exposure time",
-      "mean_tolerance": "Mean tolerance",
-      "min_brightness": "Min brightness",
-      "min_exposure_time": "Min exposure time",
-      "skyflat": "Skyflat",
-      "start_auto_brightness": "Start autobrightness",
-      "start_auto_exposure": "Start auto exposure",
-      "start_sky_flat": "Start sky flat",
-      "stop": "Stop",
-      "title": "Flat assistant"
+      "auto_brightness": "Automatický jas",
+      "auto_exposure": "Automatická expozice",
+      "brightness": "Jas",
+      "completed_recordings": "Ukončené záznamy:",
+      "count": "Počet",
+      "exposure_time": "Expoziční čas",
+      "histogram_mean_target": "Cílový průměr histogramu",
+      "max_brightness": "Max jas",
+      "max_exposure_time": "Max expozice",
+      "mean_tolerance": "Střední tolerance",
+      "min_brightness": "Min jas",
+      "min_exposure_time": "Min expozice",
+      "skyflat": "FlatOblohy",
+      "start_auto_brightness": "Spustit auto jas",
+      "start_auto_exposure": "Spustit auto expozici",
+      "start_sky_flat": "Spustit flat z oblohy ",
+      "stop": "Zastavit",
+      "title": "Asistent flatu"
     }
   }
 }
