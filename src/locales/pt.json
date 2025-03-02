@@ -1,465 +1,473 @@
 {
   "common": {
-    "cancel": "Cancelar",
-    "confirm": "Confirmar"
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "general": {
-    "cancel": "Cancelar",
-    "confirm": "Confirmar",
-    "hide": "Ocultar",
-    "show": "Exibir"
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "hide": "Hide",
+    "show": "Show"
   },
   "pages": {
     "equipment": {
-      "title": "Controle do Equipamento"
+      "title": "Equipment Control"
     }
   },
   "app": {
     "title": "Touch'N'Stars",
-    "unreachable": "NINA-API está inacessível",
-    "connecting": "Tentando estabelecer conexão",
-    "api_version_incompatible": "Versão Avançada de Api Incompatível Corrente: {current} Requerido: {required}"
+    "unreachable": "NINA-API is unreachable",
+    "connecting": "Attempting to establish connection",
+    "api_version_incompatible": "Advanced-API version incompatible current: { current } required: { required }"
   },
   "setup": {
-    "welcome": "Ben-vindo ao Touch'N'Stars",
-    "description": "Vamos começar com uma configuração rápida",
-    "selectLanguage": "Selecione seu idioma",
-    "gpsConfiguration": "configuração de GPS",
-    "completeSetup": "Concluir Configuração",
-    "instanceConfiguration": "Detalhes de conexão do N.I.N.A"
+    "welcome": "Welcome to Touch'N'Stars",
+    "description": "Let's get started with a quick setup",
+    "selectLanguage": "Select your language",
+    "gpsConfiguration": "GPS Configuration",
+    "completeSetup": "Complete Setup",
+    "instanceConfiguration": "N.I.N.A connection details"
   },
   "components": {
     "tutorial": {
-      "previous": "Anterior",
-      "next": "Próximo",
-      "skip": "Pular Tutorial"
+      "previous": "Previous",
+      "next": "Next",
+      "skip": "Skip Tutorial"
     },
     "settings": {
-      "title": "Configurações",
-      "language": "Idioma",
-      "coordinates": "Coordenadas de GPS",
-      "connection": "Detalhes de conexão do N.I.N.A",
-      "save": "Salvar",
-      "add": "Adicionar",
-      "update": "Atualizar",
+      "title": "Settings",
+      "language": "Language",
+      "coordinates": "GPS coordinates",
+      "connection": "N.I.N.A connection details",
+      "save": "Save",
+      "add": "Add",
+      "update": "Update",
       "instance": {
-        "name": "Nome da Instância",
-        "ip": "Endereço de IP",
-        "port": "Porta",
-        "edit": "Editar instância",
-        "delete": "Deletar instância"
+        "name": "Instance Name",
+        "ip": "IP Address",
+        "port": "Port",
+        "edit": "Edit instance",
+        "delete": "Delete instance"
       },
       "errors": {
-        "emptyFields": "Por favor, preencha todos os campos",
-        "instanceNameRequired": "Nome da instância é obrigatório",
-        "invalidIPFormat": "Por favor, forneça o IP ou FQDN",
-        "invalidPortRange": "Porta inválida"
+        "emptyFields": "Please fill in all fields",
+        "instanceNameRequired": "Instance name required",
+        "invalidIPFormat": "Please provide IP or FQDN",
+        "invalidPortRange": "Invalid Port"
       },
-      "showTutorial": "Exibir Tutorial",
+      "showTutorial": "Show Tutorial",
       "system": {
-        "description": "Clique em qualquer ícone para reiniciar ou desligar o sistema",
-        "title": "Controles do sistema",
-        "confirmRestart": "Tem certeza de que deseja reiniciar o sistema?",
-        "confirmShutdown": "Tem certeza de que deseja desligar o sistema?",
-        "confirmation": "Confirmação"
+        "title": "System Controls",
+        "description": "Click an icon to restart or shutdown the system",
+        "confirmShutdown": "Are you sure you want to shutdown the system?",
+        "confirmRestart": "Are you sure you want to restart the system?",
+        "confirmation": "Confirmation"
       },
       "image": {
-        "quality": "Qualidade em %",
-        "title": "Configurações de imagens"
+        "title": "Images settings",
+        "quality": "Quality in % "
       }
     },
     "framing": {
-      "confirmSetTargetTitle": "Confirmar seleção de alvo",
-      "confirmSetTargetMessage": "Você tem certeza de que deseja definir este alvo como o alvo da sequência?",
-      "useNinaCache": "Use o cache do NINA para a imagem do alvo",
-      "setSequnceTarget": "Definir como alvo da sequência",
+      "confirmSetTargetTitle": "Confirm Target Selection",
+      "confirmSetTargetMessage": "Are you sure you want to set this target as the sequence target?",
+      "useNinaCache": "Use NINA cache for the target image",
+      "setSequnceTarget": "set to sequence target",
       "search": {
-        "title": "Busca",
-        "placeholder": "Digite um termo de pesquisa..."
+        "title": "Search",
+        "placeholder": "Enter a search term..."
       },
       "openFraminingModal": "Open in framing-assistant",
       "fovSettings": {
-        "fov": "Campo de Visão",
-        "rotationAngle": "Rotação da câmera"
+        "rotationAngle": "Camera rotation",
+        "fov": "Field of View"
       },
       "getImageRotation": {
-        "SolveError": "Imagem de resolução de erros",
+        "startCapture": "Determine rotation from camera",
         "SolveRun": "Platesolve",
-        "startCapture": "Determinar a rotação da câmera"
+        "SolveError": "Error solving image"
       },
-      "moveRotator": "Gire a câmera",
-      "infoTargetImage": "Se a imagem for exibida apenas em preto, o \"cache de mapa do céu offline\" deve ser configurado em Nina ou a opção \"Use nina cache\" deve ser desativada"
+      "moveRotator": "Rotate camera",
+      "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated"
     },
     "connectEquipment": {
       "camera": {
-        "connect": "Conectar câmera",
-        "disconnect": "Desconectar câmera",
-        "error": "Erro ao controlar a câmera:"
+        "connect": "Connect camera",
+        "disconnect": "Disconnect camera",
+        "error": "Error controlling camera:"
       },
-      "connectAll": "Conectar Tudo",
-      "disconnectAll": "Desconectar Tudo",
-      "connectAllError": "Erro ao conectar todos os dispositivos",
-      "disconnectAllError": "Erro ao desconectar todos os dispositivos",
+      "connectAll": "Connect All",
+      "disconnectAll": "Disconnect All",
+      "connectAllError": "Error connecting all devices",
+      "disconnectAllError": "Error disconnecting all devices",
       "filter": {
-        "connect": "Conectar roda de filtro",
-        "disconnect": "Desconectar roda de filtro",
-        "error": "Erro ao controlar roda de filtro:"
+        "connect": "Connect filter wheel",
+        "disconnect": "Disconnect filter wheel",
+        "error": "Error controlling filter wheel:"
       },
       "mount": {
-        "connect": "Conectar montagem",
-        "disconnect": "Desconectar montagem",
-        "error": "Erro ao controlar montagem:"
+        "connect": "Connect mount",
+        "disconnect": "Disconnect mount",
+        "error": "Error controlling mount:"
       },
       "focuser": {
-        "connect": "Conectar focalizador",
-        "disconnect": "Desconectar focalizador",
-        "error": "Erro ao controlar focalizador:"
+        "connect": "Connect focuser",
+        "disconnect": "Disconnect focuser",
+        "error": "Error controlling focuser:"
       },
       "rotator": {
-        "connect": "Conectar rotor de campo",
-        "disconnect": "Desconectar rotor de campo",
-        "error": "Erro ao controlar rotor de campo:"
+        "connect": "Connect rotator",
+        "disconnect": "Disconnect rotator",
+        "error": "Error controlling rotator:"
       },
       "guider": {
-        "connect": "Conectar guiagem",
-        "disconnect": "Desconectar guiagem",
-        "error": "Erro ao controlar guiagem:"
+        "connect": "Connect guider",
+        "disconnect": "Disconnect guider",
+        "error": "Error controlling guider:"
       },
       "safety": {
-        "connect": "Conectar monitor de segurança",
-        "disconnect": "Desconectar monitor de segurança",
-        "error": "Erro ao controlar o monitor de segurança"
+        "connect": "Connect safety monitor",
+        "disconnect": "Disconnect safety monitor",
+        "error": "Error controlling safety monitor"
       },
       "flat": {
-        "connect": "Conectar painel de flat",
-        "disconnect": "Desconectar painel de flat",
-        "error": "Erro ao controlar o painel de flat:"
+        "connect": "Connect flatdevice",
+        "disconnect": "Disconnect flatdevice",
+        "error": "Error controlling flatdevice:"
       },
       "dome": {
-        "connect": "Conectar domo",
-        "disconnect": "Desconectar domo",
-        "error": "Erro ao controlar domo:"
+        "connect": "Connect dome",
+        "disconnect": "Disconnect dome",
+        "error": "Error controlling dome:"
       },
       "switch": {
-        "connect": "Conectar interruptor",
-        "disconnect": "Desconectar interruptor",
-        "error": "Erro ao controlar o interruptor"
+        "connect": "Connect switch",
+        "disconnect": "Disconnect switch",
+        "error": "Error controlling switch"
       },
       "weather": {
-        "connect": "Conectar estação meteorológica",
-        "disconnect": "Desconectar estação meteorológica",
-        "error": "Erro ao controlar a estação meteorológica"
+        "connect": "Connect weather",
+        "disconnect": "Disconnect weather",
+        "error": "Error controlling weather"
       }
     },
     "lastLogs": {
-      "loading": "Carregando dados...",
-      "error": "Erro ao carregar dados:",
-      "timestamp": "Marcador de data/hora",
-      "level": "Nível",
-      "message": "Mensagem",
-      "member": "Membro",
-      "line": "Linha",
+      "loading": "Loading data...",
+      "error": "Error loading data:",
+      "timestamp": "Timestamp",
+      "level": "Level",
+      "message": "Message",
+      "member": "Member",
+      "line": "Line",
       "download": "Download"
     },
     "navigation": {
-      "equipment": "Equipamento",
-      "camera": "Câmera",
-      "autofocus": "Autofoco",
-      "mount": "Montagem",
-      "guider": "Guiagem",
-      "dome": "Domo",
-      "sequence": "Sequência",
-      "settings": "Configurações",
+      "equipment": "Equipment",
+      "camera": "Camera",
+      "autofocus": "Autofocus",
+      "mount": "Mount",
+      "guider": "Guider",
+      "dome": "Dome",
+      "sequence": "Sequence",
+      "settings": "Settings",
       "vnc": "VNC"
     },
     "language": {
-      "select": "Selecionar idioma"
+      "select": "Select language"
     },
     "equipment": {
-      "control": "Controle do Equipamento"
+      "control": "Equipment Control"
     },
     "sequence": {
-      "title": "Sequência",
-      "stats": "Estatísticas",
-      "noSequenceLoaded": "Nenhuma sequência carregada",
-      "noSequenceData": "Nenhum dado disponível ainda",
-      "startSequence": "Iniciar sequência",
-      "stopSequence": "Parar sequência",
-      "resetSequence": "Redefinir sequência",
-      "resetConfirmationTitle": "Confirmar Redefinição",
-      "resetConfirmationMessage": "Você tem certeza de que deseja redefinir a sequência? Esta ação não pode ser desfeita.",
-      "exposures": "Exposições",
-      "exposureTime": "Tempo de exposição",
-      "filter": "Filtro",
-      "ditherEvery": "Deslocar a cada",
-      "type": "Tipo",
-      "deltaHFR": "Delta HFR",
-      "sampleSize": "Tamanho da amostra",
-      "triggers": "Gatilhos",
+      "title": "Sequence",
+      "stats": "Stats",
+      "noSequenceLoaded": "No sequence loaded",
+      "noSequenceData": "No data available yet",
+      "startSequence": "Start sequence",
+      "stopSequence": "Stop sequence",
+      "resetSequence": "Reset sequence",
+      "resetConfirmationTitle": "Confirm Reset",
+      "resetConfirmationMessage": "Are you sure you want to reset the sequence? This action cannot be undone.",
+      "exposures": "Exposures",
+      "exposureTime": "Exposure time",
+      "filter": "Filter",
+      "ditherEvery": "Dither every",
+      "type": "Type",
+      "deltaHFR": "DeltaHFR",
+      "sampleSize": "Sample size",
+      "triggers": "Triggers",
       "details": {
-        "of": "de",
-        "gain": "Ganho",
-        "ditherAfter": "Deslocar após",
-        "exposures": "exposições"
+        "of": "of",
+        "gain": "Gain",
+        "ditherAfter": "Dither after",
+        "exposures": "exposures"
       },
-      "date": "Data",
+      "date": "Date",
       "hfr": "HFR",
-      "stars": "Estrelas",
-      "mean": "Média",
-      "median": "Mediana",
-      "stDev": "Desv. Padrão",
+      "stars": "Stars",
+      "mean": "Mean",
+      "median": "Median",
+      "stDev": "St. Dev.",
       "rmsText": "RMS",
-      "sequence_control": "Controles da Sequência",
-      "temperature": "Temperatura",
+      "sequence_control": "Sequence Controls",
+      "temperature": "Temperature",
       "monitor": {
         "settings": {
-          "title": "Ver configurações",
-          "showImage": "Exibir última imagem",
-          "showImageStats": "Exibir estatísticas da última imagem",
-          "showImgStatsGraph": "Exibir gráfico HFR",
-          "showGuiderGraph": "Mostrar gráfico de guiagem",
-          "showGuiderAfGraph": "Mostrar gráfico do autofoco"
+          "title": "View settings",
+          "showImage": "Show last image",
+          "showImageStats": "Show last image stats",
+          "showImgStatsGraph": "Show HFR-Chart",
+          "showGuiderGraph": "Show guider-chart",
+          "showGuiderAfGraph": "Show autofocus-chart"
         }
       },
-      "running": "EM EXECUÇÃO",
+      "running": "RUNNING",
       "imageHistory": "Image History",
       "duration": "Duration",
       "temperatureShort": "Temp"
     },
     "mount": {
-      "title": "Montagem",
-      "slew": "Mover",
+      "title": "Mount",
+      "slew": "Slew",
       "control": {
-        "park": "Estacionar",
-        "unpark": "Desestacionar",
-        "home": "Origem",
-        "trackingMode": "Modo de Rastreamento",
+        "park": "Park",
+        "unpark": "Unpark",
+        "home": "Home",
+        "trackingMode": "Tracking Mode",
+        "manuellControl": "Manual control",
+        "slewRate": "Slew rate °/s",
         "siderial": "Siderial",
         "lunar": "Lunar",
         "solar": "Solar",
         "king": "King",
-        "stop": "Parar",
+        "stop": "Stop",
         "errors": {
-          "park": "Erro ao estacionar a montagem",
-          "unpark": "Erro ao desestacionar a montagem",
-          "home": "Erro ao mover a montagem para a origem",
-          "tracking": "Erro ao definir o modo de rastreamento"
-        },
-        "manuellControl": "Controle manual",
-        "slewRate": "Taxa de taxa °/s"
+          "park": "Error parking mount",
+          "unpark": "Error unparking mount",
+          "home": "Error homing mount",
+          "tracking": "Error setting tracking mode"
+        }
       },
       "info": {
-        "notConnected": "Por favor, conecte a montagem",
-        "parked": "Estacionado",
-        "unparked": "Desestacionado",
-        "trackingActive": "Rastreamento ativo",
-        "trackingDisabled": "Rastreamento desativado",
-        "slewing": "A montagem está se movendo",
-        "notSlewing": "Não está se movendo"
+        "notConnected": "Please connect mount",
+        "parked": "Parked",
+        "unparked": "Unparked",
+        "trackingActive": "Tracking is active",
+        "trackingDisabled": "Tracking disabled",
+        "slewing": "Mount is slewing",
+        "notSlewing": "Not slewing"
       }
     },
     "guider": {
-      "notConnected": "Por favor, conecte a guiagem",
-      "start": "Iniciar",
-      "startWithCal": "Iniciando com calibração",
-      "stop": "Parar",
-      "rms_error": "Erro RMS",
-      "title": "Guiagem",
-      "running": "CORRENDO",
-      "notes": "* Este gráfico exibe dados orientadores de acordo com as configurações da N.I.N.A."
+      "notConnected": "Please connect guider",
+      "start": "Start",
+      "startWithCal": "Starting with calibration",
+      "stop": "Stop",
+      "rms_error": "RMS Error",
+      "title": "Guider",
+      "running": "RUNNING",
+      "notes": "* This graph displays guiding data according to N.I.N.A.'s settings."
     },
     "focuser": {
-      "title": "Focalizador",
-      "new_position": "Nova posição:",
-      "move": "Mover",
-      "start_autofocus": "Iniciar autofoco",
-      "cancel_autofocus": "Cancelar autofoco",
-      "autofocus_graph": "Gráfico do autofoco",
-      "autofocus_running": "Autofoco em execução",
-      "autofocus_error": "Erro no autofoco",
-      "please_connect_focuser": "Por favor, conecte o focalizador",
-      "current_position": "Posição atual:",
-      "temperature": "Temperatura:",
-      "moving": "Movendo",
-      "stopped": "Parado",
-      "autofocus_active": "Autofoco ativo",
-      "autofocus": "Autofoco",
-      "last_autofocus": "Último autofoco"
+      "title": "Focuser",
+      "new_position": "New position:",
+      "move": "Move",
+      "start_autofocus": "Start autofocus",
+      "cancel_autofocus": "Cancel autofocus",
+      "autofocus_graph": "Autofocus graph",
+      "autofocus_running": "Autofocus running",
+      "autofocus_error": "Autofocus error",
+      "please_connect_focuser": "Please connect focuser",
+      "current_position": "Current position:",
+      "temperature": "Temperature:",
+      "moving": "Moving",
+      "stopped": "Stopped",
+      "autofocus_active": "Autofocus active",
+      "autofocus": "Autofocus",
+      "last_autofocus": "Last autofocus"
     },
     "dome": {
-      "title": "Domo",
-      "azimuth": "Azimute",
-      "slewing": "Movimentando",
-      "slewing_stopped": "Movimentação parada",
-      "following": "Seguindo",
-      "following_stopped": "Acompanhamento parado",
-      "at_home": "Origem",
-      "not_at_home": "Fora da origem",
-      "park": "Estacionar",
-      "unpark": "Desestacionar",
-      "shutter_close": "Obturador fechado",
-      "shutter_open": "Obturador aberto",
+      "title": "Dome",
+      "azimuth": "Azimuth",
+      "slewing": "Slewing",
+      "slewing_stopped": "Slewing stopped",
+      "following": "Following",
+      "following_stopped": "Following stopped",
+      "at_home": "Home",
+      "not_at_home": "Not at home",
+      "park": "Park",
+      "unpark": "Unpark",
+      "shutter_close": "Shutter closed",
+      "shutter_open": "Shutter open",
       "control": {
-        "open": "Abrir obturador",
-        "close": "Fechar obturador",
-        "stop": "Parar movimento do obturador",
+        "open": "Open shutter",
+        "close": "Close shutter",
+        "stop": "Stop shutter movement",
         "errors": {
-          "open": "Erro ao abrir o obturador",
-          "close": "Erro ao fechar o obturador",
-          "stop": "Erro ao parar o obturador"
+          "open": "Error open shutter",
+          "close": "Error close shutter",
+          "stop": "Error stop shutter"
         }
       }
     },
     "camera": {
-      "title": "Câmera",
-      "connect": "Por favor, conecte a câmera",
-      "settings": "Configurações",
+      "title": "Camera",
+      "connect": "Please connect camera",
+      "settings": "Settings",
       "loop": "Loop",
-      "capture_running": "Captura em execução",
-      "image_loading": "Carregando imagem...",
-      "start_capture": "Iniciar captura",
-      "cancel": "Cancelar",
-      "exposure_time": "Tempo de exposição:",
-      "gain_iso": "Ganho / ISO:",
-      "name": "Nome da câmera",
-      "gain": "Ganho",
+      "capture_running": "Capture running",
+      "image_loading": "Image loading...",
+      "start_capture": "Start capture",
+      "cancel": "Cancel",
+      "exposure_time": "Exposure time:",
+      "gain_iso": "Gain / ISO:",
+      "name": "Camera name",
+      "gain": "Gain",
       "offset": "Offset",
-      "temperature": "Temperatura",
-      "standby": "Modo de espera",
-      "info": "Informações",
-      "info_settings": "Informações & Configurações",
-      "please_connect": "Por favor, conecte a câmera",
-      "cooler_on": "Resfriamento ligado",
-      "cooler_off": "Resfriamento desligado",
-      "dew_heater": "Aquecedor anti-orvalho",
-      "dew_heater_on": "Aquecedor anti-orvalho Ligado",
-      "dew_heater_off": "Aquecedor anti-orvalho Desligado",
-      "camera_cooling": "Resfriamento da câmera",
-      "target_temperature": "Temperatura alvo",
-      "warm_up_time": "Tempo de aquecimento",
-      "cooling_time": "Tempo de resfriamento",
+      "temperature": "Temperature",
+      "standby": "Standby",
+      "info": "Info",
+      "info_settings": "Info & Settings",
+      "please_connect": "Please connect camera",
+      "cooler_on": "Cooling On",
+      "cooler_off": "Cooling Off",
+      "dew_heater": "Dewheater",
+      "dew_heater_on": "Dewheater On",
+      "dew_heater_off": "Dewheater Off",
+      "camera_cooling": "Camera cooling",
+      "target_temperature": "Target temperature",
+      "warm_up_time": "Warm-up time",
+      "cooling_time": "Cooling time",
       "binning_mode": "Binning",
-      "readout_mode": "Modo de leitura",
-      "set_use_platesolve": "Use platesolve"
+      "readout_mode": "Readout Mode",
+      "set_use_platesolve": "Use Platesolve"
     },
     "tppa": {
-      "title": "Alinhamento Polar de Três Pontos",
-      "camera_mount_required": "A câmera deve estar conectada e a montagem deve estar desestacionada",
-      "start_alignment": "Iniciar Alinhamento",
-      "stop_alignment": "Parar Alinhamento",
-      "altitude_error": "Erro de altitude:",
-      "azimuth_error": "Erro de azimute:",
-      "total_error": "Erro total:",
-      "last_update": "Última atualização:",
-      "error_values_missing": "Valores de erro ausentess",
-      "unknown_response_format": "Formato de resposta desconhecido",
-      "east": "Leste",
-      "west": "Oeste",
-      "down": "Baixo",
-      "up": "Cima",
-      "not_available": "Indisponível",
-      "running": "EM EXECUÇÃO",
-      "capture_running": "Exposição em execução",
-      "last_messages": "Últimas mensagens",
-      "plate_solve_error": "PLATESOLVE ERRO",
-      "plate_solve_ok": "PLATES SOLVE SUCESSO",
-      "plate_solve_start": "PLATES SOLVE START",
-      "slewing_first_position": "Slewing to First Position",
-      "slewing_next_position": "Slewing para a próxima posição"
+      "title": "Three Point Polar Alignment",
+      "camera_mount_required": "Camera must be connected and mount must be unparked",
+      "start_alignment": "Start Alignment",
+      "stop_alignment": "Stop Alignment",
+      "altitude_error": "Altitude Error:",
+      "azimuth_error": "Azimuth Error:",
+      "total_error": "Total Error:",
+      "last_update": "Last update:",
+      "error_values_missing": "Missing error values",
+      "unknown_response_format": "Unknown response format",
+      "east": "East",
+      "west": "West",
+      "down": "Down",
+      "up": "Up",
+      "not_available": "Not available",
+      "running": "RUNNING",
+      "plate_solve_start": "Platesolve start",
+      "plate_solve_ok": "Platesolve successful",
+      "plate_solve_error": "Platesolve error",
+      "slewing_first_position": "Slewing to first position",
+      "slewing_next_position": "Slewing to next position",
+      "capture_running": "Exposure running",
+      "last_messages": "Last messages"
     },
     "logs": {
-      "loading": "Carregando dados...",
-      "error": "Erro ao carregar dados:"
+      "loading": "Loading data...",
+      "error": "Error loading data:"
     },
     "test": {
-      "title": "Teste"
+      "title": "Test"
     },
-    "loading": "Carregando...",
+    "loading": "Loading...",
     "slewAndCenter": {
-      "title": "Mover e Centralizar",
-      "LastSelectedImageSource_wrong": "Por favor, selecione o mapa do céu offline como fonte de imagem no NINA / Enquadramento",
-      "ra": "AR:",
+      "title": "Slew and Center",
+      "LastSelectedImageSource_wrong": "Please select offline sky map as image source in NINA / Framing",
+      "ra": "RA:",
       "dec": "Dec:",
-      "ra_placeholder": "AR 03:47:28.2",
+      "ra_placeholder": "RA 03:47:28.2",
       "dec_placeholder": "Dec +24:06:19",
-      "slew": "Mover",
-      "slew_and_center": "Mover e Centralizar",
+      "slew": "Slew",
+      "slew_and_center": "Slew and Center",
+      "rotate": "Rotate",
       "errors": {
-        "invalidRAFormat": "Formato de AR inválido. Por favor, use HH:MM:SS.",
-        "invalidDECFormat": "Formato de Dec inválido. Por favor, use ±DD:MM:SS.",
-        "invalidRAInput": "Entrada de AR inválida.",
-        "invalidDECInput": "Entrada de Dec inválida.",
-        "apiUnreachable": "API de enquadramento inacessível",
-        "invalidFormat": "IFormato inválido. Esperado: ±DD:MM:SS.s",
-        "apiResponseError": "Erro na resposta da API:",
-        "mountInfoError": "Erro ao obter informações da montagem:"
+        "invalidRAFormat": "Invalid RA format. Please use HH:MM:SS.",
+        "invalidDECFormat": "Invalid DEC format. Please use ±DD:MM:SS.",
+        "invalidRAInput": "Invalid RA input.",
+        "invalidDECInput": "Invalid DEC input.",
+        "apiUnreachable": "Framing API unreachable",
+        "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s",
+        "apiResponseError": "Error in API response:",
+        "mountInfoError": "Error fetching mount information:"
       },
-      "rotate": "Girar",
-      "visibleStars": "Pesquisa de estrela visível"
+      "visibleStars": "Visible Star Search"
     },
     "filterwheel": {
-      "filter": "Filtro:",
-      "unknown": "Desconhecido",
-      "nofilteravailable": "Nenhum filtro disponível"
+      "filter": "Filter:",
+      "unknown": "Unknown",
+      "nofilteravailable": "No filter available"
     },
     "rotator": {
-      "label": "Rotor",
-      "move": "Mover",
-      "notConnected": "Por favor, conecte o rotador",
-      "currentPosition": "Posição atual:",
-      "moving": "Movendo",
-      "stopped": "Parado"
+      "label": "Rotator",
+      "move": "Move",
+      "notConnected": "Please connect rotator",
+      "currentPosition": "Current position:",
+      "moving": "Moving",
+      "stopped": "Stopped"
     },
     "flat": {
-      "please_connect_flatDevice": "Por favor, conecte o painel de flat",
-      "device_name": "Nome:",
-      "cover_state": "Estado da tampa:",
-      "light_state": "Estado da luz:",
-      "brightness": "Brilho:",
-      "toggle_light": "Luz:",
+      "please_connect_flatDevice": "Please connect the flat device",
+      "device_name": "Name:",
+      "cover_state": "Cover State:",
+      "light_state": "Light State:",
+      "brightness": "Brightness:",
+      "toggle_light": "Light:",
       "cover": {
-        "close": "Fechar tampa",
-        "open": "Abrir tampa"
+        "close": "close cover",
+        "open": "open cover"
       },
-      "title": "Painel de Flat"
-    },
-    "weatherModal": {
-      "weatherInformation": "Informações do clima",
-      "metric": "Métrico",
-      "imperial": "Imperial",
-      "temperature": "Temperatura",
-      "cloudCover": "Cobertura de Nuvens",
-      "wind": "Vento",
-      "humidity": "Umidade",
-      "pressure": "Pressão",
-      "dewPoint": "Ponto de orvalho",
-      "rainRate": "Taxa de chuva",
-      "skyQuality": "Qualidade do céu",
-      "skyTemperature": "Temperatura do céu"
-    },
-    "switch": {
-      "gauges": "Medições",
-      "switch": "Interruptor"
+      "title": "Flatpanel"
     },
     "flatassistant": {
-      "auto_brightness": "Brilho automático",
-      "auto_exposure": "Exposição automática",
-      "brightness": "Brilho",
-      "completed_recordings": "Gravações concluídas:",
-      "count": "Contar",
-      "exposure_time": "Período de exposição",
-      "histogram_mean_target": "Alvo médio do histograma",
-      "max_brightness": "Brilho máximo",
-      "max_exposure_time": "Tempo máximo de exposição",
-      "mean_tolerance": "Tolerância média",
-      "min_brightness": "Min brilho",
-      "min_exposure_time": "Tempo de exposição min",
-      "skyflat": "Skyflat",
-      "start_auto_brightness": "Inicie o Autobrightness",
-      "start_auto_exposure": "Inicie a exposição automática",
-      "start_sky_flat": "Comece o céu",
-      "stop": "Parar",
-      "title": "Assistente plano"
+      "title": "Flat assistant",
+      "count": "Count",
+      "exposure_time": "Exposure time",
+      "min_exposure_time": "Min exposure time",
+      "max_exposure_time": "Max exposure time",
+      "brightness": "Brightness",
+      "min_brightness": "Min brightness",
+      "max_brightness": "Max brightness",
+      "histogram_mean_target": "Histogram mean target",
+      "mean_tolerance": "Mean tolerance",
+      "completed_recordings": "Completed recordings:",
+      "start_auto_exposure": "Start auto exposure",
+      "start_auto_brightness": "Start autobrightness",
+      "start_sky_flat": "Start sky flat",
+      "stop": "Stop",
+      "auto_exposure": "Auto exposure",
+      "auto_brightness": "Auto brightness",
+      "skyflat": "Skyflat"
+    },
+    "weatherModal": {
+      "weatherInformation": "Weather Information",
+      "metric": "Metric",
+      "imperial": "Imperial",
+      "temperature": "Temperature",
+      "cloudCover": "Cloud Cover",
+      "wind": "Wind",
+      "humidity": "Humidity",
+      "pressure": "Pressure",
+      "skyTemperature": "Sky temperature",
+      "skyQuality": "Sky quality",
+      "rainRate": "Rain rate",
+      "dewPoint": "Dewpoint"
+    },
+    "switch": {
+      "gauges": "Gauges",
+      "switch": "Switch"
+    },
+    "stellarium": {
+      "selected_object": {
+        "title": "Selected object",
+        "ra": "RA",
+        "dec": "DEC",
+        "button_framing": "go to framing"
+      }
     }
   }
 }
