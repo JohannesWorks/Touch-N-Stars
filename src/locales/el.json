@@ -467,6 +467,17 @@
         "ra": "RA",
         "dec": "DEC",
         "button_framing": "go to framing"
+      },
+      "datetime": {
+        "title": "Date & Time",
+        "date": "Date",
+        "time": "Time",
+        "apply": "Apply",
+        "now": "Now",
+        "speed": "Speed"
+      },
+      "mount_position": {
+        "title": "Mount Position"
       }
     }
   }
