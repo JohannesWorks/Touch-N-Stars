@@ -92,8 +92,7 @@
     },
     "connectEquipment": {
       "camera": {
-        "connect": "Connect camera",
-        "disconnect": "Disconnect camera",
+        "name": "Camera",
         "error": "Error controlling camera:"
       },
       "connectAll": "Connect All",
@@ -103,52 +102,44 @@
       "filter": {
         "connect": "Connect filter wheel",
         "disconnect": "Disconnect filter wheel",
-        "error": "Error controlling filter wheel:"
+        "error": "Error controlling filter wheel:",
+        "name": "FIlterwheel"
       },
       "mount": {
-        "connect": "Connect mount",
-        "disconnect": "Disconnect mount",
-        "error": "Error controlling mount:"
+        "error": "Error controlling mount:",
+        "name": "Mount"
       },
       "focuser": {
-        "connect": "Connect focuser",
-        "disconnect": "Disconnect focuser",
-        "error": "Error controlling focuser:"
+        "error": "Error controlling focuser:",
+        "name": "Focuser"
       },
       "rotator": {
-        "connect": "Connect rotator",
-        "disconnect": "Disconnect rotator",
-        "error": "Error controlling rotator:"
+        "error": "Error controlling rotator:",
+        "name": "Rotator"
       },
       "guider": {
-        "connect": "Connect guider",
-        "disconnect": "Disconnect guider",
-        "error": "Error controlling guider:"
+        "error": "Error controlling guider:",
+        "name": "Guider"
       },
       "safety": {
-        "connect": "Connect safety monitor",
-        "disconnect": "Disconnect safety monitor",
-        "error": "Error controlling safety monitor"
+        "error": "Error controlling safety monitor",
+        "name": "Safety monitor"
       },
       "flat": {
-        "connect": "Connect flatdevice",
-        "disconnect": "Disconnect flatdevice",
-        "error": "Error controlling flatdevice:"
+        "error": "Error controlling flatdevice:",
+        "name": "Flatdevice"
       },
       "dome": {
-        "connect": "Connect dome",
-        "disconnect": "Disconnect dome",
-        "error": "Error controlling dome:"
+        "error": "Error controlling dome:",
+        "name": "Dome"
       },
       "switch": {
-        "connect": "Connect switch",
-        "disconnect": "Disconnect switch",
-        "error": "Error controlling switch"
+        "error": "Error controlling switch",
+        "name": "Switch"
       },
       "weather": {
-        "connect": "Connect weather",
-        "disconnect": "Disconnect weather",
-        "error": "Error controlling weather"
+        "error": "Error controlling weather",
+        "name": "Weather"
       }
     },
     "lastLogs": {
