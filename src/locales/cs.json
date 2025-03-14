@@ -469,6 +469,15 @@
       },
       "mount_position": {
         "title": "Mount Position"
+      },
+      "settings": {
+        "constellations_lines_visible": "Show Constellations",
+        "azimuthal_lines_visible": "Show azimuthal lines",
+        "equatorial_lines_visible": "Show equatorial lines",
+        "meridian_lines_visible": "Show meridian",
+        "ecliptic_lines_visible": "Show ecliptic",
+        "atmosphere_visible": "Show atmosphere",
+        "landscapes_visible": "Show landscapes"
       }
     }
   }
