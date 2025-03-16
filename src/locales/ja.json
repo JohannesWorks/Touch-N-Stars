@@ -224,6 +224,7 @@
         "park": "Park",
         "unpark": "Unpark",
         "home": "Home",
+        "set_as_park": "Set as park",
         "trackingMode": "Tracking Mode",
         "manuellControl": "Manual control",
         "slewRate": "Slew rate °/s",
