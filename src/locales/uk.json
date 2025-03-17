@@ -215,7 +215,8 @@
       "running": "RUNNING",
       "imageHistory": "Image History",
       "duration": "Duration",
-      "temperatureShort": "Temp"
+      "temperatureShort": "Temp",
+      "conditions": "Conditions"
     },
     "mount": {
       "title": "Mount",
