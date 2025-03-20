@@ -216,7 +216,11 @@
       "imageHistory": "Image History",
       "duration": "Duration",
       "temperatureShort": "Temp",
-      "conditions": "Conditions"
+      "conditions": "Conditions",
+      "info": {
+        "header": "Info",
+        "message": "Unfortunately, your sequence cannot be edited. Not all sequence plugins are currently supported"
+      }
     },
     "mount": {
       "title": "Mount",
