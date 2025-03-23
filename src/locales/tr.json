@@ -392,9 +392,13 @@
         "apiUnreachable": "Framing API unreachable",
         "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s",
         "apiResponseError": "Error in API response:",
-        "mountInfoError": "Error fetching mount information:"
+        "mountInfoError": "Error fetching mount information:",
+        "invalidAltInput": "Invalid alt input.",
+        "invalidAzInput": "Invalid az input."
       },
-      "visibleStars": "Visible Star Search"
+      "visibleStars": "Visible Star Search",
+      "alt": "Alt:",
+      "az": "Az:"
     },
     "filterwheel": {
       "filter": "Filter:",
