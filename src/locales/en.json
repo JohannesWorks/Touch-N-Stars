@@ -398,7 +398,18 @@
       },
       "visibleStars": "Visible Star Search",
       "alt": "Alt:",
-      "az": "Az:"
+      "az": "Az:",
+      "slew_modal": {
+        "is_slewing": "Slewing to target",
+        "is_centering": "Center target",
+        "is_platesolving": "Platesolve running",
+        "plate_solve_error": "Platesolve error",
+        "center_error": "Centering error",
+        "center_successful": "Centering successful",
+        "center_Repeat": "Repeat centering",
+        "exposure_running": " Exposure running",
+        "deviation_target": " Deviation to the target:"
+      }
     },
     "filterwheel": {
       "filter": "Filter:",
