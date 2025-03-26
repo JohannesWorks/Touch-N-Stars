@@ -140,6 +140,10 @@
       "weather": {
         "error": "Error controlling weather",
         "name": "Weather"
+      },
+      "info": {
+        "title": "Info",
+        "message": "The manual filter wheel and the manual rotator can currently only be controlled via NINA"
       }
     },
     "lastLogs": {
