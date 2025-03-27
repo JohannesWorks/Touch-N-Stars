@@ -225,6 +225,9 @@
       "info": {
         "header": "Info",
         "message": "Unfortunately, your sequence cannot be edited. Not all sequence plugins are currently supported. If you want to help us, let us know on GitHub which plugins you are using."
+      },
+      "info_general": {
+        "message": "Unfortunately, we are not yet able to process all parameters. We are working on supporting as many NINA functions as possible. Because there are so many plugins, we cannot integrate them all. However, we are trying to support as many as possible. If you notice an error in the display, please help us and report it on GitHub"
       }
     },
     "mount": {
@@ -461,7 +464,7 @@
       "auto_exposure": "Auto exposure",
       "auto_brightness": "Auto brightness",
       "skyflat": "Skyflat",
-      "button_slew_to_cenit": "Slew to cenit"
+      "button_slew_to_zenith": "Slew to zenith"
     },
     "weatherModal": {
       "weatherInformation": "Weather Information",
