@@ -314,7 +314,9 @@
           "open": "Error open shutter",
           "close": "Error close shutter",
           "stop": "Error stop shutter"
-        }
+        },
+        "slew": "Slew",
+        "slew_label": "Slew to degrees"
       }
     },
     "camera": {
