@@ -252,7 +252,7 @@
           "home": "Error homing mount",
           "tracking": "Error setting tracking mode"
         },
-        "slew_to_cenit": "Slew to Cenit",
+        "slew_to_cenit": "Slew to Zenith",
         "info_manuell_controll": "Manual control is only available if tracking is not active"
       },
       "info": {
@@ -320,7 +320,7 @@
         "follow": "Dome follow telescope",
         "sync": "Sync with telescope"
       },
-      "please_connect_dome": "Pleaxe connect the dome"
+      "please_connect_dome": "Please connect the dome"
     },
     "camera": {
       "title": "Camera",
