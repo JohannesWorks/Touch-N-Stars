@@ -317,8 +317,10 @@
         },
         "slew": "Slew",
         "slew_label": "Slew to degrees",
-        "follow": "Dome follow telescope"
-      }
+        "follow": "Dome follow telescope",
+        "sync": "Sync with telescope"
+      },
+      "please_connect_dome": "Pleaxe connect the dome"
     },
     "camera": {
       "title": "Camera",
@@ -514,6 +516,9 @@
         "atmosphere_visible": "Show atmosphere",
         "landscapes_visible": "Show landscapes"
       }
+    },
+    "profile": {
+      "label": "Profile:"
     }
   }
 }
