@@ -316,7 +316,8 @@
           "stop": "Error stop shutter"
         },
         "slew": "Slew",
-        "slew_label": "Slew to degrees"
+        "slew_label": "Slew to degrees",
+        "follow": "Dome follow telescope"
       }
     },
     "camera": {
