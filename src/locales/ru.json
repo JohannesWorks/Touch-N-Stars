@@ -228,6 +228,11 @@
       },
       "info_general": {
         "message": "Unfortunately, we are not yet able to process all parameters. We are working on supporting as many NINA functions as possible. Because there are so many plugins, we cannot integrate them all. However, we are trying to support as many as possible. If you notice an error in the display, please help us and report it on GitHub"
+      },
+      "sort": {
+        "sort": "Sort",
+        "oldest": "oldest first",
+        "newest": "newest first"
       }
     },
     "mount": {
