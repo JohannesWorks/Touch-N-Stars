@@ -233,7 +233,8 @@
         "sort": "Sort",
         "oldest": "oldest first",
         "newest": "newest first"
-      }
+      },
+      "time": "Time"
     },
     "mount": {
       "title": "Mount",
@@ -318,14 +319,24 @@
         "errors": {
           "open": "Error open shutter",
           "close": "Error close shutter",
-          "stop": "Error stop shutter"
+          "stop": "Error stop shutter",
+          "park": "Error Park",
+          "slew": "Error slew ",
+          "sync": "Error sync",
+          "stop_slew": "Error stop slew",
+          "home": "Error home",
+          "follow": "Error follow Telescope"
         },
         "slew": "Slew",
         "slew_label": "Slew to degrees",
         "follow": "Dome follow telescope",
-        "sync": "Sync with telescope"
+        "sync": "Sync with telescope",
+        "park": "Park",
+        "home": "Home"
       },
-      "please_connect_dome": "Please connect the dome"
+      "please_connect_dome": "Please connect the dome",
+      "is_sync": "Sync",
+      "not_sync": "Not sync"
     },
     "camera": {
       "title": "Camera",
