@@ -147,7 +147,7 @@
       },
       "info": {
         "title": "Info",
-        "message": "The manual filter wheel and the manual rotator can currently only be controlled via NINA"
+        "message": "The manual filter wheel and the manual rotator can currently only be controlled via NINA. Use the API's “Networked Filter Wheel” for the filter wheel"
       }
     },
     "lastLogs": {
@@ -453,7 +453,11 @@
     "filterwheel": {
       "filter": "Filter:",
       "unknown": "Unknown",
-      "nofilteravailable": "No filter available"
+      "nofilteravailable": "No filter available",
+      "manual_filter": {
+        "title": "Filterwheel",
+        "name": "Change to filter:"
+      }
     },
     "rotator": {
       "label": "Rotator",
