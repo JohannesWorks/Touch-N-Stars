@@ -26,7 +26,9 @@
     "selectLanguage": "Select your language",
     "gpsConfiguration": "GPS Configuration",
     "completeSetup": "Complete Setup",
-    "instanceConfiguration": "N.I.N.A connection details"
+    "instanceConfiguration": "N.I.N.A connection details",
+    "InfoAppsTitel": "Wiki",
+    "check_wki": "You can find detailed instructions in our wiki"
   },
   "components": {
     "tutorial": {
