@@ -18,6 +18,12 @@
     "title": "Touch'N'Stars",
     "unreachable": "NINA is unreachable",
     "connecting": "Attempting to establish connection",
+    "connection_error_toast": {
+      "title": "Connection error",
+      "message_api": "The API plugin is not available. Please check the settings in NINA",
+      "message_api_version": "The API plugin is too old. Please perform an update",
+      "message_tns": "The TouchNStars plugin is not available. Please check the settings in NINA"
+    },
     "api_version_incompatible": "Advanced-API version incompatible current: { current } required: { required }"
   },
   "setup": {
