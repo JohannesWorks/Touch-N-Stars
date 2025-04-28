@@ -225,7 +225,8 @@
           "showImageStats": "Show last image stats",
           "showImgStatsGraph": "Show HFR-Chart",
           "showGuiderGraph": "Show guider-chart",
-          "showGuiderAfGraph": "Show autofocus-chart"
+          "showGuiderAfGraph": "Show autofocus-chart",
+          "display_status_under_image": "Show status below image"
         }
       },
       "running": "RUNNING",
