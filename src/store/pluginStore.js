@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { loadAllPluginsMetadata, importPlugin, getIconComponent } from '@/utils/pluginDiscovery';
+import { loadAllPluginsMetadata, importPlugin } from '@/utils/pluginDiscovery';
 
 export const usePluginStore = defineStore('pluginStore', {
   state: () => ({
@@ -114,28 +114,21 @@ export const usePluginStore = defineStore('pluginStore', {
         if (pluginModule && typeof pluginModule.install === 'function') {
           // Install the plugin
           pluginModule.install(this.app, { router: this.router });
-
-          // Add navigation item
-          this.addPluginNavigationItem(plugin.id);
         }
       } catch (error) {
         console.error(`Error initializing plugin ${pluginId}:`, error);
       }
     },
 
-    addPluginNavigationItem(pluginId) {
-      const plugin = this.plugins.find((p) => p.id === pluginId);
-      if (!plugin || !plugin.enabled) return;
+    addPluginNavigationItem(pluginId, navigationItem) {
+      // This method is now called by each plugin to add its own navigation item
+      if (!navigationItem) return;
 
-      const iconComponent = getIconComponent(plugin.icon);
-      if (iconComponent) {
-        this.addNavigationItem({
-          pluginId: plugin.id,
-          path: `/${plugin.id}`,
-          icon: iconComponent,
-          title: plugin.name,
-        });
-      }
+      // Add plugin ID to the navigation item
+      navigationItem.pluginId = pluginId;
+
+      // Add the navigation item
+      this.addNavigationItem(navigationItem);
     },
   },
   persist: {

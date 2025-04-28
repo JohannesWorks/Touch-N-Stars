@@ -21,10 +21,10 @@ export default {
 
     // Add navigation item only if plugin is enabled
     if (metadata.enabled) {
-      pluginStore.addNavigationItem({
-        pluginId: metadata.id,
+      // Each plugin is now responsible for providing its own icon
+      pluginStore.addPluginNavigationItem(metadata.id, {
         path: '/weather-station',
-        icon: CloudIcon,
+        icon: CloudIcon, // Icon is directly imported by the plugin
         title: metadata.name,
       });
     }

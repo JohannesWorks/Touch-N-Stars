@@ -22,17 +22,19 @@ plugins/
   "description": "Plugin description",
   "version": "1.0.0",
   "author": "Author Name",
-  "icon": "SparklesIcon", // Icon from @heroicons/vue/24/outline
   "enabled": false
 }
 ```
 
 ## Plugin Entry Point (index.js)
 ```javascript
+// Import your icon directly in your plugin
+import { YourIconComponent } from '@heroicons/vue/24/outline';
+// Or create/import a custom icon component
+// import MyCustomIcon from './components/MyCustomIcon.vue';
 import { usePluginStore } from '@/store/pluginStore';
 import metadata from './plugin.json';
 import MyPluginView from './views/MyPluginView.vue';
-// Import any components, icons, or other dependencies
 
 export default {
   metadata,
@@ -49,6 +51,15 @@ export default {
     
     // Register plugin metadata
     pluginStore.registerPlugin(metadata);
+    
+    // Add navigation item only if plugin is enabled
+    if (metadata.enabled) {
+      pluginStore.addPluginNavigationItem(metadata.id, {
+        path: '/my-plugin',
+        icon: YourIconComponent,  // Each plugin provides its own icon
+        title: metadata.name,
+      });
+    }
   }
 }
 ```
@@ -79,18 +90,22 @@ This is handled by a build script that:
 
 ## Icon Support
 
-Your plugin can use any icon from `@heroicons/vue/24/outline`. Specify the icon name in your plugin.json file:
+Your plugin can use any icon from `@heroicons/vue/24/outline` or provide custom icon components:
 
-```json
-{
-  "icon": "CloudIcon" 
-}
+```javascript
+// Using HeroIcons
+import { SparklesIcon } from '@heroicons/vue/24/outline';
+
+// Or using your own custom icon component
+import MyCustomIcon from './components/MyCustomIcon.vue';
+
+// Then in your plugin install function:
+pluginStore.addPluginNavigationItem(metadata.id, {
+  path: '/my-plugin',
+  icon: SparklesIcon,  // or MyCustomIcon
+  title: metadata.name,
+});
 ```
-
-Currently supported icons:
-- CloudIcon
-- SparklesIcon
-- (Add more icons to the iconComponents object in utils/pluginDiscovery.js as needed)
 
 ## Example
 See the example weather station plugin in `plugins/weather-station/` for a complete implementation.

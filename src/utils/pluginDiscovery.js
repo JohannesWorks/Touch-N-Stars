@@ -2,15 +2,7 @@
  * Plugin discovery utility
  * Dynamically discovers all plugins in the plugins directory
  */
-import { CloudIcon, SparklesIcon } from '@heroicons/vue/24/outline';
 import { pluginRegistry } from '@/plugins/pluginRegistry';
-
-// Import all plugin icon components that might be used
-const iconComponents = {
-  CloudIcon,
-  SparklesIcon,
-  // Add more icons as needed
-};
 
 /**
  * Get all available plugins
@@ -40,19 +32,6 @@ export const loadAllPluginsMetadata = async () => {
   }
 
   return metadata;
-};
-
-/**
- * Get the icon component for a plugin
- * @param {string} iconName - Name of the icon from metadata
- * @returns {Component|null} Vue component for the icon or null if not found
- */
-export const getIconComponent = (iconName) => {
-  if (!iconName || typeof iconName !== 'string') {
-    return null;
-  }
-
-  return iconComponents[iconName] || null;
 };
 
 /**
