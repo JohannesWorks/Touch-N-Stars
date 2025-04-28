@@ -77,6 +77,10 @@
         "title": "Configurações de imagens",
         "black_clipping": "Black Clipping",
         "strech_factor": "Strech Factor"
+      },
+      "plugins": {
+        "description": "Descrição do plug -in",
+        "title": "Plugins"
       }
     },
     "framing": {

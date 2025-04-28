@@ -77,6 +77,10 @@
         "confirmation": "Confirmación",
         "description": "Haga clic en un icono para reiniciar o cerrar el sistema",
         "title": "Controles del sistema"
+      },
+      "plugins": {
+        "description": "Descripción del complemento",
+        "title": "Complementos"
       }
     },
     "framing": {

@@ -77,6 +77,10 @@
         "quality": "质量百分比",
         "black_clipping": "黑色裁剪",
         "strech_factor": "拉伸因子"
+      },
+      "plugins": {
+        "description": "Plugin description",
+        "title": "Plugins"
       }
     },
     "framing": {

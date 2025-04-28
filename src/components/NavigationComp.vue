@@ -8,6 +8,18 @@
       style="scroll-snap-type: x mandatory"
     >
       <div class="flex space-x-2 px-2" style="scroll-snap-align: start">
+        <!-- Plugin navigation items first -->
+        <div v-for="item in pluginStore.navigationItems" :key="item.pluginId">
+          <router-link
+            :to="item.path"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="item.title"
+          >
+            <component :is="item.icon" class="icon" />
+          </router-link>
+        </div>
+
         <div v-if="store.isBackendReachable">
           <router-link
             to="/equipment"
@@ -97,8 +109,8 @@
             >
               <path
                 d="M256,114.383c-22.526,0-40.851,18.325-40.851,40.851s18.325,40.851,40.851,40.851s40.851-18.325,40.851-40.851
-			S278.526,114.383,256,114.383z M256,179.745c-13.516,0-24.511-10.995-24.511-24.511c0-13.516,10.995-24.511,24.511-24.511
-			s24.511,10.995,24.511,24.511C280.511,168.75,269.516,179.745,256,179.745z"
+            S278.526,114.383,256,114.383z M256,179.745c-13.516,0-24.511-10.995-24.511-24.511c0-13.516,10.995-24.511,24.511-24.511
+            s24.511,10.995,24.511,24.511C280.511,168.75,269.516,179.745,256,179.745z"
               />
               <path
                 d="M495.66,283.234h-2.723v-38.128h2.723c4.512,0,8.17-3.658,8.17-8.17c0-4.512-3.658-8.17-8.17-8.17h-2.878
@@ -125,7 +137,7 @@
               />
               <path
                 d="M157.957,359.489c-4.512,0-8.17,3.658-8.17,8.17v43.574c0,4.512,3.658,8.17,8.17,8.17s8.17-3.658,8.17-8.17V367.66
-			C166.128,363.147,162.47,359.489,157.957,359.489z"
+            C166.128,363.147,162.47,359.489,157.957,359.489z"
               />
             </svg>
           </router-link>
@@ -285,11 +297,13 @@ import { apiStore } from '@/store/store';
 import { useSequenceStore } from '@/store/sequenceStore';
 import { useSettingsStore } from '@/store/settingsStore';
 import exposureCountdown from '@/components/helpers/ExposureCountdown.vue';
+import { usePluginStore } from '@/store/pluginStore';
 import { Capacitor } from '@capacitor/core';
 
 const store = apiStore();
 const sequenceStore = useSequenceStore();
 const settingsStore = useSettingsStore();
+const pluginStore = usePluginStore();
 const route = useRoute();
 const selectedInstanceId = computed(() => settingsStore.selectedInstanceId);
 const isIOS = computed(() => Capacitor.getPlatform() === 'ios');

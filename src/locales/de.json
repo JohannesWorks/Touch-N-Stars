@@ -77,6 +77,10 @@
         "quality": "Qualität in % ",
         "black_clipping": "Black Clipping",
         "strech_factor": "Strech Factor"
+      },
+      "plugins": {
+        "description": "Plugin Beschreibung",
+        "title": "Plugins"
       }
     },
     "framing": {

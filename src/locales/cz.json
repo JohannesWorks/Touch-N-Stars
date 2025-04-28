@@ -77,6 +77,10 @@
         "title": "Nastavení snímků",
         "black_clipping": "Černý Výstřižek",
         "strech_factor": "Faktor Strech"
+      },
+      "plugins": {
+        "description": "Plugin description",
+        "title": "Plugins"
       }
     },
     "framing": {

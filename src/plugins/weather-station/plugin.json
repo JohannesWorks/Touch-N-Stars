@@ -1,0 +1,9 @@
+{
+  "id": "weather-station",
+  "name": "Weather Station",
+  "description": "Extended weather monitoring and forecasting for astronomical observations",
+  "version": "1.0.0",
+  "author": "Touch 'N' Stars",
+  "icon": "CloudIcon",
+  "enabled": false
+}

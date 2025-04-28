@@ -6,6 +6,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import './assets/tailwind.css';
 import { createHead } from '@unhead/vue';
 import i18n from '@/i18n';
+import { usePluginStore } from '@/store/pluginStore';
 
 // Tooltip directive
 const tooltipDirective = {
@@ -28,4 +29,21 @@ if (settingsStore && settingsStore.language) {
   i18n.global.locale.value = settingsStore.language;
 }
 
-app.use(pinia).use(head).use(i18n).use(router).mount('#app');
+app.use(pinia).use(head).use(i18n).use(router);
+
+// Initialize plugin system
+(async () => {
+  const pluginStore = usePluginStore(pinia);
+
+  // Store references to app and router in plugin store
+  pluginStore.initializeAppAndRouter(app, router);
+
+  // Load and register all available plugins
+  await pluginStore.loadAndRegisterPlugins();
+
+  // Initialize all enabled plugins
+  await pluginStore.initializeEnabledPlugins();
+
+  // Mount the app after plugins are initialized
+  app.mount('#app');
+})();

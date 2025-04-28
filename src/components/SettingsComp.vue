@@ -132,8 +132,39 @@
       </div>
     </div>
 
-    <!-- Tutorial Modal -->
-    <TutorialModal v-if="showTutorialModal" :steps="tutorialSteps" @close="closeTutorial" />
+    <!-- Plugin Management -->
+    <div class="bg-gray-700 p-3 rounded-lg mt-4">
+      <div class="text-center mb-2">
+        <h3 class="text-gray-300 font-semibold text-lg mb-1">
+          {{ $t('components.settings.plugins.title') }}
+        </h3>
+        <p class="text-gray-400 text-sm">{{ $t('components.settings.plugins.description') }}</p>
+      </div>
+      <div class="space-y-3">
+        <div
+          v-for="plugin in pluginStore.plugins"
+          :key="plugin.id"
+          class="flex items-center justify-between p-3 bg-gray-800 rounded-lg"
+        >
+          <div>
+            <h4 class="text-white font-medium">{{ plugin.name }}</h4>
+            <p class="text-sm text-gray-400">{{ plugin.description }}</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs text-gray-500">v{{ plugin.version }}</span>
+            <button
+              @click="togglePlugin(plugin.id, !plugin.enabled)"
+              class="px-3 py-1 rounded-md text-sm"
+              :class="
+                plugin.enabled ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-700'
+              "
+            >
+              {{ plugin.enabled ? 'Enabled' : 'Disabled' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- System Controls -->
     <div class="bg-gray-700 p-3 rounded-lg mt-4">
@@ -196,6 +227,9 @@
     </div>
   </div>
 
+  <!-- Tutorial Modal -->
+  <TutorialModal v-if="showTutorialModal" :steps="tutorialSteps" @close="closeTutorial" />
+
   <!-- Confirmation Modal -->
   <div
     v-if="confirmAction"
@@ -245,11 +279,14 @@ import setImgStrechFactor from '@/components/settings/setImgStrechFactor.vue';
 import setImgQuality from '@/components/settings/setImgQuality.vue';
 import setImgBlackClipping from '@/components/settings/setImgBlackClipping.vue';
 import SetInstance from './settings/setInstance.vue';
+import { usePluginStore } from '@/store/pluginStore';
 
 const router = useRouter();
 const { locale } = useI18n();
 const settingsStore = useSettingsStore();
 const store = apiStore();
+const pluginStore = usePluginStore();
+
 const currentLanguage = ref(settingsStore.getLanguage());
 const latitude = ref('');
 const longitude = ref('');
@@ -402,5 +439,10 @@ function restartSystem() {
 
 function shutdownSystem() {
   confirmAction.value = 'shutdown';
+}
+
+async function togglePlugin(pluginId, enabled) {
+  // Use the enhanced togglePlugin method which handles initialization
+  await pluginStore.togglePlugin(pluginId, enabled);
 }
 </script>

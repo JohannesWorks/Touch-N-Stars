@@ -1,20 +1,21 @@
 {
   "name": "touch-n-stars",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "node scripts/generate-plugin-registry.js && vue-cli-service serve",
+    "build": "node scripts/generate-plugin-registry.js && vue-cli-service build",
     "lint": "vue-cli-service lint",
     "lint:eslint": "eslint . --ext .js,.vue --fix",
     "lint:fix": "eslint . --ext .js,.vue --fix",
-    "testbuild": "npm run lint:eslint && vue-cli-service build --no-lint --dest \"%LOCALAPPDATA%\\NINA\\Plugins\\3.0.0\\Touch 'N' Stars\\app\"",
+    "testbuild": "node scripts/generate-plugin-registry.js && npm run lint:eslint && vue-cli-service build --no-lint --dest \"%LOCALAPPDATA%\\NINA\\Plugins\\3.0.0\\Touch 'N' Stars\\app\"",
     "format": "prettier --write \"src/**/*.{js,vue}\"",
     "ionic:build": "npm run build",
     "ionic:serve": "npm run serve",
     "locale:entry": "node scripts/add-locale-entry.js",
-    "locale:entry:all": "node scripts/add-locale-entry-all.js"
+    "locale:entry:all": "node scripts/add-locale-entry-all.js",
+    "generate-plugins": "node scripts/generate-plugin-registry.js"
   },
   "dependencies": {
     "@capacitor/android": "7.2.0",
