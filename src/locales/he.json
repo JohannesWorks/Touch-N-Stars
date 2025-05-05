@@ -81,6 +81,10 @@
       "plugins": {
         "title": "Plugins",
         "description": "Plugin description"
+      },
+      "debug": {
+        "titel": "Debug settings",
+        "activate": "Enable debug window"
       }
     },
     "framing": {
