@@ -566,6 +566,32 @@
     },
     "profile": {
       "label": "Profile:"
+    },
+    "fav_target": {
+      "titel": "Favorites",
+      "table": {
+        "name": "Name",
+        "ra": "RA",
+        "dec": "DEC",
+        "load": "Load",
+        "remove": "Remove",
+        "sequnce": "Seq target"
+      },
+      "no_fav": "No favorites saved",
+      "modal_save": {
+        "titel": "Save",
+        "message": "The target has been saved"
+      },
+      "modal_sequence": {
+        "titel": "Sequence"
+      },
+      "modal_sequence_ok": {
+        "message": "Target set"
+      },
+      "modal_sequence_error": {
+        "message": "No sequence loaded"
+      },
+      "enter_name": "Enter name"
     }
   }
 }
