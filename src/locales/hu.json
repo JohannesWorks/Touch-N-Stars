@@ -22,7 +22,8 @@
       "title": "Connection error",
       "message_api": "The API plugin is not available. Please check the settings in NINA",
       "message_api_version": "The API plugin is too old. Please perform an update",
-      "message_tns": "The TouchNStars plugin is not available. Please check the settings in NINA"
+      "message_tns": "The TouchNStars plugin is not available. Please check the settings in NINA",
+      "message_tns_version": "The Touch N Stars plugin is too old. Please perform an update"
     },
     "api_version_incompatible": "Advanced-API version incompatible current: { current } required: { required }"
   },
@@ -575,7 +576,7 @@
         "dec": "DEC",
         "load": "Load",
         "remove": "Remove",
-        "sequnce": "Seq target"
+        "sequnce": "Seq. target"
       },
       "no_fav": "No favorites saved",
       "modal_save": {
