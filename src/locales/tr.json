@@ -86,6 +86,11 @@
       "debug": {
         "titel": "Debug settings",
         "activate": "Enable debug window"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "enable": "Enable Notifications",
+        "sequence": "Sequence Events"
       }
     },
     "framing": {
@@ -567,6 +572,12 @@
     },
     "profile": {
       "label": "Profile:"
+    },
+    "notifications": {
+      "modal": {
+        "title": "Configure Notifications",
+        "description": "Please grant permission to receive notifications about sequence events."
+      }
     },
     "fav_target": {
       "titel": "Favorites",
