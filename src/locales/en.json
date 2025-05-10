@@ -587,7 +587,8 @@
         "dec": "DEC",
         "load": "Load",
         "remove": "Remove",
-        "sequnce": "Seq. target"
+        "sequnce": "Seq. target",
+        "rotation": "Rotation"
       },
       "no_fav": "No favorites saved",
       "modal_save": {
