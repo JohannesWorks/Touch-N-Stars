@@ -71,7 +71,8 @@
         "description": "Click an icon to restart or shutdown the system",
         "confirmShutdown": "Are you sure you want to shutdown the system?",
         "confirmRestart": "Are you sure you want to restart the system?",
-        "confirmation": "Confirmation"
+        "confirmation": "Confirmation",
+        "info": "This will shutdown or restart the PC which is hosting the N.I.N.A instance!"
       },
       "image": {
         "title": "Images settings",
