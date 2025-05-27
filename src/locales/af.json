@@ -279,6 +279,7 @@
         "solar": "Solar",
         "king": "King",
         "stop": "Stop",
+        "sync_coordinates_to_mount": "Sync coordinates with mount",
         "errors": {
           "park": "Error parking mount",
           "unpark": "Error unparking mount",
