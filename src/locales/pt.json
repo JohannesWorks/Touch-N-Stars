@@ -428,7 +428,11 @@
       "slewing_first_position": "Slewing to first position",
       "slewing_next_position": "Slewing to next position",
       "capture_running": "Exposure running",
-      "last_messages": "Last messages"
+      "last_messages": "Last messages",
+      "settings": {
+        "StartFromCurrentPosition": "Start from current position?",
+        "DirectionEast": "Direction East"
+      }
     },
     "logs": {
       "loading": "Loading data...",
