@@ -307,7 +307,35 @@
       "rms_error": "RMS Error",
       "title": "Guider",
       "running": "RUNNING",
-      "notes": "* This graph displays guiding data according to N.I.N.A.'s settings."
+      "notes": "* This graph displays guiding data according to N.I.N.A.'s settings.",
+      "phd2": {
+        "Exposuretime": "Exposuretime",
+        "ra": {
+          "aggression": "RA: Aggression",
+          "hysteresis": "RA: Hysteresis",
+          "MinMove": "RA: Min move",
+          "MaxMove": "RA: Max move",
+          "predictive_weight": "RA: Predictive weight",
+          "reactive_weight": "RA: ReactiveW weight",
+          "slope_weight": "RA: Slope weight",
+          "exp_factor": "RA: Exposure factor"
+        },
+        "dec": {
+          "aggression": "DEC: Aggression",
+          "hysteresis": "DEC: Hysteresis",
+          "MinMove": "DEC: Min move",
+          "MaxMove": "DEC: Max move",
+          "predictive_weight": "DEC: Predictive weight",
+          "reactive_weight": "DEC: ReactiveW weight",
+          "slope_weight": "DEC: Slope weight",
+          "exp_factor": "DEC: Exposure factor"
+        },
+        "profile": "Profile",
+        "error": {
+          "title": "PHD2 Error",
+          "star-lost-message": "Star lost"
+        }
+      }
     },
     "focuser": {
       "title": "Focuser",
