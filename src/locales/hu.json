@@ -92,7 +92,8 @@
         "title": "Notifications",
         "enable": "Enable Notifications",
         "sequence": "Sequence Events"
-      }
+      },
+      "infoSetLocationSync": "To ensure that coordinates are correctly transferred to the mount, set the 'Location sync' option in NINA to 'Sync to Telescope'. This allows TNS to send the location data directly to the mount."
     },
     "framing": {
       "confirmSetTargetTitle": "Confirm Target Selection",
@@ -115,7 +116,9 @@
       },
       "moveRotator": "Rotate camera",
       "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated",
-      "currentAltitude": "Current Altitude"
+      "currentAltitude": "Current Altitude",
+      "useCenter": "Center",
+      "useRotate": "Rotate"
     },
     "connectEquipment": {
       "camera": {
@@ -266,6 +269,19 @@
     "mount": {
       "title": "Mount",
       "slew": "Slew",
+      "location_sync": {
+        "title": "Location sync settings",
+        "confirmationMessage": "If 'Location Sync' in NINA is set to 'Prompt', a confirmation window may appear before coordinates are sent to the telescope. To avoid this and allow TNS to automatically set the coordinates, we recommend changing the setting to 'Sync to Telescope'",
+        "toTelescope": {
+          "label": "Sync to telescope"
+        },
+        "toApplication": {
+          "label": "Sync to application"
+        },
+        "noSync": {
+          "label": "No sync"
+        }
+      },
       "control": {
         "park": "Park",
         "unpark": "Unpark",
@@ -287,7 +303,8 @@
           "tracking": "Error setting tracking mode"
         },
         "slew_to_cenit": "Slew to Zenith",
-        "info_manuell_controll": "Manual control is only available if tracking is not active"
+        "setLocationSyncToMount": "Set \"Sync to telescope\"",
+        "info_manuell_controll": "Manual control is only available if tracking is not active."
       },
       "info": {
         "notConnected": "Please connect mount",
@@ -308,6 +325,15 @@
       "title": "Guider",
       "running": "RUNNING",
       "notes": "* This graph displays guiding data according to N.I.N.A.'s settings.",
+      "statusLabel": "Status",
+      "status": {
+        "looping": "Looping",
+        "lostLock": "Lost Lock",
+        "guiding": "Guiding",
+        "stopped": "Stopped",
+        "calibrating": "Calibrating",
+        "unknown": "Unknown"
+      },
       "phd2": {
         "Exposuretime": "Exposuretime",
         "ra": {
