@@ -38,6 +38,38 @@
     "check_wki": "You can find detailed instructions in our wiki"
   },
   "components": {
+    "framing": {
+      "confirmSetTargetTitle": "Confirm Target Selection",
+      "confirmSetTargetMessage": "Are you sure you want to set this target as the sequence target?",
+      "useNinaCache": "Use NINA cache for the target image",
+      "setSequnceTarget": "set to sequence target",
+      "search": {
+        "title": "Search",
+        "placeholder": "Enter a search term...",
+        "objectTypes": {
+          "Planet": "Planet",
+          "Comet": "Comet",
+          "StellariumObject": "Object",
+          "Star": "Star",
+          "Moon": "Moon"
+        }
+      },
+      "openFraminingModal": "Open in framing-assistant",
+      "fovSettings": {
+        "rotationAngle": "Camera rotation",
+        "fov": "Field of View"
+      },
+      "getImageRotation": {
+        "startCapture": "Determine rotation from camera",
+        "SolveRun": "Platesolve",
+        "SolveError": "Error solving image"
+      },
+      "moveRotator": "Rotate camera",
+      "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated",
+      "currentAltitude": "Current Altitude",
+      "useCenter": "Center",
+      "useRotate": "Rotate"
+    },
     "tutorial": {
       "previous": "Previous",
       "next": "Next",
@@ -94,31 +126,6 @@
         "sequence": "Sequence Events"
       },
       "infoSetLocationSync": "To ensure that coordinates are correctly transferred to the mount, set the 'Location sync' option in NINA to 'Sync to Telescope'. This allows TNS to send the location data directly to the mount."
-    },
-    "framing": {
-      "confirmSetTargetTitle": "Confirm Target Selection",
-      "confirmSetTargetMessage": "Are you sure you want to set this target as the sequence target?",
-      "useNinaCache": "Use NINA cache for the target image",
-      "setSequnceTarget": "set to sequence target",
-      "search": {
-        "title": "Search",
-        "placeholder": "Enter a search term..."
-      },
-      "openFraminingModal": "Open in framing-assistant",
-      "fovSettings": {
-        "rotationAngle": "Camera rotation",
-        "fov": "Field of View"
-      },
-      "getImageRotation": {
-        "startCapture": "Determine rotation from camera",
-        "SolveRun": "Platesolve",
-        "SolveError": "Error solving image"
-      },
-      "moveRotator": "Rotate camera",
-      "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated",
-      "currentAltitude": "Current Altitude",
-      "useCenter": "Center",
-      "useRotate": "Rotate"
     },
     "connectEquipment": {
       "camera": {
@@ -670,7 +677,8 @@
         "meridian_lines_visible": "Show meridian",
         "ecliptic_lines_visible": "Show ecliptic",
         "atmosphere_visible": "Show atmosphere",
-        "landscapes_visible": "Show landscapes"
+        "landscapes_visible": "Show landscapes",
+        "dsos_visible": "Deep Sky Objects (Messier, NGC)"
       }
     },
     "profile": {
