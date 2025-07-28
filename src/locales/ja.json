@@ -22,7 +22,7 @@
       "title": "Connection error",
       "message_api": "The API plugin is not available. Please check the settings in NINA",
       "message_api_version": "The API plugin is too old. Please perform an update",
-      "message_tns": "The TouchNStars plugin is not available. Please check the settings in NINA",
+      "message_tns": "The Touch'N'Stars plugin is not available. Please check the settings in NINA",
       "message_tns_version": "The Touch N Stars plugin is too old. Please perform an update"
     },
     "api_version_incompatible": "Advanced-API version incompatible current: { current } required: { required }"
@@ -42,7 +42,7 @@
       "confirmSetTargetTitle": "Confirm Target Selection",
       "confirmSetTargetMessage": "Are you sure you want to set this target as the sequence target?",
       "useNinaCache": "Use NINA cache for the target image",
-      "setSequnceTarget": "set to sequence target",
+      "setSequenceTarget": "set to sequence target",
       "search": {
         "title": "Search",
         "placeholder": "Enter a search term...",
@@ -54,7 +54,7 @@
           "Moon": "Moon"
         }
       },
-      "openFraminingModal": "Open in framing-assistant",
+      "openFramingModal": "Open in framing-assistant",
       "fovSettings": {
         "rotationAngle": "Camera rotation",
         "fov": "Field of View"
@@ -68,7 +68,7 @@
       "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated",
       "currentAltitude": "Current Altitude",
       "useCenter": "Center",
-      "useRotate": "Rotate"
+      "useRotation": "Rotate"
     },
     "tutorial": {
       "previous": "Previous",
@@ -107,17 +107,17 @@
         "info": "This will shutdown or restart the PC which is hosting the N.I.N.A instance!"
       },
       "image": {
-        "title": "Images settings",
+        "title": "Image settings",
         "quality": "Quality in % ",
         "black_clipping": "Black Clipping",
-        "strech_factor": "Strech Factor"
+        "strech_factor": "Stretch Factor"
       },
       "plugins": {
         "title": "Plugins",
         "description": "Plugin description"
       },
       "debug": {
-        "titel": "Debug settings",
+        "title": "Debug settings",
         "activate": "Enable debug window"
       },
       "notifications": {
@@ -140,7 +140,7 @@
         "connect": "Connect filter wheel",
         "disconnect": "Disconnect filter wheel",
         "error": "Error controlling filter wheel:",
-        "name": "FIlterwheel"
+        "name": "Filterwheel"
       },
       "mount": {
         "error": "Error controlling mount:",
@@ -306,7 +306,7 @@
         "trackingMode": "Tracking Mode",
         "manuellControl": "Manual control",
         "slewRate": "Slew rate °/s",
-        "siderial": "Siderial",
+        "siderial": "Sidereal",
         "lunar": "Lunar",
         "solar": "Solar",
         "king": "King",
@@ -391,7 +391,7 @@
           "MinMove": "RA: Min move",
           "MaxMove": "RA: Max move",
           "predictive_weight": "RA: Predictive weight",
-          "reactive_weight": "RA: ReactiveW weight",
+          "reactive_weight": "RA: Reactive weight",
           "slope_weight": "RA: Slope weight",
           "exp_factor": "RA: Exposure factor"
         },
@@ -401,7 +401,7 @@
           "MinMove": "DEC: Min move",
           "MaxMove": "DEC: Max move",
           "predictive_weight": "DEC: Predictive weight",
-          "reactive_weight": "DEC: ReactiveW weight",
+          "reactive_weight": "DEC: Reactive weight",
           "slope_weight": "DEC: Slope weight",
           "exp_factor": "DEC: Exposure factor"
         },
@@ -579,8 +579,8 @@
         "center_error": "Centering error",
         "center_successful": "Centering successful",
         "center_Repeat": "Repeat centering",
-        "exposure_running": " Exposure running",
-        "deviation_target": " Deviation to the target:"
+        "exposure_running": "Exposure running",
+        "deviation_target": "Deviation to the target:"
       }
     },
     "filterwheel": {
@@ -691,23 +691,23 @@
       }
     },
     "fav_target": {
-      "titel": "Favorites",
+      "title": "Favorites",
       "table": {
         "name": "Name",
         "ra": "RA",
         "dec": "DEC",
         "load": "Load",
         "remove": "Remove",
-        "sequnce": "Seq. target",
+        "sequence": "Seq. target",
         "rotation": "Rotation"
       },
       "no_fav": "No favorites saved",
       "modal_save": {
-        "titel": "Save",
+        "title": "Save",
         "message": "The target has been saved"
       },
       "modal_sequence": {
-        "titel": "Sequence"
+        "title": "Sequence"
       },
       "modal_sequence_ok": {
         "message": "Target set"
