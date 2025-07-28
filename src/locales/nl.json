@@ -42,7 +42,7 @@
       "confirmSetTargetTitle": "Confirm Target Selection",
       "confirmSetTargetMessage": "Are you sure you want to set this target as the sequence target?",
       "useNinaCache": "Use NINA cache for the target image",
-      "setSequenceTarget": "set to sequence target",
+      "setSequnceTarget": "set to sequence target",
       "search": {
         "title": "Search",
         "placeholder": "Enter a search term...",
@@ -54,7 +54,7 @@
           "Moon": "Moon"
         }
       },
-      "openFramingModal": "Open in framing-assistant",
+      "openFraminingModal": "Open in framing-assistant",
       "fovSettings": {
         "rotationAngle": "Camera rotation",
         "fov": "Field of View"
@@ -68,7 +68,7 @@
       "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated",
       "currentAltitude": "Current Altitude",
       "useCenter": "Center",
-      "useRotation": "Rotate"
+      "useRotate": "Rotate"
     },
     "tutorial": {
       "previous": "Previous",
@@ -678,7 +678,8 @@
         "ecliptic_lines_visible": "Show ecliptic",
         "atmosphere_visible": "Show atmosphere",
         "landscapes_visible": "Show landscapes",
-        "dsos_visible": "Deep Sky Objects (Messier, NGC)"
+        "dsos_visible": "Deep Sky Objects (Messier, NGC)",
+        "camera_fov_visible": "Camera Field of View"
       }
     },
     "profile": {
@@ -698,7 +699,7 @@
         "dec": "DEC",
         "load": "Load",
         "remove": "Remove",
-        "sequence": "Seq. target",
+        "sequnce": "Seq. target",
         "rotation": "Rotation"
       },
       "no_fav": "No favorites saved",
