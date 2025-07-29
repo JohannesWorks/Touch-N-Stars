@@ -77,55 +77,37 @@
     },
     "settings": {
       "title": "Settings",
-      "language": "Language",
-      "coordinates": "GPS coordinates",
-      "connection": "N.I.N.A connection details",
+      "coordinates": "GPS Coordinates",
       "save": "Save",
-      "add": "Add",
-      "update": "Update",
-      "instance": {
-        "name": "Instance Name",
-        "ip": "IP Address",
-        "port": "Port",
-        "edit": "Edit instance",
-        "delete": "Delete instance"
-      },
-      "errors": {
-        "emptyFields": "Please fill in all fields",
-        "instanceNameRequired": "Instance name required",
-        "invalidIPFormat": "Please provide IP or FQDN",
-        "invalidPortRange": "Invalid Port",
-        "invalidInstance": "A connection could not be established"
-      },
-      "showTutorial": "Show Tutorial",
-      "system": {
-        "title": "System Controls",
-        "description": "Click an icon to restart or shutdown the system",
-        "confirmShutdown": "Are you sure you want to shutdown the system?",
-        "confirmRestart": "Are you sure you want to restart the system?",
-        "confirmation": "Confirmation",
-        "info": "This will shutdown or restart the PC which is hosting the N.I.N.A instance!"
-      },
+      "infoSetLocationSync": "Please set location sync to mount first",
+      "connection": "Connection Settings",
+      "language": "Language",
       "image": {
-        "title": "Image settings",
-        "quality": "Quality in % ",
-        "black_clipping": "Black Clipping",
-        "strech_factor": "Stretch Factor"
-      },
-      "plugins": {
-        "title": "Plugins",
-        "description": "Plugin description"
+        "title": "Image Settings",
+        "quality": "Image Quality",
+        "strech_factor": "Stretch Factor",
+        "black_clipping": "Black Clipping"
       },
       "debug": {
-        "title": "Debug settings",
-        "activate": "Enable debug window"
+        "title": "Debug",
+        "activate": "Activate Debug Mode"
       },
       "notifications": {
-        "title": "Notifications",
-        "enable": "Enable Notifications",
-        "sequence": "Sequence Events"
+        "title": "Notifications"
       },
-      "infoSetLocationSync": "To ensure that coordinates are correctly transferred to the mount, set the 'Location sync' option in NINA to 'Sync to Telescope'. This allows TNS to send the location data directly to the mount."
+      "showTutorial": "Show Tutorial",
+      "plugins": {
+        "title": "Plugin Management",
+        "description": "Manage installed plugins"
+      },
+      "system": {
+        "title": "System Controls",
+        "description": "Control system restart and shutdown",
+        "info": "These actions will affect the entire system",
+        "confirmation": "Confirm Action",
+        "confirmShutdown": "Are you sure you want to shutdown the system?",
+        "confirmRestart": "Are you sure you want to restart the system?"
+      }
     },
     "connectEquipment": {
       "camera": {
