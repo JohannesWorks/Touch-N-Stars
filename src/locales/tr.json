@@ -674,7 +674,6 @@
       }
     },
     "fav_target": {
-      "title": "Favorites",
       "table": {
         "name": "Name",
         "ra": "RA",
@@ -686,11 +685,11 @@
       },
       "no_fav": "No favorites saved",
       "modal_save": {
-        "title": "Save",
-        "message": "The target has been saved"
+        "message": "The target has been saved",
+        "titel": "Save"
       },
       "modal_sequence": {
-        "title": "Sequence"
+        "titel": "Sequence"
       },
       "modal_sequence_ok": {
         "message": "Target set"
@@ -698,7 +697,8 @@
       "modal_sequence_error": {
         "message": "No sequence loaded"
       },
-      "enter_name": "Enter name"
+      "enter_name": "Enter name",
+      "titel": "Favorite"
     }
   }
 }
