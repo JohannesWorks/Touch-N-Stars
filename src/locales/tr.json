@@ -219,6 +219,8 @@
       "deltaHFR": "DeltaHFR",
       "sampleSize": "Sample size",
       "triggers": "Triggers",
+      "expandAll": "Expand All",
+      "collapseAll": "Collapse All",
       "details": {
         "of": "of",
         "gain": "Gain",
