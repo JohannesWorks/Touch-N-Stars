@@ -700,7 +700,136 @@
         "message": "No sequence loaded"
       },
       "enter_name": "Enter name",
-      "titel": "Favorite"
+      "titel": "Favourites"
+    }
+  },
+  "plugins": {
+    "sequenceCreator": {
+      "title": "N.I.N.A Sequence Creator",
+      "subtitle": "Create professional astrophotography sequences",
+      "toolbar": {
+        "undo": "Undo",
+        "redo": "Redo",
+        "loadBasicSequence": "Load Basic Sequence",
+        "clearSequence": "Clear Sequence",
+        "exportSequence": "Export Sequence",
+        "validSequence": "Sequence is valid and can be exported",
+        "invalidSequence": "Add Target Settings and Smart Exposure to create a valid sequence"
+      },
+      "confirmations": {
+        "clearSequence": "Are you sure you want to clear the entire sequence? This action cannot be undone.",
+        "removeAction": "Remove \"{actionName}\" action?",
+        "unknownError": "Unknown error occurred",
+        "sendSequenceFailed": "Failed to send sequence to N.I.N.A"
+      },
+      "containers": {
+        "startSequence": {
+          "title": "Start Sequence",
+          "description": "Actions executed at the beginning of the session",
+          "emptyTitle": "No Start Actions",
+          "emptyDescription": "Add actions to prepare your equipment for imaging"
+        },
+        "targetSequence": {
+          "title": "Target Sequence",
+          "description": "Main imaging sequence for your target",
+          "emptyTitle": "No Target Actions",
+          "emptyDescription": "Add imaging actions for your target"
+        },
+        "endSequence": {
+          "title": "End Sequence",
+          "description": "Actions executed at the end of the session",
+          "emptyTitle": "No End Actions",
+          "emptyDescription": "Add actions to safely shut down your equipment"
+        },
+        "noActions": "No Actions",
+        "addActionsToContainer": "Add actions to this container",
+        "addAction": "Add Action"
+      },
+      "actions": {
+        "disabled": "Disabled",
+        "enabled": "Enabled",
+        "closeEditor": "Close Editor",
+        "editParameters": "Edit Parameters",
+        "moveUp": "Move Up",
+        "moveDown": "Move Down",
+        "disableAction": "Disable Action",
+        "enableAction": "Enable Action",
+        "duplicateAction": "Duplicate Action",
+        "removeAction": "Remove Action",
+        "actionParameters": "Action Parameters",
+        "changesSaveAutomatically": "Changes save automatically",
+        "min": "Min:",
+        "max": "Max:",
+        "yes": "Yes",
+        "no": "No",
+        "notSet": "Not set",
+        "noConfigurableParameters": "This action has no configurable parameters.",
+        "actionId": "Action ID",
+        "category": "Category",
+        "parameters": "Parameters"
+      },
+      "actionLibrary": {
+        "title": "Action Library",
+        "description": "Click to add actions to containers",
+        "startActions": "🚀 Start Actions",
+        "targetActions": "🎯 Target Actions",
+        "endActions": "🏁 End Actions"
+      },
+      "exportModal": {
+        "title": "Export N.I.N.A Sequence",
+        "subtitle": "Your sequence is ready to be exported as N.I.N.A compatible JSON",
+        "buttons": {
+          "downloadJSON": "Download JSON File",
+          "copyToClipboard": "Copy to Clipboard",
+          "copied": "Copied!",
+          "sendToNina": "Send to N.I.N.A",
+          "sending": "Sending...",
+          "sent": "Sent!",
+          "failed": "Failed"
+        },
+        "messages": {
+          "successTitle": "Success:",
+          "successMessage": "Sequence has been loaded into N.I.N.A successfully!",
+          "errorTitle": "Error:"
+        },
+        "jsonPreview": {
+          "title": "JSON Preview",
+          "sequenceJsonExport": "Sequence JSON Export",
+          "previewDescription": "Preview and download your sequence as a JSON file",
+          "totalActions": "Total Actions",
+          "enabled": "Enabled",
+          "categories": "Categories",
+          "estimatedDuration": "Est. Duration",
+          "filenamePrompt": "Enter filename...",
+          "copyJson": "Copy JSON",
+          "copied": "Copied!",
+          "downloadJson": "Download JSON"
+        },
+        "howToUse": {
+          "title": "How to use:",
+          "step1": "Download or copy the JSON file, or",
+          "step2": "Send directly to N.I.N.A (requires connection), or",
+          "step3": "Import manually into N.I.N.A via Sequence → Load Sequence",
+          "step4": "Adjust any equipment-specific settings as needed"
+        }
+      },
+      "targetSearch": {
+        "searchLabel": "Search Target",
+        "searchDescription": "Search for deep-sky objects, planets or stars and automatically adopt the coordinates",
+        "placeholder": "Enter object name (e.g. M31, NGC 1234, Mars)...",
+        "objectTypes": {
+          "DSO": "Deep-Sky Object",
+          "Planet": "Planet",
+          "Star": "Star",
+          "Moon": "Moon",
+          "Comet": "Comet",
+          "StellariumObject": "Stellarium Object"
+        }
+      },
+      "settings": {
+        "title": "Meridianflip",
+        "enableMeridianFlip": "Enable Meridianflip"
+      }
     }
   }
 }
