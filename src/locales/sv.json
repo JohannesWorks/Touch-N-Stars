@@ -729,6 +729,7 @@
         "title": "Confirmation",
         "clearSequence": "Are you sure you want to clear the entire sequence? This action cannot be undone.",
         "saveAsDefault": "Are you sure you want to save the current sequence as default? This will overwrite the previous default sequence.",
+        "loadBasicSequence": "Are you sure you want to load the basic sequence? This will overwrite the current sequence.",
         "removeAction": "Remove \"{actionName}\" action?",
         "unknownError": "Unknown error occurred",
         "sendSequenceFailed": "Failed to send sequence to N.I.N.A"
