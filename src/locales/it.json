@@ -5,9 +5,7 @@
   },
   "general": {
     "cancel": "Cancel",
-    "confirm": "Confirm",
-    "hide": "Hide",
-    "show": "Show"
+    "confirm": "Confirm"
   },
   "pages": {
     "equipment": {
@@ -24,8 +22,7 @@
       "message_api_version": "The API plugin is too old. Please perform an update",
       "message_tns": "The Touch'N'Stars plugin is not available. Please check the settings in NINA",
       "message_tns_version": "The Touch N Stars plugin is too old. Please perform an update"
-    },
-    "api_version_incompatible": "Advanced-API version incompatible current: { current } required: { required }"
+    }
   },
   "setup": {
     "welcome": "Welcome to Touch'N'Stars",
@@ -111,6 +108,14 @@
         "confirmation": "Confirm Action",
         "confirmShutdown": "Are you sure you want to shutdown the system?",
         "confirmRestart": "Are you sure you want to restart the system?"
+      },
+      "update": "Update",
+      "errors": {
+        "instanceNameRequired": "Instance name is required",
+        "invalidIPFormat": "Invalid IP format",
+        "invalidPortRange": "Invalid port range",
+        "invalidInstance": "Invalid instance",
+        "emptyFields": "Empty fields"
       }
     },
     "connectEquipment": {
@@ -190,12 +195,6 @@
       "settings": "Settings",
       "vnc": "VNC"
     },
-    "language": {
-      "select": "Select language"
-    },
-    "equipment": {
-      "control": "Equipment Control"
-    },
     "sequence": {
       "title": "Sequence",
       "stats": "Stats",
@@ -238,7 +237,6 @@
       "median": "Median",
       "stDev": "St. Dev.",
       "rmsText": "RMS",
-      "sequence_control": "Sequence Controls",
       "temperature": "Temperature",
       "monitor": {
         "settings": {
@@ -526,13 +524,6 @@
         "DirectionEast": "Direction East"
       }
     },
-    "logs": {
-      "loading": "Loading data...",
-      "error": "Error loading data:"
-    },
-    "test": {
-      "title": "Test"
-    },
     "loading": "Loading...",
     "slewAndCenter": {
       "title": "Slew and Center",
@@ -690,14 +681,8 @@
         "rotation": "Rotation"
       },
       "no_fav": "No favorites saved",
-      "modal_save": {
-        "message": "The target has been saved",
-        "titel": "Save",
-        "title": "Save"
-      },
       "modal_sequence": {
-        "titel": "Sequence",
-        "title": "Sequence"
+        "titel": "Sequence"
       },
       "modal_sequence_ok": {
         "message": "Target set"
@@ -706,8 +691,7 @@
         "message": "No sequence loaded"
       },
       "enter_name": "Enter name",
-      "titel": "Favourites",
-      "title": "Favourites"
+      "titel": "Favourites"
     }
   },
   "plugins": {
