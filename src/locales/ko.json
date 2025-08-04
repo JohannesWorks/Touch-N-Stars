@@ -696,7 +696,7 @@
       },
       "modal_sequence": {
         "titel": "Sequence",
-        "title": "sequence"
+        "title": "Sequence"
       },
       "modal_sequence_ok": {
         "message": "Target set"
@@ -706,7 +706,7 @@
       },
       "enter_name": "Enter name",
       "titel": "Favourites",
-      "title": "Favorite"
+      "title": "Favourites"
     }
   },
   "plugins": {
@@ -718,12 +718,16 @@
         "redo": "Redo",
         "loadBasicSequence": "Load Basic Sequence",
         "clearSequence": "Clear Sequence",
+        "saveAsDefault": "Save as Default",
+        "saveAsDefaultSuccess": "Saved as default sequence!",
         "exportSequence": "Export Sequence",
         "validSequence": "Sequence is valid and can be exported",
         "invalidSequence": "Add Target Settings and Smart Exposure to create a valid sequence"
       },
       "confirmations": {
+        "title": "Confirmation",
         "clearSequence": "Are you sure you want to clear the entire sequence? This action cannot be undone.",
+        "saveAsDefault": "Are you sure you want to save the current sequence as default? This will overwrite the previous default sequence.",
         "removeAction": "Remove \"{actionName}\" action?",
         "unknownError": "Unknown error occurred",
         "sendSequenceFailed": "Failed to send sequence to N.I.N.A"
@@ -772,7 +776,81 @@
         "noConfigurableParameters": "This action has no configurable parameters.",
         "actionId": "Action ID",
         "category": "Category",
-        "parameters": "Parameters"
+        "parameters": "Parameters",
+        "unparkTelescope": {
+          "name": "Unpark Telescope",
+          "description": "Unpark the telescope mount"
+        },
+        "coolCamera": {
+          "name": "Cool Camera",
+          "description": "Cool the camera to specified temperature",
+          "temperatureLabel": "Temperature (°C)",
+          "temperatureTooltip": "Target temperature for camera cooling",
+          "durationLabel": "Cooling Duration (minutes)",
+          "durationTooltip": "Time to actively cool the camera (0 = cool until temperature reached)"
+        },
+        "targetSettings": {
+          "name": "Target Settings",
+          "description": "Define target coordinates and settings",
+          "targetNameLabel": "Target Name",
+          "targetNameTooltip": "Name of the celestial object",
+          "raLabel": "Right Ascension",
+          "raTooltip": "RA in HH:MM:SS format",
+          "decLabel": "Declination",
+          "decTooltip": "Dec in DD:MM:SS format",
+          "positionAngleLabel": "Position Angle (°)",
+          "positionAngleTooltip": "Camera rotation angle"
+        },
+        "slewToTarget": {
+          "name": "Slew to Target",
+          "description": "Navigate to target with different options",
+          "slewModeLabel": "Slew Mode",
+          "slewModeTooltip": "Choose how to navigate to the target"
+        },
+        "runAutofocus": {
+          "name": "Run Autofocus",
+          "description": "Perform automatic focusing routine"
+        },
+        "startGuiding": {
+          "name": "Start Guiding",
+          "description": "Start autoguiding system",
+          "forceCalibrationLabel": "Force Calibration",
+          "forceCalibrationTooltip": "Force new guider calibration"
+        },
+        "smartExposure": {
+          "name": "Smart Exposure (Imaging)",
+          "description": "Intelligent exposure sequence with dithering and triggers",
+          "exposureTimeLabel": "Exposure Time (s)",
+          "exposureTimeTooltip": "Duration of each exposure",
+          "gainLabel": "Gain",
+          "gainTooltip": "Camera gain setting",
+          "offsetLabel": "Offset",
+          "offsetTooltip": "Camera offset setting",
+          "binningLabel": "Binning",
+          "binningTooltip": "Pixel binning mode",
+          "filterLabel": "Filter",
+          "filterTooltip": "Filter wheel selection",
+          "imageTypeLabel": "Image Type",
+          "imageTypeTooltip": "Type of exposure to capture",
+          "countLabel": "Image Count",
+          "countTooltip": "Number of exposures to take",
+          "ditherAfterLabel": "Dither After N Exposures",
+          "ditherAfterTooltip": "Dither frequency"
+        },
+        "stopGuiding": {
+          "name": "Stop Guiding",
+          "description": "Stop autoguiding system"
+        },
+        "warmCamera": {
+          "name": "Warm Camera",
+          "description": "Warm up the camera",
+          "durationLabel": "Warming Duration (minutes)",
+          "durationTooltip": "Time to actively warm up the camera (0 = warm to ambient temperature)"
+        },
+        "parkTelescope": {
+          "name": "Park Telescope",
+          "description": "Park the telescope mount"
+        }
       },
       "actionLibrary": {
         "title": "Action Library",
