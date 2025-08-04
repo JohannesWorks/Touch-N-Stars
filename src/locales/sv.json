@@ -96,7 +96,8 @@
       "notifications": {
         "title": "Notifications",
         "enable": "Enable",
-        "sequence": "Sequence"
+        "sequence": "Sequence",
+        "phd2": "PHD2"
       },
       "showTutorial": "Show Tutorial",
       "plugins": {
@@ -766,6 +767,7 @@
         "enableAction": "Enable Action",
         "duplicateAction": "Duplicate Action",
         "removeAction": "Remove Action",
+        "clickToRename": "Click to rename",
         "actionParameters": "Action Parameters",
         "changesSaveAutomatically": "Changes save automatically",
         "min": "Min:",
