@@ -722,6 +722,12 @@
         "saveAsDefault": "Save as Default",
         "saveAsDefaultSuccess": "Saved as default sequence!",
         "exportSequence": "Export Sequence",
+        "sendToNina": "Send to N.I.N.A",
+        "sending": "Sending...",
+        "sent": "Sent!",
+        "failed": "Failed",
+        "sendErrorTitle": "Error sending to N.I.N.A",
+        "sendSuccessMessage": "Sequence successfully sent to N.I.N.A!",
         "validSequence": "Sequence is valid and can be exported",
         "invalidSequence": "Add Target Settings and Smart Exposure to create a valid sequence"
       },
