@@ -14,8 +14,6 @@
   },
   "app": {
     "title": "Touch'N'Stars",
-    "unreachable": "NINA is unreachable",
-    "connecting": "Attempting to establish connection",
     "connection_error_toast": {
       "title": "Connection error",
       "message_api": "The API plugin is not available. Please check the settings in NINA",
@@ -63,7 +61,6 @@
       },
       "moveRotator": "Rotate camera",
       "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated",
-      "currentAltitude": "Current Altitude",
       "useCenter": "Center",
       "useRotate": "Rotate"
     },
@@ -120,53 +117,40 @@
     },
     "connectEquipment": {
       "camera": {
-        "name": "Camera",
-        "error": "Error controlling camera:"
+        "name": "Camera"
       },
       "connectAll": "Connect All",
       "disconnectAll": "Disconnect All",
       "connectAllError": "Error connecting all devices",
       "disconnectAllError": "Error disconnecting all devices",
       "filter": {
-        "connect": "Connect filter wheel",
-        "disconnect": "Disconnect filter wheel",
-        "error": "Error controlling filter wheel:",
         "name": "Filterwheel"
       },
       "mount": {
-        "error": "Error controlling mount:",
         "name": "Mount"
       },
       "focuser": {
-        "error": "Error controlling focuser:",
         "name": "Focuser"
       },
       "rotator": {
-        "error": "Error controlling rotator:",
         "name": "Rotator"
       },
       "guider": {
-        "error": "Error controlling guider:",
         "name": "Guider"
       },
       "safety": {
-        "error": "Error controlling safety monitor",
         "name": "Safety monitor"
       },
       "flat": {
-        "error": "Error controlling flatdevice:",
         "name": "Flatdevice"
       },
       "dome": {
-        "error": "Error controlling dome:",
         "name": "Dome"
       },
       "switch": {
-        "error": "Error controlling switch",
         "name": "Switch"
       },
       "weather": {
-        "error": "Error controlling weather",
         "name": "Weather"
       },
       "info": {
@@ -175,28 +159,13 @@
       }
     },
     "lastLogs": {
-      "loading": "Loading data...",
-      "error": "Error loading data:",
       "timestamp": "Timestamp",
       "level": "Level",
       "message": "Message",
-      "member": "Member",
-      "line": "Line",
       "download": "Download"
     },
-    "navigation": {
-      "equipment": "Equipment",
-      "camera": "Camera",
-      "autofocus": "Autofocus",
-      "mount": "Mount",
-      "guider": "Guider",
-      "dome": "Dome",
-      "sequence": "Sequence",
-      "settings": "Settings",
-      "vnc": "VNC"
-    },
+    "navigation": {},
     "sequence": {
-      "title": "Sequence",
       "stats": "Stats",
       "noSequenceLoaded": "No sequence loaded",
       "noSequenceData": "No data available yet",
@@ -206,45 +175,26 @@
       "resetConfirmationTitle": "Confirm Reset",
       "resetConfirmationMessage": "Are you sure you want to reset the sequence? This action cannot be undone.",
       "load_sequence": "Load sequence from directory",
-      "refresh_sequences": "Refresh Sequences",
-      "select_sequence": "Select Sequence",
       "choose_sequence": "Choose a sequence",
       "no_sequences_found": "No sequence found",
-      "sequences_loaded": "Sequences loaded",
       "error_loading_sequences": "Error loading sequences",
-      "sequence_loaded_successfully": "Sequence '{name}' loaded successfully",
       "error_loading_sequence": "Error loading sequence",
-      "exposures": "Exposures",
-      "exposureTime": "Exposure time",
       "filter": "Filter",
-      "ditherEvery": "Dither every",
-      "type": "Type",
-      "deltaHFR": "DeltaHFR",
-      "sampleSize": "Sample size",
       "triggers": "Triggers",
       "expandAll": "Expand All",
       "collapseAll": "Collapse All",
-      "details": {
-        "of": "of",
-        "gain": "Gain",
-        "ditherAfter": "Dither after",
-        "exposures": "exposures"
-      },
-      "date": "Date",
+      "details": {},
       "hfr": "HFR",
-      "stars": "Stars",
       "mean": "Mean",
       "median": "Median",
       "stDev": "St. Dev.",
       "rmsText": "RMS",
-      "temperature": "Temperature",
       "monitor": {
         "settings": {
           "title": "View settings",
           "showImage": "Show last image",
           "showImageStats": "Show last image stats",
           "showImgStatsGraph": "Show HFR-Chart",
-          "showGuiderGraph": "Show guider-chart",
           "showGuiderAfGraph": "Show autofocus-chart",
           "display_status_under_image": "Show status below image"
         }
@@ -258,9 +208,7 @@
         "header": "Info",
         "message": "Unfortunately, your sequence cannot be edited. Not all sequence plugins are currently supported. If you want to help us, let us know on GitHub which plugins you are using."
       },
-      "info_general": {
-        "message": "Unfortunately, we are not yet able to process all parameters. We are working on supporting as many NINA functions as possible. Because there are so many plugins, we cannot integrate them all. However, we are trying to support as many as possible. If you notice an error in the display, please help us and report it on GitHub"
-      },
+      "info_general": {},
       "sort": {
         "sort": "Sort",
         "oldest": "oldest first",
@@ -293,20 +241,12 @@
         "manuellControl": "Manual control",
         "slewRate": "Slew rate °/s",
         "siderial": "Sidereal",
-        "lunar": "Lunar",
-        "solar": "Solar",
-        "king": "King",
-        "stop": "Stop",
         "sync_coordinates_to_mount": "Sync coordinates with mount",
         "errors": {
-          "park": "Error parking mount",
           "unpark": "Error unparking mount",
-          "home": "Error homing mount",
           "tracking": "Error setting tracking mode"
         },
-        "slew_to_cenit": "Slew to Zenith",
-        "setLocationSyncToMount": "Set \"Sync to telescope\"",
-        "info_manuell_controll": "Manual control is only available if tracking is not active."
+        "setLocationSyncToMount": "Set \"Sync to telescope\""
       },
       "info": {
         "notConnected": "Please connect mount",
@@ -326,7 +266,6 @@
       "rms_error": "RMS Error",
       "title": "Guider",
       "running": "RUNNING",
-      "notes": "* This graph displays guiding data according to N.I.N.A.'s settings.",
       "statusLabel": "Status",
       "status": {
         "looping": "Looping",
@@ -345,16 +284,9 @@
         "direction": "Direction",
         "west": "West",
         "east": "East",
-        "calculatedPosition": "Calculated Position",
-        "current": "Current",
-        "target": "Target",
-        "currentPosition": "Current Position",
-        "targetPosition": "Target Position",
         "slewToPosition": "Slew to Position",
         "startCalibration": "Start Calibration",
         "stopCalibration": "Stop Calibration",
-        "recalculate": "Recalculate",
-        "close": "Close",
         "positionCalculated": "Optimal position calculated",
         "slewing": "Slewing to target position...",
         "slewComplete": "Slew completed",
@@ -406,7 +338,6 @@
       "start_autofocus": "Start autofocus",
       "cancel_autofocus": "Cancel autofocus",
       "autofocus_graph": "Autofocus graph",
-      "autofocus_running": "Autofocus running",
       "autofocus_error": "Autofocus error",
       "please_connect_focuser": "Please connect focuser",
       "current_position": "Current position:",
@@ -439,7 +370,6 @@
           "close": "Error close shutter",
           "stop": "Error stop shutter",
           "park": "Error Park",
-          "slew": "Error slew ",
           "sync": "Error sync",
           "stop_slew": "Error stop slew",
           "home": "Error home",
@@ -457,14 +387,9 @@
       "not_sync": "Not sync"
     },
     "camera": {
-      "title": "Camera",
       "connect": "Please connect camera",
       "settings": "Settings",
-      "loop": "Loop",
       "capture_running": "Capture running",
-      "image_loading": "Image loading...",
-      "start_capture": "Start capture",
-      "cancel": "Cancel",
       "exposure_time": "Exposure time:",
       "gain_iso": "Gain / ISO:",
       "name": "Camera name",
@@ -472,9 +397,6 @@
       "offset": "Offset",
       "temperature": "Temperature",
       "standby": "Standby",
-      "info": "Info",
-      "info_settings": "Info & Settings",
-      "please_connect": "Please connect camera",
       "cooler_on": "Cooling On",
       "cooler_off": "Cooling Off",
       "dew_heater": "Dewheater",
@@ -503,7 +425,6 @@
       "altitude_error": "Altitude Error:",
       "azimuth_error": "Azimuth Error:",
       "total_error": "Total Error:",
-      "last_update": "Last update:",
       "error_values_missing": "Missing error values",
       "unknown_response_format": "Unknown response format",
       "east": "East",
@@ -524,7 +445,6 @@
         "DirectionEast": "Direction East"
       }
     },
-    "loading": "Loading...",
     "slewAndCenter": {
       "title": "Slew and Center",
       "LastSelectedImageSource_wrong": "Please select offline sky map as image source in NINA / Framing",
@@ -534,14 +454,9 @@
       "dec_placeholder": "Dec +24:06:19",
       "slew": "Slew",
       "slew_and_center": "Slew and Center",
-      "rotate": "Rotate",
       "errors": {
-        "invalidRAFormat": "Invalid RA format. Please use HH:MM:SS.",
-        "invalidDECFormat": "Invalid DEC format. Please use ±DD:MM:SS.",
         "invalidRAInput": "Invalid RA input.",
         "invalidDECInput": "Invalid DEC input.",
-        "apiUnreachable": "Framing API unreachable",
-        "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s",
         "apiResponseError": "Error in API response:",
         "mountInfoError": "Error fetching mount information:",
         "invalidAltInput": "Invalid alt input.",
@@ -576,8 +491,7 @@
       "move": "Move",
       "notConnected": "Please connect rotator",
       "currentPosition": "Current position:",
-      "moving": "Moving",
-      "stopped": "Stopped"
+      "moving": "Moving"
     },
     "flat": {
       "please_connect_flatDevice": "Please connect the flat device",
@@ -642,13 +556,10 @@
         "title": "Date & Time",
         "date": "Date",
         "time": "Time",
-        "apply": "Apply",
         "now": "Now",
         "speed": "Speed"
       },
-      "mount_position": {
-        "title": "Mount Position"
-      },
+      "mount_position": {},
       "settings": {
         "constellations_lines_visible": "Show Constellations",
         "azimuthal_lines_visible": "Show azimuthal lines",
@@ -657,8 +568,7 @@
         "ecliptic_lines_visible": "Show ecliptic",
         "atmosphere_visible": "Show atmosphere",
         "landscapes_visible": "Show landscapes",
-        "dsos_visible": "Deep Sky Objects (Messier, NGC)",
-        "camera_fov_visible": "Camera Field of View"
+        "dsos_visible": "Deep Sky Objects (Messier, NGC)"
       }
     },
     "profile": {
@@ -677,7 +587,6 @@
         "dec": "DEC",
         "load": "Load",
         "remove": "Remove",
-        "sequnce": "Seq. target",
         "rotation": "Rotation"
       },
       "no_fav": "No favorites saved",
@@ -708,7 +617,6 @@
       "disconnected": "Disconnected",
       "error": "Error",
       "lastUpdate": "Last Update",
-      "refresh": "Refresh",
       "startAuto": "Start Auto",
       "stopAuto": "Stop Auto",
       "settings": "Settings",
@@ -719,10 +627,7 @@
       "noImageAvailable": "No image available",
       "configureUrl": "Configure snapshot URL and fetch image",
       "loadingImage": "Loading image...",
-      "errors": {
-        "noUrl": "No snapshot URL configured",
-        "failedToLoad": "Failed to load webcam image"
-      }
+      "errors": {}
     },
     "sequenceCreator": {
       "title": "N.I.N.A Sequence Creator",
@@ -734,7 +639,6 @@
         "clearSequence": "Clear Sequence",
         "saveAsDefault": "Save as Default",
         "saveAsDefaultSuccess": "Saved as default sequence!",
-        "exportSequence": "Export Sequence",
         "sendToNina": "Send to N.I.N.A",
         "sending": "Sending...",
         "sent": "Sent!",
@@ -749,9 +653,7 @@
         "clearSequence": "Are you sure you want to clear the entire sequence? This action cannot be undone.",
         "saveAsDefault": "Are you sure you want to save the current sequence as default? This will overwrite the previous default sequence.",
         "loadBasicSequence": "Are you sure you want to load the basic sequence? This will overwrite the current sequence.",
-        "removeAction": "Remove \"{actionName}\" action?",
-        "unknownError": "Unknown error occurred",
-        "sendSequenceFailed": "Failed to send sequence to N.I.N.A"
+        "removeAction": "Remove \"{actionName}\" action?"
       },
       "containers": {
         "startSequence": {
@@ -783,8 +685,6 @@
         "editParameters": "Edit Parameters",
         "moveUp": "Move Up",
         "moveDown": "Move Down",
-        "disableAction": "Disable Action",
-        "enableAction": "Enable Action",
         "duplicateAction": "Duplicate Action",
         "removeAction": "Remove Action",
         "clickToRename": "Click to rename",
@@ -928,8 +828,7 @@
           "Planet": "Planet",
           "Star": "Star",
           "Moon": "Moon",
-          "Comet": "Comet",
-          "StellariumObject": "Stellarium Object"
+          "Comet": "Comet"
         }
       },
       "settings": {
