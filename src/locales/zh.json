@@ -695,6 +695,35 @@
     }
   },
   "plugins": {
+    "webcam": {
+      "title": "Webcam Settings",
+      "snapshotUrl": "Snapshot URL",
+      "snapshotUrlDescription": "A snapshot URL is a direct link to a single image from your webcam/IP camera. This URL should return a JPEG/PNG image directly, not an HTML page or stream.",
+      "snapshotUrlExamples": "Examples:",
+      "refreshInterval": "Refresh Interval",
+      "displayOptions": "Display Options",
+      "autoRefresh": "Auto Refresh",
+      "status": "Status",
+      "connected": "Connected",
+      "disconnected": "Disconnected",
+      "error": "Error",
+      "lastUpdate": "Last Update",
+      "refresh": "Refresh",
+      "startAuto": "Start Auto",
+      "stopAuto": "Stop Auto",
+      "settings": "Settings",
+      "reset": "Reset",
+      "close": "Close",
+      "resetConfirm": "Are you sure you want to reset all webcam settings?",
+      "liveView": "Live View",
+      "noImageAvailable": "No image available",
+      "configureUrl": "Configure snapshot URL and fetch image",
+      "loadingImage": "Loading image...",
+      "errors": {
+        "noUrl": "No snapshot URL configured",
+        "failedToLoad": "Failed to load webcam image"
+      }
+    },
     "sequenceCreator": {
       "title": "N.I.N.A Sequence Creator",
       "subtitle": "Create professional astrophotography sequences",
