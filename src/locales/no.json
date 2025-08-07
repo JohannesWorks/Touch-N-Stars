@@ -96,7 +96,8 @@
       "showTutorial": "Show Tutorial",
       "plugins": {
         "title": "Plugin Management",
-        "description": "Manage installed plugins"
+        "description": "Manage installed plugins",
+        "author": "Author"
       },
       "system": {
         "title": "System Controls",
@@ -768,6 +769,10 @@
           "description": "Warm up the camera",
           "durationLabel": "Warming Duration (minutes)",
           "durationTooltip": "Time to actively warm up the camera (0 = warm to ambient temperature)"
+        },
+        "findHome": {
+          "name": "Find Home",
+          "description": "Move telescope to home position"
         },
         "parkTelescope": {
           "name": "Park Telescope",
