@@ -81,7 +81,10 @@
         "title": "Image Settings",
         "quality": "Image Quality",
         "strech_factor": "Stretch Factor",
-        "black_clipping": "Black Clipping"
+        "black_clipping": "Black Clipping",
+        "debayern": "Debayer Image",
+        "DebayeredHFR": "Debayered HFR",
+        "UnlinkedStretch": "Unlinked Strech"
       },
       "debug": {
         "title": "Debug",
