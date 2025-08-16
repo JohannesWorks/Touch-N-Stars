@@ -445,8 +445,18 @@
       "capture_running": "Exposure running",
       "last_messages": "Last messages",
       "settings": {
+        "title": "TPPA Settings",
         "StartFromCurrentPosition": "Start from current position?",
-        "DirectionEast": "Direction East"
+        "DirectionEast": "Direction East",
+        "ManualMode": "Manual Mode",
+        "camera_settings": "Camera Settings",
+        "camera_settings_hint": "Leave empty for NINA defaults",
+        "exposure_time": "Exposure Time (s)",
+        "gain": "Gain",
+        "nina_default": "NINA Default"
+      },
+      "error_modal": {
+        "title": "TPPA Errors"
       }
     },
     "slewAndCenter": {
