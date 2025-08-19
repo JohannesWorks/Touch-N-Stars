@@ -618,6 +618,120 @@
     }
   },
   "plugins": {
+    "telescopius": {
+      "title": "Telescopius",
+      "initializing": "Initializing...",
+      "welcome": "Welcome to the Telescopius plugin!",
+      "description": "Enables data retrieval from telescopius.com",
+      "offlineInfo": "Loads personal target lists from telescopius.com and stores them locally for offline availability.",
+      "outdated": {
+        "title": "Plugin Outdated",
+        "message": "The TouchNStars plugin in NINA is outdated and needs to be updated.",
+        "required": "Required version",
+        "current": "Current version"
+      },
+      "landing": {
+        "title": "Telescopius Plugin",
+        "subtitle": "Bring your target objects from Telescopius.com directly into Touch'N'Stars",
+        "whatIsPlugin": {
+          "title": "What is this plugin?",
+          "description": "Load your saved target objects from Telescopius.com directly into Touch'N'Stars and use them for navigation and framing.",
+          "features": {
+            "loadLists": "Load target lists from Telescopius.com",
+            "navigate": "Navigate directly to objects",
+            "framingAssistant": "Use framing assistant",
+            "offlineCache": "Offline cache for fast access"
+          }
+        },
+        "whatIsTelecopius": {
+          "title": "What is Telescopius?",
+          "description": "Telescopius is a comprehensive astronomy platform for discovering and planning astronomical observations.",
+          "features": {
+            "database": "Extensive object database",
+            "lists": "Personalized target lists",
+            "planning": "Observation planning",
+            "community": "Community and sharing"
+          },
+          "visitWebsite": "Visit Telescopius.com"
+        },
+        "mainFeatures": {
+          "title": "Main Features",
+          "description": "Seamless integration between Telescopius and Touch'N'Stars:",
+          "features": {
+            "autoImport": "Automatic Import: All target lists at once",
+            "smartCache": "Smart Cache: Fast offline access",
+            "directNavigation": "Direct Navigation: Slew with one click",
+            "framingIntegration": "Framing Integration: Uses existing tools",
+            "locationBased": "Location-based: Considers your location"
+          }
+        },
+        "apiSetup": {
+          "title": "Set up API Key",
+          "description": "Follow these simple steps to configure the plugin:",
+          "step1": {
+            "title": "Create Telescopius Account",
+            "description": "If you don't have an account yet, register for free:",
+            "button": "Register for free"
+          },
+          "step2": {
+            "title": "Request API Key",
+            "description": "Sign in and go to Settings → API for your personal key:",
+            "button": "Request API key"
+          },
+          "step3": {
+            "title": "Configure API Key",
+            "description": "When creating the API key, use these settings:",
+            "config": {
+              "name": "Name",
+              "nameValue": "Any name (e.g. Touch N Stars)",
+              "description": "Description",
+              "descriptionValue": "Any description (e.g. API for TNS)",
+              "accessType": "Access Type",
+              "accessTypeValue": "Select Server",
+              "ipLimit": "Limit access to these IP addresses",
+              "ipLimitValue": "Leave empty"
+            }
+          },
+          "step4": {
+            "title": "Enter API Key",
+            "description": "Click \"Configure API Key\" below and enter your key:",
+            "button": "Configure API Key"
+          },
+          "security": {
+            "title": "Security",
+            "description": "Your API key is stored only locally on your device and never shared with others. You can delete it at any time."
+          }
+        }
+      },
+      "apiKey": {
+        "title": "Telescopius API Key",
+        "description": "To use Telescopius, you need an API key. You can get one on the Telescopius website:",
+        "linkText": "→ Request Telescopius API Key",
+        "securityNote": "The API key is stored on the server and used only for Telescopius requests.",
+        "placeholder": "Enter your Telescopius API key...",
+        "configured": "API key is already configured",
+        "save": "Save",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "configure": "Configure API Key",
+        "required": "API key required",
+        "errors": {
+          "saveFailed": "API key could not be saved.",
+          "deleteFailed": "API key could not be deleted.",
+          "validationFailed": "API key validation failed"
+        },
+        "loadFromTelescopius": "refresh"
+      },
+      "targetLists": {
+        "noListsTitle": "No Target Lists Saved",
+        "noListsDescription": "No target lists have been found in your Telescopius account yet.",
+        "noListsHint": "Create target lists on telescopius.com and then reload them here.",
+        "refreshFailed": "Update not possible. Telescopius.com not reachable",
+        "editOnTelescopius": "Edit lists on Telescopius",
+        "dataFrom": "Data from",
+        "connectionError": "Connection to Telescopius failed. The NINA PC needs an internet connection and at least one target list must exist in Telescopius."
+      }
+    },
     "webcam": {
       "title": "Webcam Settings",
       "snapshotUrl": "Snapshot URL",
