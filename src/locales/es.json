@@ -625,14 +625,29 @@
       "intro": "Collect latest TNS logs (including debug) and upload them to the configured endpoint.",
       "descriptionLabel": "Description (optional)",
       "descriptionPlaceholder": "Describe the problem to investigate...",
+      "lastToken": "Generated Token",
+      "submissionHistory": "Submission History",
+      "confirmClearAll": "Are you sure you want to clear all submission history?",
       "actions": {
         "collectUpload": "Collect & Upload",
-        "uploading": "Uploading…"
+        "uploading": "Uploading…",
+        "copyToken": "Copy",
+        "remove": "Remove",
+        "clearAll": "Clear All"
+      },
+      "submissionFields": {
+        "date": "Date",
+        "filename": "Filename",
+        "token": "Token"
       },
       "result": {
         "success": "Upload successful",
         "failed": "Upload failed",
-        "failedWithStatus": "Upload failed ({status})"
+        "failedWithStatus": "Upload failed ({status})",
+        "tokenCopied": "Token copied to clipboard",
+        "tokenCopyFailed": "Failed to copy token",
+        "submissionRemoved": "Submission removed",
+        "allSubmissionsCleared": "All submissions cleared"
       }
     },
     "telescopius": {
