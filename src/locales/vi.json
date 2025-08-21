@@ -96,6 +96,10 @@
         "sequence": "Sequence",
         "phd2": "PHD2"
       },
+      "keepAwake": {
+        "title": "Keep Screen Awake",
+        "description": "Prevent the device from dimming or locking while the app is open."
+      },
       "showTutorial": "Show Tutorial",
       "plugins": {
         "title": "Plugin Management",
