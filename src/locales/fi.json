@@ -1,7 +1,8 @@
 {
   "common": {
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "close": "Close"
   },
   "general": {
     "cancel": "Cancel",
@@ -21,6 +22,10 @@
       "message_tns": "The Touch'N'Stars plugin is not available. Please check the settings in NINA",
       "message_tns_version": "The Touch N Stars plugin is too old. Please perform an update"
     }
+  },
+  "whatsnew": {
+    "title": "What's New",
+    "loading": "Loading…"
   },
   "setup": {
     "welcome": "Welcome to Touch'N'Stars",
