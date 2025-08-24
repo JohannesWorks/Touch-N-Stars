@@ -459,16 +459,13 @@
         "title": "TPPA Settings",
         "StartFromCurrentPosition": "Start from current position?",
         "DirectionEast": "Direction East",
-        "ManualMode": "Manual Mode",
         "camera_settings": "Camera Settings",
         "camera_settings_hint": "Leave empty for NINA defaults",
         "exposure_time": "Exposure Time (s)",
         "gain": "Gain",
         "nina_default": "NINA Default"
       },
-      "error_modal": {
-        "title": "TPPA Errors"
-      }
+      "error_modal": {}
     },
     "slewAndCenter": {
       "title": "Slew and Center",
@@ -670,8 +667,6 @@
     },
     "telescopius": {
       "title": "Telescopius",
-      "welcome": "Welcome to the Telescopius plugin!",
-      "description": "Enables data retrieval from telescopius.com",
       "offlineInfo": "Loads personal target lists from telescopius.com and stores them locally for offline availability.",
       "landing": {
         "title": "Telescopius Plugin",
@@ -760,8 +755,7 @@
         "required": "API key required",
         "errors": {
           "saveFailed": "API key could not be saved.",
-          "deleteFailed": "API key could not be deleted.",
-          "validationFailed": "API key validation failed"
+          "deleteFailed": "API key could not be deleted."
         },
         "loadFromTelescopius": "refresh"
       },
@@ -769,7 +763,6 @@
         "noListsTitle": "No Target Lists Saved",
         "noListsDescription": "No target lists have been found in your Telescopius account yet.",
         "noListsHint": "Create target lists on telescopius.com and then reload them here.",
-        "refreshFailed": "Update not possible. Telescopius.com not reachable",
         "editOnTelescopius": "Edit lists on Telescopius",
         "dataFrom": "Data from",
         "connectionError": "Connection to Telescopius failed. The NINA PC needs an internet connection and at least one target list must exist in Telescopius."
@@ -813,7 +806,6 @@
         "sendToNina": "Send to N.I.N.A",
         "sending": "Sending...",
         "sent": "Sent!",
-        "failed": "Failed",
         "sendErrorTitle": "Error sending to N.I.N.A",
         "sendSuccessMessage": "Sequence successfully sent to N.I.N.A!",
         "validSequence": "Sequence is valid and can be exported",
@@ -957,24 +949,9 @@
         "endActions": "🏁 End Actions"
       },
       "exportModal": {
-        "title": "Export N.I.N.A Sequence",
-        "subtitle": "Your sequence is ready to be exported as N.I.N.A compatible JSON",
-        "buttons": {
-          "downloadJSON": "Download JSON File",
-          "copyToClipboard": "Copy to Clipboard",
-          "copied": "Copied!",
-          "sendToNina": "Send to N.I.N.A",
-          "sending": "Sending...",
-          "sent": "Sent!",
-          "failed": "Failed"
-        },
-        "messages": {
-          "successTitle": "Success:",
-          "successMessage": "Sequence has been loaded into N.I.N.A successfully!",
-          "errorTitle": "Error:"
-        },
+        "buttons": {},
+        "messages": {},
         "jsonPreview": {
-          "title": "JSON Preview",
           "sequenceJsonExport": "Sequence JSON Export",
           "previewDescription": "Preview and download your sequence as a JSON file",
           "totalActions": "Total Actions",
@@ -986,13 +963,7 @@
           "copied": "Copied!",
           "downloadJson": "Download JSON"
         },
-        "howToUse": {
-          "title": "How to use:",
-          "step1": "Download or copy the JSON file, or",
-          "step2": "Send directly to N.I.N.A (requires connection), or",
-          "step3": "Import manually into N.I.N.A via Sequence → Load Sequence",
-          "step4": "Adjust any equipment-specific settings as needed"
-        }
+        "howToUse": {}
       },
       "targetSearch": {
         "searchLabel": "Search Target",
