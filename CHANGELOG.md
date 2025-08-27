@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.x.x] - 2025-xx-xx
+
+### Added
+- Filterwheel page: Dedicated page with responsive grid layout and status information
+- Rotator page: Dedicated page with enhanced info display and controls
+- Camera page: Quick access buttons and modal popups for rotator controls
+- Navigation: Icons for filterwheel and rotator when equipment is connected
+- Mount info: Added Right Ascension, Declination, and Time to Meridian Flip display
+- TPPA page: Image modal with zoom functionality for viewing camera images during alignment
+- Focuser page: Image modal with zoom functionality for viewing camera images during autofocus
+- TPPA and Focus pages: Add background camera image when running
+
+### Changed
+- Rotator: Moved from camera settings modal to dedicated quick access button
+- TPPA page: Mount info display hidden to reduce clutter during alignment process
+- Camera page: The last image taken is now always displayed. As in NINA
+
+### Fixed
+-
+
 ## [1.1.2.2] - 2025-08-27
 ### Added
 - Mount page: Added slew stop button
