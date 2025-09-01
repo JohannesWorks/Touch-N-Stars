@@ -177,7 +177,6 @@
       "message": "Message",
       "download": "Download"
     },
-    "navigation": {},
     "sequence": {
       "stats": "Stats",
       "noSequenceLoaded": "No sequence loaded",
@@ -268,7 +267,10 @@
         "trackingActive": "Tracking is active",
         "trackingDisabled": "Tracking disabled",
         "slewing": "Mount is slewing",
-        "notSlewing": "Not slewing"
+        "notSlewing": "Not slewing",
+        "timeToMeridianFlip": "Time to Meridian Flip",
+        "declination": "Dec",
+        "rightAscension": "Ra"
       }
     },
     "guider": {
@@ -500,19 +502,27 @@
       }
     },
     "filterwheel": {
+      "title": "Filter Wheel",
       "filter": "Filter:",
       "unknown": "Unknown",
       "nofilteravailable": "No filter available",
+      "please_connect_filterwheel": "Please connect filter wheel",
+      "currentFilter": "Current Filter",
+      "position": "Position",
+      "availableFilters": "Available Filters",
       "manual_filter": {
         "title": "Filterwheel",
         "name": "Change to filter:"
       }
     },
     "rotator": {
+      "title": "Rotator",
       "label": "Rotator",
       "move": "Move",
+      "control": "Control",
       "notConnected": "Please connect rotator",
-      "currentPosition": "Current position:",
+      "please_connect_rotator": "Please connect rotator",
+      "currentPosition": "Current Position",
       "moving": "Moving"
     },
     "flat": {
@@ -611,7 +621,6 @@
         "remove": "Remove",
         "rotation": "Rotation"
       },
-      "no_fav": "No favorites saved",
       "modal_sequence": {
         "titel": "Sequence"
       },
@@ -622,7 +631,13 @@
         "message": "No sequence loaded"
       },
       "enter_name": "Enter name",
+      "no_fav": "No favorites saved",
       "titel": "Favourites"
+    },
+    "helpers": {
+      "imageModal": {
+        "no_image": "No image data available"
+      }
     }
   },
   "plugins": {
