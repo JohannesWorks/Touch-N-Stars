@@ -93,7 +93,8 @@
       },
       "debug": {
         "title": "Debug",
-        "activate": "Activate Debug Mode"
+        "activate": "Activate Debug Mode",
+        "titel": "Debug"
       },
       "notifications": {
         "title": "Notifications",
@@ -522,8 +523,12 @@
       "control": "Control",
       "notConnected": "Please connect rotator",
       "please_connect_rotator": "Please connect rotator",
+      "connected": "Connected",
+      "disconnected": "Disconnected",
       "currentPosition": "Current Position",
-      "moving": "Moving"
+      "moving": "Moving",
+      "stationary": "Stationary",
+      "stepSize": "Step Size"
     },
     "flat": {
       "please_connect_flatDevice": "Please connect the flat device",
