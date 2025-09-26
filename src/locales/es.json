@@ -209,7 +209,8 @@
           "showImageStats": "Show last image stats",
           "showImgStatsGraph": "Show HFR-Chart",
           "showGuiderAfGraph": "Show autofocus-chart",
-          "display_status_under_image": "Show status below image"
+          "display_status_under_image": "Show status below image",
+          "sequenceCurrentState": "Show Sequence state"
         }
       },
       "running": "RUNNING",
@@ -227,7 +228,10 @@
         "oldest": "oldest first",
         "newest": "newest first"
       },
-      "time": "Time"
+      "time": "Time",
+      "noRunningItems": "Sequence stopped",
+      "status": "Sequence status",
+      "instructions": "Instructions"
     },
     "mount": {
       "title": "Mount",
@@ -413,7 +417,7 @@
       "name": "Camera name",
       "gain": "Gain",
       "offset": "Offset",
-      "temperature": "Temperature",
+      "temperature": "Temperature  (°C)",
       "standby": "Standby",
       "cooler_on": "Cooling On",
       "cooler_off": "Cooling Off",
@@ -433,7 +437,10 @@
         "width": "Width (px)",
         "height": "Height (px)",
         "focal_length": "Focal length (mm)"
-      }
+      },
+      "at_target_temp": "At target temp",
+      "temperature_setpoint": "Temp setpoint (°C)",
+      "cooler_power": "Cooler power (%)"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
@@ -466,9 +473,11 @@
         "camera_settings_hint": "Leave empty for NINA defaults",
         "exposure_time": "Exposure Time (s)",
         "gain": "Gain",
-        "nina_default": "NINA Default"
+        "nina_default": "NINA Default",
+        "ManualMode": "Manual mode"
       },
-      "error_modal": {}
+      "error_modal": {},
+      "tppa": "TPPA"
     },
     "slewAndCenter": {
       "title": "Slew and Center",
@@ -1001,6 +1010,18 @@
         "title": "Meridianflip",
         "enableMeridianFlip": "Enable Meridianflip"
       }
+    },
+    "livestack": {
+      "not_available": "Livestack was not found. Please install the Livestack plugin in NINA first.",
+      "beta_note": "This plugin is still under development and may contain some errors!",
+      "status": "Status",
+      "target": "Target",
+      "last_updated": "Last updated",
+      "available_filters": "Available Filters",
+      "no_image_available": "No image available",
+      "start_and_select_filter": "Start livestack and select a filter to see images",
+      "images_available": "{count} Images Available",
+      "no_images_available": "No Images Available"
     }
   }
 }
