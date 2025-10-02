@@ -424,7 +424,7 @@
       "dew_heater": "Dewheater",
       "dew_heater_on": "Dewheater On",
       "dew_heater_off": "Dewheater Off",
-      "camera_cooling": "Camera cooling",
+      "camera_cooling": "Camera cool down",
       "target_temperature": "Target temperature",
       "warm_up_time": "Warm-up time",
       "cooling_time": "Cooling time",
@@ -440,7 +440,8 @@
       },
       "at_target_temp": "At target temp",
       "temperature_setpoint": "Temp setpoint (°C)",
-      "cooler_power": "Cooler power (%)"
+      "cooler_power": "Cooler power (%)",
+      "camera_warming": "Camera warm up"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
