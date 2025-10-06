@@ -833,12 +833,12 @@
         "clearSequence": "Clear Sequence",
         "saveAsDefault": "Save as Default",
         "saveAsDefaultSuccess": "Saved as default sequence!",
-        "sendToNina": "Send to N.I.N.A",
+        "sendToNina": "Adopt Sequence",
         "sending": "Sending...",
         "sent": "Sent!",
         "sendErrorTitle": "Error sending to N.I.N.A",
         "sendSuccessMessage": "Sequence successfully sent to N.I.N.A!",
-        "validSequence": "Sequence is valid and can be exported",
+        "validSequence": "Sequence is valid and can be adopted",
         "invalidSequence": "Add Target Settings and Smart Exposure to create a valid sequence"
       },
       "confirmations": {
@@ -846,7 +846,8 @@
         "clearSequence": "Are you sure you want to clear the entire sequence? This action cannot be undone.",
         "saveAsDefault": "Are you sure you want to save the current sequence as default? This will overwrite the previous default sequence.",
         "loadBasicSequence": "Are you sure you want to load the basic sequence? This will overwrite the current sequence.",
-        "removeAction": "Remove \"{actionName}\" action?"
+        "removeAction": "Remove \"{actionName}\" action?",
+        "navigateToSequence": "Do you want to switch to the Sequence page now?"
       },
       "containers": {
         "startSequence": {
