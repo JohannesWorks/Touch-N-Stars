@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { apiStore } from '@/store/store';
 import apiService from '@/services/apiService';
+import { usePermissions } from '@/composables/usePermissions';
 
 // Reactive state für das Modal
 export const showLocationSyncModal = ref(false);
@@ -47,6 +48,34 @@ export function cancelLocationSync() {
   if (locationSyncResolver) {
     locationSyncResolver(false);
     locationSyncResolver = null;
+  }
+}
+
+// Get current location with permission handling
+export async function getDeviceLocation() {
+  const { getCurrentLocation, isNative } = usePermissions();
+
+  if (!isNative) {
+    console.log('Not on native platform, skipping location permission');
+    return null;
+  }
+
+  try {
+    const result = await getCurrentLocation();
+
+    if (!result.success) {
+      console.warn('Failed to get location:', result.error);
+      return null;
+    }
+
+    return {
+      latitude: result.latitude,
+      longitude: result.longitude,
+      altitude: result.altitude || 0,
+    };
+  } catch (error) {
+    console.error('Error getting device location:', error);
+    return null;
   }
 }
 

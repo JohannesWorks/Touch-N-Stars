@@ -1,6 +1,7 @@
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import { useSettingsStore } from '@/store/settingsStore';
+import { usePermissions } from '@/composables/usePermissions';
 
 class NotificationService {
   constructor() {
@@ -21,10 +22,16 @@ class NotificationService {
         return false;
       }
 
-      // Request permission
-      const permission = await LocalNotifications.requestPermissions();
+      // Use permission composable for better handling
+      const { requestNotificationPermission } = usePermissions();
+      const permissionResult = await requestNotificationPermission();
 
-      if (permission.display === 'granted') {
+      if (!permissionResult.granted) {
+        console.log('Notification permission denied');
+        return false;
+      }
+
+      if (permissionResult.granted) {
         // Register notification channels for Android
         if (this.platform === 'android') {
           await LocalNotifications.createChannel({

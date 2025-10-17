@@ -3,10 +3,13 @@ import { apiStore } from '@/store/store';
 import { useFramingStore } from '@/store/framingStore';
 import { ref } from 'vue';
 import { timeSync } from '@/utils/timeSync';
+import { usePermissions } from '@/composables/usePermissions';
 
 export const useCameraStore = defineStore('cameraStore', () => {
   const framingStore = useFramingStore();
   const store = apiStore();
+  const { checkCameraPermission, requestCameraPermission, isNative } = usePermissions();
+
   const remainingExposureTime = ref(0);
   const progress = ref(0);
   const imageData = ref(null);
@@ -31,6 +34,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const containerSize = ref(100);
   const slewModal = ref(false);
   const showCameraInfo = ref(false); // eslint-disable-line no-unused-vars
+  const cameraPermissionDenied = ref(false);
 
   let exposureCountdownTimer = null;
 
@@ -65,6 +69,24 @@ export const useCameraStore = defineStore('cameraStore', () => {
 
   // Startet die Aufnahme + Countdown + Bildabruf
   async function capturePhoto(apiService, exposureTime, gain, solve = false) {
+    // Camera Permission Check (only on native platforms)
+    if (isNative) {
+      try {
+        const permissionResult = await requestCameraPermission();
+
+        if (!permissionResult.granted) {
+          console.warn('Camera permission denied');
+          cameraPermissionDenied.value = true;
+          return { success: false, error: 'Camera permission denied' };
+        }
+
+        cameraPermissionDenied.value = false;
+      } catch (error) {
+        console.error('Error requesting camera permission:', error);
+        return { success: false, error: 'Permission check failed' };
+      }
+    }
+
     if (exposureTime <= 0) {
       exposureTime = 2; // Default-Wert
       return;
@@ -170,6 +192,24 @@ export const useCameraStore = defineStore('cameraStore', () => {
   }
 
   async function getCameraRotation(apiService, exposureTime = 2, gain) {
+    // Camera Permission Check (only on native platforms)
+    if (isNative) {
+      try {
+        const permissionResult = await requestCameraPermission();
+
+        if (!permissionResult.granted) {
+          console.warn('Camera permission denied');
+          cameraPermissionDenied.value = true;
+          return { success: false, error: 'Camera permission denied' };
+        }
+
+        cameraPermissionDenied.value = false;
+      } catch (error) {
+        console.error('Error requesting camera permission:', error);
+        return { success: false, error: 'Permission check failed' };
+      }
+    }
+
     loading.value = true;
     isLoadingImage.value = true;
     progress.value = 0;
@@ -306,6 +346,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
     readoutMode,
     containerSize,
     slewModal,
+    cameraPermissionDenied,
 
     // Actions
     capturePhoto,
@@ -313,5 +354,9 @@ export const useCameraStore = defineStore('cameraStore', () => {
     abortExposure,
     updateCountdown,
     stopCountdown,
+
+    // Permissions
+    checkCameraPermission,
+    requestCameraPermission,
   };
 });
