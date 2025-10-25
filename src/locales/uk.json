@@ -231,7 +231,12 @@
       "time": "Time",
       "noRunningItems": "Sequence stopped",
       "status": "Sequence status",
-      "instructions": "Instructions"
+      "instructions": "Instructions",
+      "tnsMessageBox": {
+        "title": "Sequence Message",
+        "stopSequence": "Stop Sequence",
+        "continueSequence": "Continue Sequence"
+      }
     },
     "mount": {
       "title": "Mount",
@@ -412,7 +417,7 @@
       "connect": "Please connect camera",
       "settings": "Settings",
       "capture_running": "Capture running",
-      "exposure_time": "Exposure time:",
+      "exposure_time": "Exposure time (s):",
       "gain_iso": "Gain / ISO:",
       "name": "Camera name",
       "gain": "Gain",
@@ -425,9 +430,9 @@
       "dew_heater_on": "Dewheater On",
       "dew_heater_off": "Dewheater Off",
       "camera_cooling": "Camera cool down",
-      "target_temperature": "Target temperature",
-      "warm_up_time": "Warm-up time",
-      "cooling_time": "Cooling time",
+      "target_temperature": "Target temperature (°C)",
+      "warm_up_time": "Warm-up time (min)",
+      "cooling_time": "Cooling time (min)",
       "binning_mode": "Binning",
       "readout_mode": "Readout Mode",
       "set_use_platesolve": "Use Platesolve",
@@ -441,11 +446,16 @@
       "at_target_temp": "At target temp",
       "temperature_setpoint": "Temp setpoint (°C)",
       "cooler_power": "Cooler power (%)",
-      "camera_warming": "Camera warm up"
+      "camera_warming": "Camera warm up",
+      "cooler_status": "Cooler Status",
+      "cooler_status_off": "OFF",
+      "cooler_status_cooling": "Active - Cooling to",
+      "cooler_status_holding": "Active - At target temp",
+      "cooler_status_warming": "Active - Warming to"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
-      "camera_mount_required": "Camera must be connected and mount must be unparked",
+      "camera_mount_required": "Camera must be connected",
       "start_alignment": "Start Alignment",
       "stop_alignment": "Stop Alignment",
       "altitude_error": "Altitude Error:",
