@@ -280,7 +280,9 @@
         "notSlewing": "Not slewing",
         "timeToMeridianFlip": "Time to Meridian Flip",
         "declination": "Dec",
-        "rightAscension": "Ra"
+        "rightAscension": "Ra",
+        "Alt": "Alt",
+        "Az": "Az"
       }
     },
     "guider": {
