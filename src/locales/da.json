@@ -451,7 +451,8 @@
       "cooler_status_off": "OFF",
       "cooler_status_cooling": "Active - Cooling to",
       "cooler_status_holding": "Active - At target temp",
-      "cooler_status_warming": "Active - Warming to"
+      "cooler_status_warming": "Active - Warming to",
+      "set_save_snapshot": "Save snapshots"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
