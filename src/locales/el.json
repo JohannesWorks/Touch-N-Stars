@@ -27,6 +27,18 @@
     "title": "What's New",
     "loading": "Loading…"
   },
+  "updates": {
+    "title": "Update available",
+    "description": "A newer app bundle ({version}) is ready to install.",
+    "releaseNotes": "Release notes",
+    "whatsNew": "What's new",
+    "downloading": "Downloading update… {progress}%",
+    "preparing": "Preparing update… please keep the app open.",
+    "error": "Update failed. Please try again later.",
+    "later": "Later",
+    "updateNow": "Update now",
+    "working": "Working…"
+  },
   "setup": {
     "welcome": "Welcome to Touch'N'Stars",
     "description": "Let's get started with a quick setup",
