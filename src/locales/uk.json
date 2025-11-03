@@ -229,6 +229,7 @@
       "imageHistory": "Image History",
       "duration": "Duration",
       "temperatureShort": "Temp",
+      "targetName": "Target",
       "conditions": "Conditions",
       "info": {
         "header": "Info",
