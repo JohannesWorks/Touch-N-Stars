@@ -192,14 +192,15 @@ const addFOV = () => {
     const pos = [Math.sin(az) * cosAlt, Math.cos(az) * cosAlt, Math.sin(alt), 0];
 
     // Create camera FOV object
-    const fov = stellariumStore.stel.createObj('camera_fov', {
-      pos: pos,
-      size: [width.value * DD2R, height.value * DD2R],
-      label: label.value,
-      color: [...selectedColor.value.rgba, 0.15], // Add alpha for transparency
-      border_color: [...selectedColor.value.rgba, 0.8], // Add alpha for border
-      frame: 2, // FRAME_OBSERVED (azimuthal frame)
-    });
+    const fov = stellariumStore.stel.createObj('camera_fov');
+
+    // Set properties individually
+    fov.pos = pos;
+    fov.size = [width.value * DD2R, height.value * DD2R];
+    fov.label = label.value;
+    fov.color = [...selectedColor.value.rgba, 0.15]; // Add alpha for transparency
+    fov.border_color = [...selectedColor.value.rgba, 0.8]; // Add alpha for border
+    fov.frame = 2; // FRAME_OBSERVED (azimuthal frame)
 
     stellariumStore.stel.core.add(fov);
     activeFOV.value = fov;
