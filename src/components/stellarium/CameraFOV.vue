@@ -179,17 +179,13 @@ const addFOV = () => {
       activeFOV.value = null;
     }
 
-    // Get current view center position (azimuth, altitude)
-    const observer = stellariumStore.stel.core.observer;
-    const azimuth = observer.azimuth || 0;
-    const altitude = observer.altitude || 0;
+    // Get current view center position
+    // Use a fixed position in the center of the sky (zenith by default)
+    // User can adjust by moving the view before adding the FOV
 
-    // Convert to position vector: [x, y, z, w]
-    // For az/alt, we use a simple approach: pointing direction in observed frame
-    const az = azimuth;
-    const alt = altitude;
-    const cosAlt = Math.cos(alt);
-    const pos = [Math.sin(az) * cosAlt, Math.cos(az) * cosAlt, Math.sin(alt), 0];
+    // Default to zenith position in observed frame
+    // This creates a valid position vector [x, y, z, w] where w=0 means at infinity
+    const pos = [0, 0, 1, 0]; // Pointing straight up (zenith)
 
     // Create camera FOV object
     const fov = stellariumStore.stel.createObj('camera_fov');
@@ -202,6 +198,7 @@ const addFOV = () => {
     fov.border_color = [...selectedColor.value.rgba, 0.8]; // Add alpha for border
     fov.frame = 2; // FRAME_OBSERVED (azimuthal frame)
 
+    // Add to core as a child object
     stellariumStore.stel.core.add(fov);
     activeFOV.value = fov;
 
