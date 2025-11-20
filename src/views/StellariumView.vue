@@ -40,6 +40,10 @@
       :selectedObjectDecDeg="selectedObjectDecDeg"
       @setFramingCoordinates="setFramingCoordinates"
     />
+
+    <!-- Camera FOV Modal -->
+    <CameraFOV :isVisible="isCameraFOVVisible" @close="toggleCameraFOV" position="right" />
+
     <div
       :class="controlsClasses"
       class="fixed flex gap-2 bg-black bg-opacity-90 p-2 rounded-full stellarium-controls"
@@ -47,6 +51,34 @@
     >
       <stellariumCredits />
       <stellariumSettings />
+
+      <!-- Camera FOV Button -->
+      <button
+        @click="toggleCameraFOV"
+        class="p-2 bg-gray-700 border border-cyan-600 rounded-full shadow-md z-10"
+        :class="{ 'bg-cyan-600': isCameraFOVVisible }"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-7 h-7 text-white"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      </button>
 
       <!-- Refresh Button (iOS only) -->
       <button
@@ -93,6 +125,7 @@ import stellariumCredits from '@/components/stellarium/stellariumCredits.vue';
 import SelectedObject from '@/components/stellarium/SelectedObject.vue';
 import stellariumSettings from '@/components/stellarium/stellariumSettings.vue';
 import stellariumClock from '@/components/stellarium/stellariumClock.vue';
+import CameraFOV from '@/components/stellarium/CameraFOV.vue';
 
 const store = apiStore();
 const framingStore = useFramingStore();
@@ -105,6 +138,7 @@ const selectedObjectRa = ref(null);
 const selectedObjectDec = ref(null);
 const selectedObjectRaDeg = ref(null);
 const selectedObjectDecDeg = ref(null);
+const isCameraFOVVisible = ref(false);
 const wasmPath = '/stellarium-js/stellarium-web-engine.wasm';
 const isSearchVisible = ref(false);
 const searchComponent = ref(null);
@@ -136,6 +170,10 @@ const searchModalClasses = computed(() => ({
 }));
 
 // Funktion zum Ein-/Ausblenden des Suchfeldes
+function toggleCameraFOV() {
+  isCameraFOVVisible.value = !isCameraFOVVisible.value;
+}
+
 function toggleSearch(event) {
   // Prevent default behavior if event is provided
   if (event) {

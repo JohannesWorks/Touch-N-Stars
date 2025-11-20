@@ -671,6 +671,16 @@
         "atmosphere_visible": "Show atmosphere",
         "landscapes_visible": "Show landscapes",
         "dsos_visible": "Deep Sky Objects (Messier, NGC)"
+      },
+      "cameraFOV": {
+        "title": "Camera FOV",
+        "width": "Width",
+        "height": "Height",
+        "label": "Label",
+        "color": "Color",
+        "add": "Add FOV",
+        "update": "Update FOV",
+        "remove": "Remove FOV"
       }
     },
     "profile": {

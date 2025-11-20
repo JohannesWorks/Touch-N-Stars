@@ -671,6 +671,16 @@
         "landscapes_visible": "Landschaften",
         "dsos_visible": "Deep-Sky Objekte (Messier, NGC)",
         "meridian_lines_visible": "Meridian"
+      },
+      "cameraFOV": {
+        "title": "Kamera FOV",
+        "width": "Breite",
+        "height": "Höhe",
+        "label": "Bezeichnung",
+        "color": "Farbe",
+        "add": "FOV hinzufügen",
+        "update": "FOV aktualisieren",
+        "remove": "FOV entfernen"
       }
     },
     "profile": {
