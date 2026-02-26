@@ -21,6 +21,8 @@
         labelKey="components.filterwheel.settings.FilterWheelFilters.FocusOffset"
         :settingKey="`FilterWheelSettings-FilterWheelFilters-${getOriginalIndex(filter)}-FocusOffset`"
         :modelValue="filter.FocusOffset"
+        :max="999999"
+        :min="-999999"
         class="mb-3"
       />
       <SettingInput
