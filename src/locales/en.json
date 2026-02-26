@@ -152,6 +152,7 @@
         "separator": "Separator",
         "empty": "Tap tokens below to build pattern",
         "freeText": "Text",
+        "addText": "Add",
         "editTokens": "Edit tokens",
         "help": {
           "title": "File Name Pattern",

@@ -144,6 +144,29 @@
         </button>
       </div>
 
+      <!-- Free Text Input -->
+      <div class="flex flex-col gap-1 mt-2">
+        <label class="text-xs text-gray-500">{{
+          $t('components.settings.imageFile.freeText') || 'Free Text'
+        }}</label>
+        <div class="flex gap-1">
+          <input
+            v-model="freeTextInput"
+            type="text"
+            @keyup.enter="addFreeText"
+            placeholder="Enter text..."
+            class="flex-1 px-2 py-1 text-xs rounded bg-gray-800 border border-gray-600/50 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-gray-500"
+          />
+          <button
+            @click="addFreeText"
+            :disabled="!freeTextInput.trim()"
+            class="px-3 py-1 text-xs rounded bg-green-900/60 hover:bg-green-800/60 disabled:bg-gray-700/40 disabled:text-gray-500 text-green-200 border border-green-700/50 disabled:border-gray-600/50 transition-colors"
+          >
+            {{ $t('components.settings.imageFile.addText') || 'Add' }}
+          </button>
+        </div>
+      </div>
+
       <!-- Save Button -->
       <button
         @click="savePattern"
@@ -226,6 +249,7 @@ const saveSuccess = ref(false);
 const insertPos = ref(null); // null = append at end
 const showHelp = ref(false);
 const showTokens = ref(false);
+const freeTextInput = ref('');
 
 const defaultPattern =
   '$$DATEMINUS12$$\\$$IMAGETYPE$$\\$$DATETIME$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$';
@@ -508,6 +532,13 @@ function removeSegment(index) {
   if (insertPos.value !== null && insertPos.value > index) {
     insertPos.value = insertPos.value - 1;
   }
+}
+
+function addFreeText() {
+  const text = freeTextInput.value.trim();
+  if (!text) return;
+  addSegment(text);
+  freeTextInput.value = '';
 }
 
 const patternString = computed(() => buildPattern());

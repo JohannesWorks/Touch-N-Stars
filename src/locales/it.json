@@ -151,6 +151,7 @@
         "separator": "Separatore",
         "empty": "Tocca i token qui sotto per costruire il modello",
         "freeText": "Testo",
+        "addText": "Aggiungi",
         "editTokens": "Modifica token",
         "help": {
           "title": "Modello nome file",

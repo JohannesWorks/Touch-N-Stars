@@ -151,6 +151,7 @@
         "separator": "Séparateur",
         "empty": "Appuyez sur les jetons ci-dessous pour construire le modèle",
         "freeText": "Texte",
+        "addText": "Ajouter",
         "editTokens": "Modifier les jetons",
         "help": {
           "title": "Modèle de nom de fichier",

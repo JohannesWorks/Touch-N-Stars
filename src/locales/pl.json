@@ -151,6 +151,7 @@
         "separator": "Separator",
         "empty": "Dotknij tokenów poniżej, aby zbudować wzorzec",
         "freeText": "Tekst",
+        "addText": "Dodaj",
         "editTokens": "Edytuj tokeny",
         "help": {
           "title": "Wzorzec nazwy pliku",

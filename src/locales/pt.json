@@ -151,6 +151,7 @@
         "separator": "Separador",
         "empty": "Toque nos tokens abaixo para construir o padrão",
         "freeText": "Texto",
+        "addText": "Adicionar",
         "editTokens": "Editar tokens",
         "help": {
           "title": "Padrão de nome de ficheiro",

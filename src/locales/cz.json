@@ -150,6 +150,7 @@
         "separator": "Oddělovač",
         "empty": "Klepněte na tokeny níže pro sestavení vzoru",
         "freeText": "Text",
+        "addText": "Přidat",
         "editTokens": "Upravit tokeny",
         "help": {
           "title": "Vzor názvu souboru",

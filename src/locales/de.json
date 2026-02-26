@@ -150,6 +150,7 @@
         "separator": "Trenner",
         "empty": "Tippe auf die Tokens um das Muster zu erstellen",
         "freeText": "Text",
+        "addText": "Hinzufügen",
         "editTokens": "Tokens bearbeiten",
         "help": {
           "title": "Dateinamenmuster",

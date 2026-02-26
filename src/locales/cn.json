@@ -151,6 +151,7 @@
         "separator": "分隔符",
         "empty": "点击下方标记构建模式",
         "freeText": "文本",
+        "addText": "添加",
         "editTokens": "编辑标记",
         "help": {
           "title": "文件名模式",

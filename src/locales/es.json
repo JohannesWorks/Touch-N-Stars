@@ -150,6 +150,7 @@
         "separator": "Separador",
         "empty": "Toca los tokens de abajo para construir el patrón",
         "freeText": "Texto",
+        "addText": "Añadir",
         "editTokens": "Editar tokens",
         "help": {
           "title": "Patrón de nombre de archivo",
