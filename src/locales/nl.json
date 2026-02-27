@@ -1800,7 +1800,11 @@
         "phd2Disabling": "uitschakelen",
         "phd2Enabling": "inschakelen",
         "phd2Failed": "PHD2 Service-update mislukt: {message}",
-        "phd2Success": "PHD2 Service-update succesvol."
+        "phd2Success": "PHD2 Service-update succesvol.",
+        "forcingSync": "Tijd handmatig synchroniseren...",
+        "syncingTime": "Tijdsverschil gedetecteerd: {diff}s. \nTijd synchroniseren...",
+        "timeInSync": "De tijd loopt synchroon (diff: {diff}s).",
+        "timeSynced": "Systeemtijd succesvol gesynchroniseerd."
       },
       "notAvailable": "PINS-omgeving niet gedetecteerd. Deze plugin is uitgeschakeld.",
       "sambaDescription": "Netwerkbestandsdeling in- of uitschakelen",
@@ -1829,7 +1833,12 @@
       "phd2Title": "PHD2 automatisch starten",
       "autoConnect": "Maak automatisch verbinding met geselecteerde wifi na het opstarten",
       "bandAuto": "Auto",
-      "wifiBand": "WiFi-band"
+      "wifiBand": "WiFi-band",
+      "autoSync": "Automatische synchronisatie",
+      "deviceTime": "Apparaattijd",
+      "loadingTime": "Laadtijd...",
+      "syncNow": "Synchroniseer nu",
+      "systemTime": "Systeem tijd"
     },
     "pinsDevices": {
       "config": {

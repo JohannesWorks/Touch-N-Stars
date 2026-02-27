@@ -1801,7 +1801,11 @@
         "phd2Disabling": "disabling",
         "phd2Enabling": "enabling",
         "phd2Failed": "PHD2 Service update failed: {message}",
-        "phd2Success": "PHD2 Service update successful."
+        "phd2Success": "PHD2 Service update successful.",
+        "forcingSync": "Manually syncing time...",
+        "syncingTime": "Time difference detected: {diff}s. Syncing time...",
+        "timeInSync": "Time is in sync (diff: {diff}s).",
+        "timeSynced": "System time synchronized successfully."
       },
       "notAvailable": "未检测到 PINS 环境。此插件已禁用。",
       "sambaDescription": "启用或禁用网络文件共享",
@@ -1830,7 +1834,12 @@
       "phd2Title": "PHD2 Autostart",
       "autoConnect": "Autoconnect to selected wifi after boot",
       "bandAuto": "Auto",
-      "wifiBand": "WiFi Band"
+      "wifiBand": "WiFi Band",
+      "autoSync": "Auto Sync",
+      "deviceTime": "Device Time",
+      "loadingTime": "Loading time...",
+      "syncNow": "Sync Now",
+      "systemTime": "System Time"
     },
     "pinsDevices": {
       "config": {

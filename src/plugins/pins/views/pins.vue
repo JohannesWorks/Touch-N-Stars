@@ -244,6 +244,50 @@
           </div>
         </div>
 
+        <!-- System Time Card -->
+        <div
+          class="border border-gray-700 rounded-lg bg-gray-800 shadow-xl p-6 relative overflow-hidden flex flex-row items-center justify-between"
+        >
+          <div class="absolute top-0 right-20 p-4 opacity-10 pointer-events-none">
+            <svg class="w-16 h-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <div class="relative z-10">
+            <h3 class="text-xl font-bold text-white mb-1">{{ $t('plugins.pins.systemTime') }}</h3>
+            <p class="text-gray-400 text-sm" v-if="deviceTime">
+              {{ $t('plugins.pins.deviceTime') }}: {{ new Date(deviceTime * 1000).toLocaleString() }}
+            </p>
+            <p class="text-gray-400 text-sm" v-else>
+              {{ $t('plugins.pins.loadingTime') }}
+            </p>
+          </div>
+          <div class="relative z-10 flex flex-col items-end gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-gray-400 uppercase font-bold">{{
+                $t('plugins.pins.autoSync')
+              }}</span>
+              <toggleButton
+                :status-value="pinsStore.timeSyncEnabled"
+                @update:status-value="handleTimeSyncToggle"
+                :disabled="status === 'Running'"
+              />
+            </div>
+            <button
+              @click="manualTimeSync"
+              class="text-xs bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded transition-colors"
+              :disabled="status === 'Running'"
+            >
+              {{ $t('plugins.pins.syncNow') }}
+            </button>
+          </div>
+        </div>
+
         <div
           class="border border-gray-700 rounded-lg bg-gray-800 shadow-xl p-6 relative overflow-hidden"
         >
@@ -414,6 +458,7 @@ const store = apiStore();
 const pinsStore = usePinsStore();
 
 const dryRun = ref(false);
+const deviceTime = ref(null);
 const sambaEnabled = ref(false);
 const phd2Enabled = ref(false);
 const phd2Running = ref(false);
@@ -491,10 +536,107 @@ watch(
     if (newValue) {
       checkSambaStatus();
       checkPhd2Status();
+      checkSystemTime();
     }
   },
   { immediate: true }
 );
+
+async function checkSystemTime() {
+  const ip = getIp();
+  if (!ip) return;
+
+  try {
+    const directAxios = axios.create({ headers: {} });
+    const response = await directAxios.get(`http://${ip}:${PORT}/system/time`, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      timeout: 5000,
+    });
+
+    if (response.data && response.data.timestamp) {
+      deviceTime.value = response.data.timestamp;
+
+      if (pinsStore.timeSyncEnabled) {
+        syncSystemTime(response.data.timestamp);
+      }
+    }
+  } catch (error) {
+    console.error('Failed to check system time:', error);
+  }
+}
+
+async function syncSystemTime(remoteTimestamp, force = false) {
+  const ip = getIp();
+  if (!ip) return;
+
+  const localTime = Date.now() / 1000;
+  const diff = Math.abs(remoteTimestamp - localTime);
+
+  if (diff > 5 || force) {
+    if (force) {
+      console.log('Forcing time sync...');
+      appendLog(t('plugins.pins.logs.forcingSync'));
+    } else {
+      console.log(`Time difference detected: ${diff.toFixed(2)}s. Syncing...`);
+      appendLog(t('plugins.pins.logs.syncingTime', { diff: diff.toFixed(1) }));
+    }
+
+    try {
+      const directAxios = axios.create({ headers: {} });
+      await directAxios.post(
+        `http://${ip}:${PORT}/system/time`,
+        {
+          timestamp: localTime,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          timeout: 5000,
+        }
+      );
+      appendLog(t('plugins.pins.logs.timeSynced'));
+      // Refresh time after sync
+      setTimeout(checkSystemTime, 2000);
+    } catch (error) {
+      console.error('Failed to sync system time:', error);
+      appendLog(t('plugins.pins.logs.error', { message: 'Time Sync Failed: ' + error.message }));
+    }
+  } else {
+    appendLog(t('plugins.pins.logs.timeInSync', { diff: diff.toFixed(3) }));
+  }
+}
+
+async function manualTimeSync() {
+  const ip = getIp();
+  if (!ip) return;
+
+  try {
+    const directAxios = axios.create({ headers: {} });
+    const response = await directAxios.get(`http://${ip}:${PORT}/system/time`, {
+      headers: { Authorization: `Bearer ${TOKEN}` },
+      timeout: 5000,
+    });
+    if (response.data && response.data.timestamp) {
+      syncSystemTime(response.data.timestamp, true);
+    }
+  } catch (e) {
+    console.error(e);
+    appendLog(
+      t('plugins.pins.logs.error', { message: 'Failed to fetch time for sync: ' + e.message })
+    );
+  }
+}
+
+async function handleTimeSyncToggle(newValue) {
+  pinsStore.setTimeSync(newValue);
+  if (newValue) {
+    checkSystemTime();
+  }
+}
 
 async function checkSambaStatus() {
   const ip = getIp();

@@ -1800,7 +1800,11 @@
         "phd2Disabling": "wyłączanie",
         "phd2Enabling": "umożliwienie",
         "phd2Failed": "Aktualizacja usługi PHD2 nie powiodła się: {wiadomość}",
-        "phd2Success": "Aktualizacja usługi PHD2 powiodła się."
+        "phd2Success": "Aktualizacja usługi PHD2 powiodła się.",
+        "forcingSync": "Ręczna synchronizacja czasu...",
+        "syncingTime": "Wykryto różnicę czasu: {diff} s. \nCzas synchronizacji...",
+        "timeInSync": "Czas jest zsynchronizowany (różnica: {diff} s).",
+        "timeSynced": "Czas systemowy został pomyślnie zsynchronizowany."
       },
       "notAvailable": "Środowisko PINS nie zostało wykryte. Ta wtyczka jest wyłączona.",
       "sambaDescription": "Włącz lub wyłącz udostępnianie plików w sieci",
@@ -1829,7 +1833,12 @@
       "phd2Title": "Autostart PHD2",
       "autoConnect": "Po uruchomieniu automatycznie połącz się z wybranym Wi-Fi",
       "bandAuto": "Automatyczny",
-      "wifiBand": "Pasmo Wi-Fi"
+      "wifiBand": "Pasmo Wi-Fi",
+      "autoSync": "Automatyczna synchronizacja",
+      "deviceTime": "Czas urządzenia",
+      "loadingTime": "Czas ładowania...",
+      "syncNow": "Synchronizuj teraz",
+      "systemTime": "Czas systemowy"
     },
     "pinsDevices": {
       "config": {

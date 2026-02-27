@@ -1029,8 +1029,17 @@
         "wsConnecting": "Verbindung zu {wsUrl} wird aufgebaut...",
         "wsConnected": "Verbindung hergestellt. Streame Protokolle...",
         "wsClosed": "Verbindung geschlossen. (Code: {code})",
-        "wsError": "Ein WebSocket-Fehler ist aufgetreten."
-      }
+        "wsError": "Ein WebSocket-Fehler ist aufgetreten.",
+        "forcingSync": "Zeit manuell synchronisieren...",
+        "syncingTime": "Zeitunterschied erkannt: {diff}s. \nSynchronisierungszeit...",
+        "timeInSync": "Die Zeit ist synchron (Diff: {diff}s).",
+        "timeSynced": "Systemzeit erfolgreich synchronisiert."
+      },
+      "autoSync": "Automatische Synchronisierung",
+      "deviceTime": "Gerätezeit",
+      "loadingTime": "Ladezeit...",
+      "syncNow": "Jetzt synchronisieren",
+      "systemTime": "Systemzeit"
     },
     "bahtifocus": {
       "title": "Bahtinov Mask Analyzer",

@@ -996,6 +996,11 @@
       "autoConnect": "Autoconnect to selected wifi after boot",
       "wifiConnect": "Connect",
       "scanning": "Scanning...",
+      "systemTime": "System Time",
+      "deviceTime": "Device Time",
+      "loadingTime": "Loading time...",
+      "autoSync": "Auto Sync",
+      "syncNow": "Sync Now",
       "startUpgrade": "Start Upgrade",
       "upgrading": "Upgrading...",
       "terminalOutput": "TERMINAL OUTPUT",
@@ -1008,6 +1013,10 @@
         "failed": "Failed"
       },
       "logs": {
+        "syncingTime": "Time difference detected: {diff}s. Syncing time...",
+        "forcingSync": "Manually syncing time...",
+        "timeInSync": "Time is in sync (diff: {diff}s).",
+        "timeSynced": "System time synchronized successfully.",
         "noIp": "Error: No IP address found in settings. Please connect to an instance first.",
         "init": "Initializing upgrade sequence on host: {ip}",
         "config": "Configuration: Dry Run = {dryRun}",

@@ -3,6 +3,7 @@ import apiService from '@/services/apiService';
 import apiPinsService from '@/services/apiPinsService';
 import { useCameraStore } from '@/store/cameraStore';
 import { useSettingsStore } from '@/store/settingsStore';
+import { usePinsStore } from '@/plugins/pins/store/pinsStore';
 import { useToastStore } from '@/store/toastStore';
 import { useImagetStore } from './imageStore';
 import { useAutofocusStore } from '@/store/autofocusStore';
@@ -819,6 +820,13 @@ export const apiStore = defineStore('store', {
     },
 
     async syncSystemTime() {
+      const pinsStore = usePinsStore();
+
+      if (!pinsStore.timeSyncEnabled) {
+        console.log('[Time Sync] Time sync is disabled in settings.');
+        return;
+      }
+
       if (this.isTimeSynced) return;
 
       const serverTime = await apiPinsService.fetchSystemTime();

@@ -3,8 +3,12 @@ import { defineStore } from 'pinia';
 export const usePinsStore = defineStore('pins', {
   state: () => ({
     savedWifiPasswords: {}, // Object map: SSID -> Password
+    timeSyncEnabled: false,
   }),
   actions: {
+    setTimeSync(enabled) {
+      this.timeSyncEnabled = enabled;
+    },
     savePassword(ssid, password) {
       if (!ssid) return;
       this.savedWifiPasswords[ssid] = password;

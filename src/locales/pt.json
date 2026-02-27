@@ -1800,7 +1800,11 @@
         "phd2Disabling": "desabilitando",
         "phd2Enabling": "habilitando",
         "phd2Failed": "Falha na atualização do serviço PHD2: {message}",
-        "phd2Success": "Atualização do serviço PHD2 bem-sucedida."
+        "phd2Success": "Atualização do serviço PHD2 bem-sucedida.",
+        "forcingSync": "Sincronizando a hora manualmente...",
+        "syncingTime": "Diferença horária detectada: {diff}s. \nSincronizando hora...",
+        "timeInSync": "O tempo está sincronizado (diff: {diff}s).",
+        "timeSynced": "Hora do sistema sincronizada com sucesso."
       },
       "notAvailable": "Ambiente PINS não detectado. Este plugin está desativado.",
       "sambaDescription": "Ativar ou desativar compartilhamento de arquivos de rede",
@@ -1829,7 +1833,12 @@
       "phd2Title": "Inicialização automática do PHD2",
       "autoConnect": "Conecte-se automaticamente ao wifi selecionado após a inicialização",
       "bandAuto": "Auto",
-      "wifiBand": "Banda Wi-Fi"
+      "wifiBand": "Banda Wi-Fi",
+      "autoSync": "Sincronização automática",
+      "deviceTime": "Hora do dispositivo",
+      "loadingTime": "Tempo de carregamento...",
+      "syncNow": "Sincronizar agora",
+      "systemTime": "Hora do sistema"
     },
     "pinsDevices": {
       "config": {
