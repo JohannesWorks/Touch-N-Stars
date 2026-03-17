@@ -7,17 +7,16 @@ let SUPPORTED_PLATFORMS = new Set(['android', 'ios']);
 let UPDATE_ASSET_NAME = 'dist.zip';
 
 function getGithubApiBase() {
-  return 'https://api.github.com/repos/Touch-N-Stars/Touch-N-Stars';
-}
-
-function isBetaUpdateChannelEnabled() {
   try {
     const settingsStore = useSettingsStore();
-    return Boolean(settingsStore?.useBetaFeatures);
+    if (settingsStore?.useBetaFeatures) {
+      console.log('[Updater] Beta features enabled: using beta update channels');
+      return 'https://api.github.com/repos/JohannesWorks/Touch-N-Stars';
+    }
   } catch (error) {
-    // Store not initialized yet, use stable channel by default
-    return false;
+    // Store not initialized yet, use default
   }
+  return 'https://api.github.com/repos/Touch-N-Stars/Touch-N-Stars';
 }
 
 const defaultHeaders = {
@@ -134,67 +133,43 @@ async function fetchJson(url) {
   return response.json();
 }
 
-function mapReleaseToUpdateMetadata(release) {
-  const assets = Array.isArray(release.assets) ? release.assets : [];
-
-  console.info('[Updater] Release assets found:', assets.map((a) => a?.name).filter(Boolean));
-
-  const updateAsset = assets.find((a) => a?.name === UPDATE_ASSET_NAME) || null;
-  if (!updateAsset || !updateAsset.browser_download_url) {
-    throw new Error(`Release ${release.tag_name} does not expose ${UPDATE_ASSET_NAME}`);
-  }
-
-  const changelogAsset = assets.find((a) => a?.name === 'CHANGELOG.md') || null;
-
-  const versionString = release.tag_name || release.name;
-  const parsedVersion = parseVersion(versionString);
-  const normalizedVersion = `${parsedVersion.major}.${parsedVersion.minor}.${parsedVersion.patch}${
-    parsedVersion.prerelease.length > 0 ? `-${parsedVersion.prerelease.join('.')}` : ''
-  }`;
-
-  if (!normalizedVersion || normalizedVersion === '0.0.0') {
-    throw new Error(`Release ${release.tag_name} has an unparseable version`);
-  }
-
-  return {
-    tagName: release.tag_name,
-    version: normalizedVersion,
-    name: release.name || release.tag_name,
-    notes: release.body || '',
-    assetUrl: updateAsset.browser_download_url,
-    changelogUrl: changelogAsset ? changelogAsset.browser_download_url : null,
-    publishedAt: release.published_at,
-    isPrerelease: release.prerelease,
-  };
-}
-
 async function fetchLatestRelease() {
-  const useBetaChannel = isBetaUpdateChannelEnabled();
-  const channel = useBetaChannel ? 'beta' : 'stable';
-
   try {
-    const releases = await fetchJson(`${getGithubApiBase()}/releases?per_page=30`);
-    const channelReleases = (Array.isArray(releases) ? releases : []).filter((release) => {
-      if (!release || release.draft) return false;
-      return useBetaChannel ? Boolean(release.prerelease) : !release.prerelease;
-    });
+    const release = await fetchJson(`${getGithubApiBase()}/releases/latest`);
+    if (!release || release.draft) return null;
 
-    if (channelReleases.length === 0) {
-      console.warn(`[Updater] No ${channel} releases found`);
+    const assets = Array.isArray(release.assets) ? release.assets : [];
+
+    console.info('[Updater] Release assets found:', assets.map((a) => a?.name).filter(Boolean));
+
+    const updateAsset = assets.find((a) => a?.name === UPDATE_ASSET_NAME) || null;
+    if (!updateAsset || !updateAsset.browser_download_url) {
+      throw new Error(`Release ${release.tag_name} does not expose ${UPDATE_ASSET_NAME}`);
+    }
+
+    const changelogAsset = assets.find((a) => a?.name === 'CHANGELOG.md') || null;
+
+    const versionString = release.tag_name || release.name;
+    const parsedVersion = parseVersion(versionString);
+    const normalizedVersion = `${parsedVersion.major}.${parsedVersion.minor}.${parsedVersion.patch}${
+      parsedVersion.prerelease.length > 0 ? `-${parsedVersion.prerelease.join('.')}` : ''
+    }`;
+
+    if (!normalizedVersion || normalizedVersion === '0.0.0') {
+      console.warn('[Updater] Skipping release with unparseable version:', release.tag_name);
       return null;
     }
 
-    for (const release of channelReleases) {
-      try {
-        const mapped = mapReleaseToUpdateMetadata(release);
-        console.info(`[Updater] Using ${channel} release:`, mapped.tagName);
-        return mapped;
-      } catch (error) {
-        console.warn('[Updater] Skipping release candidate:', release?.tag_name, error?.message);
-      }
-    }
-
-    return null;
+    return {
+      tagName: release.tag_name,
+      version: normalizedVersion,
+      name: release.name || release.tag_name,
+      notes: release.body || '',
+      assetUrl: updateAsset.browser_download_url,
+      changelogUrl: changelogAsset ? changelogAsset.browser_download_url : null,
+      publishedAt: release.published_at,
+      isPrerelease: release.prerelease,
+    };
   } catch (error) {
     console.warn('[Updater] Failed to resolve latest release:', error);
     return null;

@@ -1,4 +1,4 @@
-name: Build Bundle & Publish Production Release
+name: Build Bundle & Tag Release
 
 on:
   workflow_dispatch: {}
@@ -55,7 +55,7 @@ jobs:
       - name: Upload dist.zip artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist-prod
+          name: dist
           path: dist.zip
 
       - name: Publish GitHub Release
@@ -63,8 +63,6 @@ jobs:
         with:
           tag_name: v${{ steps.pkg.outputs.version }}
           name: v${{ steps.pkg.outputs.version }}
-          prerelease: false
-          make_latest: true
           files: |
             dist.zip
             CHANGELOG.md
