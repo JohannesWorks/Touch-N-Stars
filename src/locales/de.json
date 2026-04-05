@@ -73,13 +73,13 @@
     "check_wki": "In unserem Wiki finden Sie detaillierte Anleitungen",
     "coordAlt": "Alt",
     "coordLat": "Lat",
-    "coordLon": "Lang",
+    "coordLon": "Länge",
     "coordUnit": "M",
     "coordsNotSupported": "Wird vom Treiber nicht unterstützt",
-    "currentMountCoords": "Montageort",
+    "currentMountCoords": "Montierungsstandort",
     "currentNinaCoords": "Profilstandort",
     "loadingCoords": "Laden…",
-    "mountNotConnected": "Halterung nicht angeschlossen",
+    "mountNotConnected": "Montierung nicht verbunden",
     "syncDirection": "Richtung der Standortsynchronisierung",
     "syncDirectionNosync": "Keine Synchronisierung",
     "syncDirectionToApplication": "Vom Mount zum Profil synchronisieren",
@@ -185,7 +185,7 @@
       "imageSavePath": {
         "title": "Speicherpfad",
         "placeholder": "Kein Pfad gewählt",
-        "selectTitle": "Speicherort wöhlen",
+        "selectTitle": "Speicherort wählen",
         "save": "Speichern",
         "saving": "...",
         "dirtyHint": "Pfad geändert - bitte auf Speichern drücken um die Änderung zu Übernehmen.",
@@ -342,13 +342,13 @@
         "titel": "Montierungseinstellungen",
         "max_slew_rate": "Max. Schwenkgeschwindigkeit (°/s)"
       },
-      "coordsMismatchWarning": "Profil- und Montagekoordinaten unterscheiden sich.",
+      "coordsMismatchWarning": "Profil- und Montierungskoordinaten unterscheiden sich.",
       "timeSync": {
         "backendTime": "Backend UTC",
-        "mountNotConnected": "Halterung nicht angeschlossen",
-        "mountTime": "Mounten Sie UTC",
+        "mountNotConnected": "Montierung nicht verbunden",
+        "mountTime": "Uhrzeit der Montierung",
         "notSupported": "Wird vom Treiber nicht unterstützt",
-        "syncLabel": "Synchronisierungszeit zum Mounten",
+        "syncLabel": "Zeit mit Montierung synchronisieren",
         "title": "Zeitsynchronisation"
       }
     },
@@ -471,8 +471,8 @@
         "timeDisplay": "Zeitbereich"
       },
       "running": "WIRD AUSGEFÜHRT",
-      "imageHistory": "Image History",
-      "duration": "Duration",
+      "imageHistory": "Bildverlauf",
+      "duration": "Dauer",
       "temperatureShort": "Temp",
       "targetName": "Ziel",
       "conditions": "Bedingungen",
@@ -508,7 +508,7 @@
       },
       "items": {
         "saving": "Speichern…",
-        "generic": "Generic",
+        "generic": "Allgemein",
         "on": "Ein",
         "off": "Aus",
         "takeExposure": {
@@ -620,7 +620,7 @@
         },
         "polarAlignment": {
           "searchRadius": "Suchradius (°)",
-          "alignmentTolerance": "Ausrichttolerant (Bogensek)",
+          "alignmentTolerance": "Ausrichttoleranz (Bogensek)",
           "moveRate": "Bewegungsrate (°/s)",
           "targetDistance": "Zielabstand (°)",
           "eastDirection": "Ost-Richtung",
