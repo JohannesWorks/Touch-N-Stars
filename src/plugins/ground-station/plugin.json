@@ -1,0 +1,10 @@
+{
+  "id": "ground-station",
+  "name": "Ground Station",
+  "description": "Configure NINA Ground Station notification services (Pushover, Telegram, Email, Discord, Slack, MQTT, IFTTT, ntfy.sh)",
+  "version": "1.0.0",
+  "author": "Johannes",
+  "defaultEnabled": false,
+  "enabled": true,
+  "isPins": false
+}
