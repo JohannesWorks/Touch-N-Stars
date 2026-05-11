@@ -85,17 +85,24 @@ const iterationsTracked = computed(
 );
 
 const runningStatusText = computed(() => {
+  const filterPrefix = flatsStore.currentFilterName
+    ? `${t('components.flatassistant.filter_label')} ${flatsStore.currentFilterName} — `
+    : '';
+
   if (!iterationsTracked.value) {
-    return t('components.flatassistant.status_running_unknown');
+    return filterPrefix + t('components.flatassistant.status_running_unknown');
   }
-  return t(
-    flatsStore.currentRunType === 'darks'
-      ? 'components.flatassistant.status_running_darks'
-      : 'components.flatassistant.status_running_flats',
-    {
-      completed: flatsStore.status.CompletedIterations,
-      total: flatsStore.status.TotalIterations,
-    }
+  return (
+    filterPrefix +
+    t(
+      flatsStore.currentRunType === 'darks'
+        ? 'components.flatassistant.status_running_darks'
+        : 'components.flatassistant.status_running_flats',
+      {
+        completed: flatsStore.status.CompletedIterations,
+        total: flatsStore.status.TotalIterations,
+      }
+    )
   );
 });
 

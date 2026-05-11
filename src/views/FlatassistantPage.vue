@@ -40,7 +40,11 @@
       <MultiMode v-else />
 
       <div
-        v-show="flatsStore.status.State === 'Running' || flatsStore.lastRun !== null"
+        v-show="
+          flatsStore.status.State === 'Running' ||
+          flatsStore.status.State === 'Finished' ||
+          flatsStore.lastRun !== null
+        "
         class="flex flex-col w-full max-w-md space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
       >
         <getStatus />

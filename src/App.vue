@@ -400,6 +400,18 @@ watch(
 const sequenceStore = useSequenceStore();
 const logStore = useLogStore();
 const flatsStore = useFlatassistantStore();
+
+// Global flat run outcome — fires regardless of which page is active.
+// prevRun !== null guard mirrors the original page watcher: first setter wins,
+// so fetchFlatsInfos (Running-state values) beats waitForCompletion (Finished-state
+// values which NINA may zero out).
+watch(
+  () => flatsStore.lastRun,
+  (run, prevRun) => {
+    if (!run || prevRun !== null) return;
+    flatsStore.commitRunOutcome(run);
+  }
+);
 const cameraStore = useCameraStore();
 const dialogStore = useDialogStore();
 const messageboxStore = useMessageboxStore();

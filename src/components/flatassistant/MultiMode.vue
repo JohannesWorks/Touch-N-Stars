@@ -60,6 +60,40 @@
               <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span class="text-sm font-medium text-white truncate">{{ filter.Name }}</span>
+            <!-- Per-filter run result indicator -->
+            <svg
+              v-if="flatsStore.filterResults[filter.Id] === 'success'"
+              class="w-4 h-4 text-green-400 shrink-0"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <template
+              v-else-if="['failed', 'dim', 'bright'].includes(flatsStore.filterResults[filter.Id])"
+            >
+              <svg
+                class="w-4 h-4 text-red-400 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span
+                v-if="flatsStore.filterResults[filter.Id] === 'dim'"
+                class="text-xs text-red-400 shrink-0"
+                >{{ $t('components.flatassistant.result_dim') }}</span
+              >
+              <span
+                v-else-if="flatsStore.filterResults[filter.Id] === 'bright'"
+                class="text-xs text-red-400 shrink-0"
+                >{{ $t('components.flatassistant.result_bright') }}</span
+              >
+            </template>
           </div>
           <toggleButton
             :statusValue="isActive(filter.Id)"
@@ -406,7 +440,7 @@ function toggleFilter(filterId, value) {
   }
 }
 
-// ── Session persistence (mode + filter selections, NOT configs) ───────────────
+// ── Session persistence (mode + filter selections + local-only config fields) ──
 
 watch(
   () => ({
@@ -414,6 +448,12 @@ watch(
     keepClosed: state.keepClosed,
     activeFilterIds: [...state.activeFilterIds],
     expandedFilterIds: [...state.expandedFilterIds],
+    filterConfigs: Object.fromEntries(
+      Object.entries(state.filterConfigs).map(([id, cfg]) => [
+        id,
+        { count: cfg.count, brightness: cfg.brightness, exposureTime: cfg.exposureTime },
+      ])
+    ),
   }),
   (val) => {
     settingsStore.flats.multiMode = { ...settingsStore.flats.multiMode, ...val };
@@ -491,57 +531,161 @@ watch(
 // ── Start / Stop ──────────────────────────────────────────────────────────────
 
 async function startMultiMode() {
-  const filters = state.activeFilterIds.map((filterId) => {
+  const wheelOrder = store.filterInfo.AvailableFilters?.map((f) => f.Id) ?? [];
+  const sortedIds = [...state.activeFilterIds].sort(
+    (a, b) => wheelOrder.indexOf(a) - wheelOrder.indexOf(b)
+  );
+
+  // Reset per-filter results
+  for (const id of sortedIds) {
+    flatsStore.filterResults[id] = null;
+  }
+
+  // Initialise run state. Switch currentRunType to 'flats' so fetchFlatsInfos uses
+  // NINA's status (not TNS multi-status) while each per-filter call is running.
+  flatsStore.startManagedRun('flats-multi');
+  flatsStore.currentRunType = 'flats';
+
+  let totalCompleted = 0;
+  let totalRequested = 0;
+  const darkJobs = [];
+
+  for (const filterId of sortedIds) {
+    if (flatsStore.workflowStopRequested) break;
+
     const cfg = state.filterConfigs[filterId];
-    const base = {
-      filterId,
-      count: cfg.count,
-      gain: cfg.gain,
-      offset: cfg.offset,
-      binning: cfg.binning,
-      histogramMean: cfg.histogramMean,
-      meanTolerance: cfg.meanTolerance,
-    };
-    if (state.selectedMode === 'AutoExposure') {
-      return {
-        ...base,
-        minExposure: cfg.minExposure,
-        maxExposure: cfg.maxExposure,
-        brightness: cfg.brightness,
-      };
-    } else if (state.selectedMode === 'AutoBrightness') {
-      return {
-        ...base,
-        exposureTime: cfg.exposureTime,
-        minBrightness: cfg.minBrightness,
-        maxBrightness: cfg.maxBrightness,
-      };
-    } else {
-      return { ...base, minExposure: cfg.minExposure, maxExposure: cfg.maxExposure };
+    flatsStore.currentFilterName =
+      store.filterInfo.AvailableFilters?.find((f) => f.Id === filterId)?.Name ?? String(filterId);
+
+    // Sync histogram target for this filter
+    flatsStore.histogramMean = cfg.histogramMean / 100;
+    flatsStore.meanTolerance = cfg.meanTolerance / 100;
+
+    // Call the appropriate NINA single-filter flat API (same endpoints as single mode,
+    // they accept filterId so NINA moves the filter wheel automatically)
+    let response;
+    try {
+      if (state.selectedMode === 'AutoExposure') {
+        response = await apiService.flatAutoExposure(
+          cfg.count,
+          cfg.minExposure,
+          cfg.maxExposure,
+          cfg.histogramMean / 100,
+          cfg.meanTolerance / 100,
+          cfg.binning,
+          cfg.gain,
+          cfg.offset,
+          filterId,
+          cfg.brightness,
+          state.keepClosed
+        );
+      } else if (state.selectedMode === 'AutoBrightness') {
+        response = await apiService.flatAutoBrightness(
+          cfg.count,
+          cfg.minBrightness,
+          cfg.maxBrightness,
+          cfg.histogramMean / 100,
+          cfg.meanTolerance / 100,
+          cfg.binning,
+          cfg.gain,
+          cfg.offset,
+          filterId,
+          cfg.exposureTime,
+          state.keepClosed
+        );
+      } else {
+        response = await apiService.flatSkyflat(
+          cfg.count,
+          cfg.minExposure,
+          cfg.maxExposure,
+          cfg.histogramMean / 100,
+          cfg.meanTolerance / 100,
+          cfg.binning,
+          cfg.gain,
+          cfg.offset,
+          filterId,
+          state.keepClosed
+        );
+      }
+    } catch (err) {
+      flatsStore.notifyOperationIssue(err?.response?.data ?? err);
+      flatsStore.filterResults[filterId] = 'failed';
+      totalRequested += cfg.count;
+      continue;
     }
-  });
 
-  const payload = { mode: state.selectedMode, keepClosed: state.keepClosed, filters };
+    if (response?.Success === false) {
+      flatsStore.notifyOperationIssue(response, 'warning');
+      flatsStore.filterResults[filterId] = 'failed';
+      totalRequested += cfg.count;
+      continue;
+    }
 
-  try {
-    await flatsStore.runFlatWorkflow({
-      request: () => apiService.flatMultiMode(payload),
-      statusLoader: () => apiService.flatMultiStatus(),
-      darkJobs:
-        state.selectedMode === 'SkyFlat'
-          ? []
-          : filters.map((filter) => ({
-              count: flatsStore.darkCount,
-              filterId: filter.filterId,
-              binning: filter.binning,
-              gain: filter.gain,
-              offset: filter.offset,
-            })),
-      keepClosed: state.keepClosed,
+    // Poll NINA's status. Use a 30-poll grace so a stale Finished state left by a
+    // previous failed run doesn't cause an early exit before NINA transitions to Running.
+    const { completed, total } = await flatsStore.waitForCompletion(
+      () => apiService.flatassistantAction('status'),
+      250,
+      { gracePollLimit: 120 }
+    );
+
+    totalCompleted += completed;
+    totalRequested += total || cfg.count;
+
+    if (total > 0 && completed >= total) {
+      flatsStore.filterResults[filterId] = 'success';
+      if (state.selectedMode !== 'SkyFlat' && flatsStore.darkCount > 0) {
+        darkJobs.push({
+          count: flatsStore.darkCount,
+          filterId,
+          binning: cfg.binning,
+          gain: cfg.gain,
+          offset: cfg.offset,
+        });
+      }
+    } else if (flatsStore.workflowStopRequested) {
+      flatsStore.filterResults[filterId] = 'stopped';
+    } else {
+      // Try to infer dim vs bright from last ADU vs per-filter target
+      const lastADU = flatsStore.currentADU;
+      const MAX_ADU = 65535;
+      const targetADU = (cfg.histogramMean / 100) * MAX_ADU;
+      const toleranceADU = (cfg.meanTolerance / 100) * MAX_ADU;
+      if (lastADU !== null && lastADU < targetADU - toleranceADU) {
+        flatsStore.filterResults[filterId] = 'dim';
+      } else if (lastADU !== null && lastADU > targetADU + toleranceADU) {
+        flatsStore.filterResults[filterId] = 'bright';
+      } else {
+        flatsStore.filterResults[filterId] = 'failed';
+      }
+    }
+  }
+
+  flatsStore.currentFilterName = null;
+
+  // Restore run type and commit aggregate result — triggers App.vue watcher → toast
+  flatsStore.currentRunType = 'flats-multi';
+  const FAILURE_STATES = ['failed', 'dim', 'bright'];
+  const failedFilterNames = sortedIds
+    .filter((id) => FAILURE_STATES.includes(flatsStore.filterResults[id]))
+    .map((id) => {
+      const name = store.filterInfo.AvailableFilters?.find((f) => f.Id === id)?.Name ?? String(id);
+      const result = flatsStore.filterResults[id];
+      if (result === 'dim') return `${name} (too dim)`;
+      if (result === 'bright') return `${name} (too bright)`;
+      return name;
     });
-  } catch (error) {
-    console.error('Error starting multimode flats:', error);
-    flatsStore.notifyOperationIssue(error?.response?.data ?? error);
+  flatsStore.lastRun = {
+    type: 'flats-multi',
+    completed: totalCompleted,
+    total: totalRequested,
+    success: totalRequested > 0 && totalCompleted >= totalRequested,
+    lastADU: flatsStore.currentADU,
+    failedFilterNames,
+  };
+
+  if (darkJobs.length > 0 && !flatsStore.workflowStopRequested) {
+    await flatsStore.runDarkSeries(darkJobs, state.keepClosed);
   }
 }
 
@@ -561,8 +705,16 @@ watch(
   () => store.profileInfo?.FilterWheelSettings?.FilterWheelFilters,
   (profileFilters) => {
     if (!profileFilters?.length || configsInitialized) return;
+    const savedConfigs = settingsStore.flats.multiMode?.filterConfigs ?? {};
     profileFilters.forEach((_, idx) => {
-      state.filterConfigs[idx] = defaultConfig(idx);
+      const base = defaultConfig(idx);
+      const saved = savedConfigs[idx] ?? {};
+      state.filterConfigs[idx] = {
+        ...base,
+        count: saved.count ?? base.count,
+        brightness: saved.brightness ?? base.brightness,
+        exposureTime: saved.exposureTime ?? base.exposureTime,
+      };
     });
     // Ensure saved active filters have a config even if not in profile list
     state.activeFilterIds.forEach((id) => ensureFilterConfig(id));
