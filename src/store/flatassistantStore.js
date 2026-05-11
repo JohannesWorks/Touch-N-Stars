@@ -80,13 +80,13 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
 
         // A run just finished — save a summary so the UI can show the outcome
         if (prevState === 'Running' && next.State === 'Finished') {
-          this.lastRun = {
+          this.commitRunOutcome({
             type: this.currentRunType,
             completed: prevCompleted,
             total: prevTotal,
             success: prevTotal > 0 && prevCompleted >= prevTotal,
             lastADU: this.currentADU,
-          };
+          });
         }
 
         this.status = next;
@@ -149,6 +149,58 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
       });
     },
 
+    commitRunOutcome(run) {
+      this.lastRun = run;
+
+      let type = 'info';
+      let message;
+
+      if (run.total <= 0) {
+        if (this.workflowStopRequested) {
+          type = 'info';
+          message = i18n.global.t('components.flatassistant.status_completed_flats');
+        } else {
+          type = 'error';
+          message = i18n.global.t('components.flatassistant.status_failed_flats');
+        }
+      } else if (run.success) {
+        type = 'success';
+        message = i18n.global.t(
+          run.type === 'darks'
+            ? 'components.flatassistant.status_success_darks'
+            : 'components.flatassistant.status_success_flats',
+          { count: run.total }
+        );
+      } else if (run.completed > 0) {
+        type = 'warning';
+        message = i18n.global.t(
+          run.type === 'darks'
+            ? 'components.flatassistant.status_stopped_darks'
+            : 'components.flatassistant.status_stopped_flats',
+          { completed: run.completed, total: run.total }
+        );
+      } else {
+        type = 'error';
+        message = i18n.global.t(
+          run.type === 'darks'
+            ? 'components.flatassistant.status_failed_darks'
+            : 'components.flatassistant.status_failed_flats'
+        );
+      }
+
+      this.lastRunOutcome = { type, message };
+
+      if (type !== 'info') {
+        useToastStore().showToast({
+          type,
+          title: i18n.global.t('components.flatassistant.title'),
+          message,
+          autoClose: true,
+          autoCloseDelay: 10000,
+        });
+      }
+    },
+
     async waitForCompletion(statusLoader, pollMs = 1000) {
       while (!this.workflowStopRequested) {
         const response = await statusLoader();
@@ -162,13 +214,13 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
           }
 
           if (status.State !== 'Running') {
-            this.lastRun = {
+            this.commitRunOutcome({
               type: this.currentRunType,
               completed: Math.max(0, Number(status.CompletedIterations) || 0),
               total: Math.max(0, Number(status.TotalIterations) || 0),
               success: this.didRunSucceed(status),
               lastADU: this.currentADU,
-            };
+            });
             return status;
           }
         }
@@ -306,13 +358,13 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
       }
 
       if (totalRequested > 0) {
-        this.lastRun = {
+        this.commitRunOutcome({
           type: 'darks',
           completed: totalCompleted,
           total: totalRequested,
           success: allSucceeded && totalCompleted >= totalRequested,
           lastADU,
-        };
+        });
       }
 
       return this.lastRun;

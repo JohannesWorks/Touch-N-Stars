@@ -323,6 +323,7 @@ import UpdateAvailableModal from '@/components/helpers/UpdateAvailableModal.vue'
 import PickerOverlay from '@/components/helpers/PickerOverlay.vue';
 import Modal from '@/components/helpers/Modal.vue';
 import { usePinsStore } from '@/plugins/pins/store/pinsStore';
+import { useFlatassistantStore } from '@/store/flatassistantStore';
 import { useNightSummaryStore } from '@/plugins/nightsummary/store/nightsummaryStore';
 import {
   checkForManualUpdate,
@@ -398,6 +399,7 @@ watch(
 );
 const sequenceStore = useSequenceStore();
 const logStore = useLogStore();
+const flatsStore = useFlatassistantStore();
 const cameraStore = useCameraStore();
 const dialogStore = useDialogStore();
 const messageboxStore = useMessageboxStore();
@@ -565,6 +567,7 @@ function pauseApp() {
   store.stopFetchingInfo();
   logStore.stopFetchingLog();
   sequenceStore.stopFetching();
+  flatsStore.stopFetchingFlats();
   cameraStore.stopCountdown();
   dialogStore.stopPolling();
   // Keine States zurücksetzen - UI bleibt erhalten
@@ -582,6 +585,7 @@ async function resumeApp() {
   await store.fetchAllInfos(t);
   store.startFetchingInfo(t);
   logStore.startFetchingLog();
+  flatsStore.startFetchingFlats();
 
   // Check for PINS support first
   await store.checkForPINS();
@@ -796,6 +800,7 @@ onMounted(async () => {
 
   store.startFetchingInfo(t);
   logStore.startFetchingLog();
+  flatsStore.startFetchingFlats();
 
   // Check for PINS support first
   await store.checkForPINS();
@@ -938,6 +943,7 @@ onBeforeUnmount(async () => {
   store.stopFetchingInfo();
   logStore.stopFetchingLog();
   sequenceStore.stopFetching();
+  flatsStore.stopFetchingFlats();
 
   if (pinsUpgradeRecoveryTimer) {
     clearTimeout(pinsUpgradeRecoveryTimer);
