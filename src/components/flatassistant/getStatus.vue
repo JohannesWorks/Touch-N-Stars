@@ -44,30 +44,28 @@
       </div>
     </template>
 
-    <!-- Finished: show outcome -->
-    <template v-else-if="flatsStore.lastRun">
-      <!-- All flats captured -->
-      <div v-if="flatsStore.lastRun.success" class="flex items-center gap-2 text-sm text-green-400">
-        <span class="text-base">✓</span>
-        <span>{{ successStatusText }}</span>
+    <!-- Finished: show locked outcome (set once when the run completes, never recomputed) -->
+    <template v-else-if="flatsStore.lastRunOutcome">
+      <div :class="['flex items-center gap-2 text-sm', outcomeColorClass]">
+        <CheckCircleIcon
+          v-if="
+            flatsStore.lastRunOutcome.type === 'success' ||
+            flatsStore.lastRunOutcome.type === 'info'
+          "
+          class="w-4 h-4 shrink-0"
+        />
+        <ExclamationTriangleIcon
+          v-else-if="flatsStore.lastRunOutcome.type === 'warning'"
+          class="w-4 h-4 shrink-0"
+        />
+        <XCircleIcon v-else class="w-4 h-4 shrink-0" />
+        <span>{{ flatsStore.lastRunOutcome.message }}</span>
       </div>
-      <!-- Stopped part-way through (user cancel or mid-run error) -->
       <div
-        v-else-if="flatsStore.lastRun.completed > 0"
-        class="flex items-center gap-2 text-sm text-yellow-400"
+        v-if="flatsStore.lastRun?.lastADU !== null && flatsStore.lastRunOutcome.type === 'error'"
+        class="text-xs text-gray-400 pl-5"
       >
-        <span class="text-base">⚠</span>
-        <span>{{ stoppedStatusText }}</span>
-      </div>
-      <!-- Zero flats taken — determination phase failed (e.g. too dim at max exposure) -->
-      <div v-else class="space-y-1">
-        <div class="flex items-center gap-2 text-sm text-red-400">
-          <span class="text-base">✗</span>
-          <span>{{ failedStatusText }}</span>
-        </div>
-        <div v-if="flatsStore.lastRun.lastADU !== null" class="text-xs text-gray-400 pl-5">
-          {{ $t('components.flatassistant.status_adu_live', { adu: flatsStore.lastRun.lastADU }) }}
-        </div>
+        {{ $t('components.flatassistant.status_adu_live', { adu: flatsStore.lastRun.lastADU }) }}
       </div>
     </template>
   </div>
@@ -77,12 +75,20 @@
 import { computed } from 'vue';
 import { useFlatassistantStore } from '@/store/flatassistantStore';
 import { useI18n } from 'vue-i18n';
+import { CheckCircleIcon, ExclamationTriangleIcon, XCircleIcon } from '@heroicons/vue/24/outline';
 
 const flatsStore = useFlatassistantStore();
 const { t } = useI18n();
 
-const runningStatusText = computed(() =>
-  t(
+const iterationsTracked = computed(
+  () => flatsStore.status.TotalIterations > 0 && flatsStore.status.CompletedIterations >= 0
+);
+
+const runningStatusText = computed(() => {
+  if (!iterationsTracked.value) {
+    return t('components.flatassistant.status_running_unknown');
+  }
+  return t(
     flatsStore.currentRunType === 'darks'
       ? 'components.flatassistant.status_running_darks'
       : 'components.flatassistant.status_running_flats',
@@ -90,37 +96,21 @@ const runningStatusText = computed(() =>
       completed: flatsStore.status.CompletedIterations,
       total: flatsStore.status.TotalIterations,
     }
-  )
-);
+  );
+});
 
-const successStatusText = computed(() =>
-  t(
-    flatsStore.lastRun?.type === 'darks'
-      ? 'components.flatassistant.status_success_darks'
-      : 'components.flatassistant.status_success_flats',
-    { count: flatsStore.lastRun?.total ?? 0 }
-  )
-);
-
-const stoppedStatusText = computed(() =>
-  t(
-    flatsStore.lastRun?.type === 'darks'
-      ? 'components.flatassistant.status_stopped_darks'
-      : 'components.flatassistant.status_stopped_flats',
-    {
-      completed: flatsStore.lastRun?.completed ?? 0,
-      total: flatsStore.lastRun?.total ?? 0,
-    }
-  )
-);
-
-const failedStatusText = computed(() =>
-  t(
-    flatsStore.lastRun?.type === 'darks'
-      ? 'components.flatassistant.status_failed_darks'
-      : 'components.flatassistant.status_failed_flats'
-  )
-);
+const outcomeColorClass = computed(() => {
+  switch (flatsStore.lastRunOutcome?.type) {
+    case 'success':
+      return 'text-green-400';
+    case 'warning':
+      return 'text-yellow-400';
+    case 'error':
+      return 'text-red-400';
+    default:
+      return 'text-gray-300';
+  }
+});
 
 const progressPercent = computed(() => {
   const { TotalIterations, CompletedIterations } = flatsStore.status;

@@ -43,12 +43,7 @@
         v-show="flatsStore.status.State === 'Running' || flatsStore.lastRun !== null"
         class="flex flex-col w-full max-w-md space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
       >
-        <div
-          v-show="flatsStore.status.State === 'Running'"
-          class="flex justify-center items-center p-2 border border-gray-500 rounded-lg bg-gray-800"
-        >
-          <getStatus />
-        </div>
+        <getStatus />
         <LastImage />
       </div>
     </div>
@@ -70,12 +65,74 @@ import SubNav from '@/components/SubNav.vue';
 import { useFlatassistantStore } from '@/store/flatassistantStore';
 import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
+import { useToastStore } from '@/store/toastStore';
 import { useI18n } from 'vue-i18n';
 
 const flatsStore = useFlatassistantStore();
 const settingsStore = useSettingsStore();
 const store = apiStore();
+const toastStore = useToastStore();
 const { t } = useI18n();
+
+// When a run finishes, lock the outcome into the store once — it stays until the next run.
+watch(
+  () => flatsStore.lastRun,
+  (run, prevRun) => {
+    if (!run || prevRun !== null) return;
+
+    let type = 'info';
+    let message;
+
+    if (run.total <= 0) {
+      // PINS / SkyFlat / NINA failure: REST returns no iteration data (-1 clamped to 0).
+      // SignalR sends nothing useful for flat failures — use workflowStopRequested instead.
+      if (flatsStore.workflowStopRequested) {
+        type = 'info';
+        message = t('components.flatassistant.status_completed_flats');
+      } else {
+        type = 'error';
+        message = t('components.flatassistant.status_failed_flats');
+      }
+    } else if (run.success) {
+      type = 'success';
+      message = t(
+        run.type === 'darks'
+          ? 'components.flatassistant.status_success_darks'
+          : 'components.flatassistant.status_success_flats',
+        { count: run.total }
+      );
+    } else if (run.completed > 0) {
+      type = 'warning';
+      message = t(
+        run.type === 'darks'
+          ? 'components.flatassistant.status_stopped_darks'
+          : 'components.flatassistant.status_stopped_flats',
+        { completed: run.completed, total: run.total }
+      );
+    } else {
+      type = 'error';
+      message = t(
+        run.type === 'darks'
+          ? 'components.flatassistant.status_failed_darks'
+          : 'components.flatassistant.status_failed_flats'
+      );
+    }
+
+    // Lock the outcome — nothing can change this until the next run starts
+    flatsStore.lastRunOutcome = { type, message };
+
+    // Toast for non-info outcomes
+    if (type !== 'info') {
+      toastStore.showToast({
+        type,
+        title: t('components.flatassistant.title'),
+        message,
+        autoClose: true,
+        autoCloseDelay: 10000,
+      });
+    }
+  }
+);
 
 const selectedComponent = computed(() => {
   switch (settingsStore.flats.selectedOption) {
@@ -97,6 +154,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   flatsStore.stopFetchingFlats();
+  flatsStore.lastRun = null;
+  flatsStore.signalRStatus = null;
+  flatsStore.lastRunOutcome = null;
 });
 
 let saveDebounce;

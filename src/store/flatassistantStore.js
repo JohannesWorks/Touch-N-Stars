@@ -33,6 +33,11 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
     lastRun: null,
     // ADU (Mean) of the most recently captured image during the current run
     currentADU: null,
+    // Last human-readable status message received from NINA/PINS via SignalR progress hub.
+    signalRStatus: null,
+    // Locked outcome set once when a run completes — stays until the next run starts.
+    // { type: 'success'|'warning'|'error'|'info', message: string }
+    lastRunOutcome: null,
     currentRunType: 'flats',
     workflowStopRequested: false,
     intervalId: null,
@@ -95,14 +100,22 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
       this.workflowStopRequested = false;
       this.lastRun = null;
       this.currentADU = null;
+      this.signalRStatus = null;
+      this.lastRunOutcome = null;
+    },
+
+    updateSignalRStatus(message) {
+      if (message && message.trim()) {
+        this.signalRStatus = message.trim();
+      }
     },
 
     didRunSucceed(status) {
       if (status?.State !== 'Finished') return false;
       const total = Number(status?.TotalIterations);
       const completed = Number(status?.CompletedIterations);
-      // Some modes (e.g. SkyFlat) report -1 when iteration tracking is not applicable
-      if (total < 0) return true;
+      // PINS / SkyFlat report -1 — outcome unknown from REST alone, don't claim success
+      if (total < 0) return false;
       return total > 0 && completed >= total;
     },
 
@@ -307,14 +320,12 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
 
     startFetchingFlats() {
       if (!this.intervalId) {
-        console.log('startFetchingFlats ');
         this.intervalId = setInterval(this.fetchFlatsInfos, 1000);
       }
     },
 
     stopFetchingFlats() {
       if (this.intervalId) {
-        console.log('stopFetchingFlats ');
         clearInterval(this.intervalId);
         this.intervalId = null;
       }
