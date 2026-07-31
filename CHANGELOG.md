@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - WiFi (PINS): The network tab stayed unusable when the PINS daemon on the rig was older than the app. Status, scanning, connecting and disconnecting work again in that case; the rig network mode section is now only shown when the rig actually supports switching modes
 - WiFi (PINS): An ordinary WiFi change on the phone no longer starts a rig search that blocks the network tab
 - WiFi (PINS): A failed rig search no longer leaves its error banner on screen permanently
+- WiFi (PINS): The network tab showed the hotspot view - DHCP leases, no network status and no disconnect button - even while the rig was connected to your WiFi as a client. Which controls are shown now follows the mode the rig actually reports, and the "WiFi Configuration" switch is turned on automatically when the rig is in client mode
+- WiFi (PINS): The tab no longer switches back and forth between its client and hotspot layout when a status request to the rig times out; the last known mode is kept until a new one arrives
 
 ## [App6.1.0-beta1] - 2026-07-30
 ### Added

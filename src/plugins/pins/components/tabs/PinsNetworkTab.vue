@@ -52,8 +52,9 @@
       @save-hotspot="$emit('save-hotspot')"
     />
 
+    <!-- DHCP leases only exist while this rig actually serves a hotspot. -->
     <PinsDhcpClientsCard
-      v-if="!stationaryMode || allowConcurrentMode"
+      v-if="dhcpClientsVisible"
       :clients="dhcpClients"
       :loading="dhcpClientsLoading"
       @refresh="$emit('refresh-dhcp')"
@@ -62,10 +63,12 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import PinsWifiCard from '../PinsWifiCard.vue';
 import PinsDhcpClientsCard from '../PinsDhcpClientsCard.vue';
+import { hasNetworkModeInfo, isHotspotModeActive } from '../../composables/networkModeState';
 
-defineProps({
+const props = defineProps({
   stationaryMode: {
     type: Boolean,
     required: true,
@@ -198,6 +201,13 @@ defineProps({
     type: Boolean,
     required: true,
   },
+});
+
+const dhcpClientsVisible = computed(() => {
+  if (props.allowConcurrentMode) return true;
+  // Without the mode API there is nothing better to go on than the old toggle.
+  if (!hasNetworkModeInfo(props.wifiStatus, props.wifiMode)) return !props.stationaryMode;
+  return isHotspotModeActive(props.wifiStatus, props.wifiMode);
 });
 
 defineEmits([

@@ -20,7 +20,7 @@
       </div>
       <div class="flex items-center gap-4">
         <button
-          v-if="stationaryMode || allowConcurrentMode"
+          v-if="clientControlsVisible"
           @click="$emit('scan-wifi')"
           class="text-blue-400 hover:text-white transition-colors p-2"
           :disabled="isScanning"
@@ -229,7 +229,7 @@
     </div>
 
     <div
-      v-if="stationaryMode || allowConcurrentMode"
+      v-if="clientControlsVisible"
       class="w-full relative z-10 flex flex-col gap-3 mt-2 animate-fade-in-up"
     >
       <div
@@ -646,6 +646,7 @@
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import toggleButton from '@/components/helpers/toggleButton.vue';
+import { isClientModeActive } from '../composables/networkModeState';
 
 const { t } = useI18n();
 
@@ -832,6 +833,14 @@ const canSaveHotspot = computed(() => {
 });
 
 const wifiIsConnected = computed(() => Boolean(props.wifiStatus?.connected));
+// The rig being in client mode is reason enough to show scanning, status and the
+// disconnect action - the manual switch only adds them when it is not.
+const clientControlsVisible = computed(
+  () =>
+    props.stationaryMode ||
+    props.allowConcurrentMode ||
+    isClientModeActive(props.wifiStatus, props.wifiMode)
+);
 const desiredNetworkMode = computed(
   () => props.wifiMode?.desiredMode || props.wifiStatus?.desiredMode || 'unknown'
 );

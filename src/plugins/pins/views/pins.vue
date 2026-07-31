@@ -285,6 +285,7 @@ import {
   parseIndiInstallJobId,
 } from '../composables/indiInstallUtils';
 import { createHotspotSettingsApi } from '../composables/hotspotSettingsApi';
+import { isClientModeActive } from '../composables/networkModeState';
 import { WifiSignal } from '@/utils/wifiSignal';
 import { PINS_PORT as PORT, DEFAULT_PINS_DAEMON_API_TOKEN as TOKEN } from '@/services/pinsConfig';
 import { usePolling } from '@/composables/usePolling';
@@ -1131,12 +1132,19 @@ async function loadWifiStatus() {
     supportsNetworkMode.value = supportsPinsNetworkMode() !== false;
     mobileWifiSignal.value = mobileSignal;
     wifiConnected.value = Boolean(response?.connected);
+    // A rig that is in client mode is by definition in stationary mode; leaving the
+    // switch off would contradict the controls shown right below it.
+    if (!stationaryMode.value && isClientModeActive(wifiStatus.value, wifiMode.value)) {
+      stationaryMode.value = true;
+    }
     // A reachable daemon means any earlier recovery attempt is moot.
     resolveRigConnectionFailure();
   } catch (error) {
     console.error('Failed to load WiFi status:', error);
     wifiStatus.value = null;
-    wifiMode.value = null;
+    // The last known mode is deliberately kept. The daemon on port 8000 times out
+    // regularly (app resume, WiFi handover), and clearing it would make the tab
+    // flip between its client and hotspot layouts on every one of those blips.
     mobileWifiSignal.value = await loadMobileWifiSignal();
     wifiConnected.value = false;
   }
