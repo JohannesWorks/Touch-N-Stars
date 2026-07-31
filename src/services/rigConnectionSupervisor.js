@@ -3,6 +3,7 @@ import { isAppBackgrounded } from '@/utils/appLifecycle';
 import {
   buildPinsEndpointCandidates,
   discoverPinsDaemonHosts,
+  healthRigId,
   normalizeCandidateHost,
   probePinsHealth,
   resolvePinsEndpoint,
@@ -79,6 +80,15 @@ export function clearNetworkTransition() {
   rigConnectionState.startedAt = '';
 }
 
+// A failed recovery used to stick forever, leaving a permanent error banner and
+// disabled controls. Any later proof that the rig is reachable clears it.
+export function resolveRigConnectionFailure() {
+  if (rigConnectionState.phase !== 'failed') return;
+  rigConnectionState.phase = 'idle';
+  rigConnectionState.error = '';
+  clearNetworkTransition();
+}
+
 function selectedInstance() {
   return settingsStoreRef?.getInstance?.(settingsStoreRef.selectedInstanceId) || null;
 }
@@ -105,31 +115,36 @@ async function promoteEndpoint(result) {
   const instance = selectedInstance();
   if (!instance) return;
   const currentHost = settingsStoreRef.connection.ip;
-  settingsStoreRef.promoteInstanceEndpoint(instance.id, {
-    host: result.host,
-    rigId: result.health.rigId,
-  });
-  rigConnectionState.rigId = result.health.rigId;
+  const rigId = healthRigId(result.health);
+  settingsStoreRef.promoteInstanceEndpoint(instance.id, { host: result.host, rigId });
+  // Older daemons report no rigId; keep whatever we already knew instead of clearing it.
+  if (rigId) rigConnectionState.rigId = rigId;
   rigConnectionState.activeHost = result.host;
   if (normalizeCandidateHost(currentHost) !== normalizeCandidateHost(result.host)) {
     await backendStoreRef.switchBackend();
   }
 }
 
+// Best effort: returns the rig identity when the daemon reports one, otherwise an
+// empty string. This must never throw — callers use it to tag an operation, not to
+// gate it, and daemons without a rigId are still perfectly usable.
 export async function identifySelectedRig() {
-  if (!isPinsBackend()) {
-    throw new Error('PINS rig discovery is unavailable for this backend');
-  }
+  if (!isPinsBackend()) return '';
   const instance = selectedInstance();
-  if (!instance) throw new Error('No PINS rig is selected');
+  if (!instance) return '';
   if (instance.rigId) return instance.rigId;
 
-  const result = await probePinsHealth({
-    host: settingsStoreRef.connection.ip || instance.ip,
-    source: 'active-endpoint',
-  });
-  await promoteEndpoint(result);
-  return result.health.rigId;
+  try {
+    const result = await probePinsHealth({
+      host: settingsStoreRef.connection.ip || instance.ip,
+      source: 'active-endpoint',
+    });
+    await promoteEndpoint(result);
+    return healthRigId(result.health);
+  } catch (error) {
+    console.warn('[RigConnectionSupervisor] Rig identity probe failed:', error?.message || error);
+    return '';
+  }
 }
 
 async function probeRound({ expectedRigId, includeFieldFallback, signal }) {
@@ -145,7 +160,8 @@ async function probeRound({ expectedRigId, includeFieldFallback, signal }) {
   if (currentHost) {
     try {
       const current = await probePinsHealth({ host: currentHost, source: 'active' }, { signal });
-      if (!expectedRigId || current.health.rigId === expectedRigId) {
+      const currentRigId = healthRigId(current.health);
+      if (!expectedRigId || !currentRigId || currentRigId === expectedRigId) {
         return current;
       }
     } catch {
@@ -279,8 +295,17 @@ export async function initializeRigConnectionSupervisor({ settingsStore, backend
     pinsInstanceId = settingsStore.selectedInstanceId;
   }
   if (!onlineListenerInstalled && typeof window !== 'undefined') {
+    // Only chase the rig if we actually asked it to change networks. Otherwise every
+    // ordinary Wi-Fi switch on the phone locked the PINS screen for the probe duration.
     window.addEventListener('online', () => {
-      recoverRigConnection({ timeoutMs: 12000, includeFieldFallback: true }).catch(() => {});
+      const transition = readTransition();
+      if (!transition) return;
+      recoverRigConnection({
+        requestedMode: transition.requestedMode,
+        operationId: transition.operationId,
+        timeoutMs: 12000,
+        includeFieldFallback: true,
+      }).catch(() => {});
     });
     onlineListenerInstalled = true;
   }

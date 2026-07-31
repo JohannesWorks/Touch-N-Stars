@@ -93,3 +93,23 @@ test('resolver rejects a reachable different rig and selects the matching identi
   assert.equal(result.host, '10.42.0.1');
   assert.match(result.attempts[0].error, /identity mismatch/i);
 });
+
+test('a daemon without a rigId is still a valid endpoint', async () => {
+  const fetchImpl = async () => ({
+    ok: true,
+    json: async () => ({ status: 'ok', service: 'pinsdaemon' }),
+  });
+
+  const probe = await probePinsHealth({ host: '192.168.1.44' }, { fetchImpl });
+  assert.equal(probe.host, '192.168.1.44');
+
+  // Older daemons predate rig identities; not reporting one must not be read as
+  // reporting the wrong one.
+  const resolved = await resolvePinsEndpoint({
+    candidates: [{ host: '192.168.1.44' }],
+    expectedRigId: 'rig-right',
+    fetchImpl,
+    concurrency: 1,
+  });
+  assert.equal(resolved.host, '192.168.1.44');
+});

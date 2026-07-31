@@ -171,7 +171,7 @@ import { ref, watch } from 'vue';
 import { Capacitor } from '@capacitor/core';
 import { mDNS } from '@acovanconis/capacitor-mdns';
 import { useI18n } from 'vue-i18n';
-import { probePinsHealth } from '@/services/rigEndpointResolver';
+import { healthRigId, probePinsHealth } from '@/services/rigEndpointResolver';
 
 const MDNS_SERVICE_TYPES = ['_touchnstars._tcp', '_pinsdaemon._tcp'];
 const PINS_DAEMON_SERVICE_TYPE = '_pinsdaemon._tcp';
@@ -260,7 +260,8 @@ async function handleInstanceSelected(instance) {
   if (instance.sourceType === PINS_DAEMON_SERVICE_TYPE) {
     try {
       const result = await probePinsHealth({ host: instance.ip });
-      instanceRigId.value = result.health.rigId;
+      // Older daemons answer /health without an identity; keep the field a string.
+      instanceRigId.value = healthRigId(result.health);
     } catch (error) {
       console.warn('PINS identity probe failed:', error?.message || error);
     }

@@ -80,14 +80,15 @@ function healthUrl(host) {
   return `http://${formattedHost}:${PINS_DAEMON_PORT}/health`;
 }
 
+// rigId is only reported by daemons that also implement the network-mode API.
+// Requiring it here would make every probe against an older daemon fail, so it
+// stays optional and is used for identity matching alone.
 function isValidHealth(payload) {
-  return (
-    payload &&
-    payload.status === 'ok' &&
-    payload.service === 'pinsdaemon' &&
-    typeof payload.rigId === 'string' &&
-    payload.rigId.trim().length > 0
-  );
+  return payload && payload.status === 'ok' && payload.service === 'pinsdaemon';
+}
+
+export function healthRigId(health) {
+  return asNonEmptyString(health?.rigId);
 }
 
 export async function probePinsHealth(
@@ -150,10 +151,13 @@ export async function resolvePinsEndpoint({
       const candidate = queue[nextIndex++];
       try {
         const result = await probePinsHealth(candidate, { fetchImpl, timeoutMs, signal });
-        if (expectedRigId && result.health.rigId !== expectedRigId) {
+        const reportedRigId = healthRigId(result.health);
+        // A daemon that reports no identity cannot be rejected for having the
+        // wrong one — reachable is the best signal we have on older versions.
+        if (expectedRigId && reportedRigId && reportedRigId !== expectedRigId) {
           errors.push({
             host: result.host,
-            error: `Rig identity mismatch: expected ${expectedRigId}, received ${result.health.rigId}`,
+            error: `Rig identity mismatch: expected ${expectedRigId}, received ${reportedRigId}`,
           });
           continue;
         }

@@ -20,6 +20,7 @@
               :wifi-list="wifiList"
               :wifi-status="wifiStatus"
               :wifi-mode="wifiMode"
+              :supports-network-mode="supportsNetworkMode"
               :connection-state="rigConnectionState"
               :mobile-wifi-signal="mobileWifiSignal"
               :selected-ssid="selectedSsid"
@@ -264,7 +265,10 @@ import { useSettingsStore } from '@/store/settingsStore';
 import { usePinsStore } from '../store/pinsStore';
 import { apiStore } from '@/store/store';
 import { useToastStore } from '@/store/toastStore';
-import apiPinsService from '@/services/apiPinsService';
+import apiPinsService, {
+  resetPinsDaemonCapabilities,
+  supportsPinsNetworkMode,
+} from '@/services/apiPinsService';
 import SubNav from '@/components/SubNav.vue';
 import Modal from '@/components/helpers/Modal.vue';
 import PinsNetworkTab from '../components/tabs/PinsNetworkTab.vue';
@@ -288,6 +292,7 @@ import {
   beginNetworkTransition,
   identifySelectedRig,
   recoverRigConnection,
+  resolveRigConnectionFailure,
   rigConnectionState,
 } from '@/services/rigConnectionSupervisor';
 
@@ -327,6 +332,9 @@ const dhcpClients = ref([]);
 const isDhcpClientsLoading = ref(false);
 const wifiStatus = ref(null);
 const wifiMode = ref(null);
+// Daemons older than the 6.x network-mode API have no /wifi/mode. Assume support
+// until a probe proves otherwise, so the card does not flicker on first load.
+const supportsNetworkMode = ref(true);
 const mobileWifiSignal = ref(null);
 const selectedIndi3rdpartyAsset = ref('');
 const showIndi3rdpartyInstallModal = ref(false);
@@ -1111,18 +1119,24 @@ async function loadWifiStatus() {
   if (!ip) return;
 
   try {
+    // The mode probe is deliberately kept out of the failure path: on an older
+    // daemon it is simply absent and must never cost us the WiFi status itself.
     const [response, mode, mobileSignal] = await Promise.all([
       apiPinsService.getPinsWifiStatus(),
-      apiPinsService.getPinsWifiMode(),
+      apiPinsService.getPinsWifiModeIfSupported().catch(() => null),
       loadMobileWifiSignal(),
     ]);
     wifiStatus.value = response || null;
     wifiMode.value = mode || null;
+    supportsNetworkMode.value = supportsPinsNetworkMode() !== false;
     mobileWifiSignal.value = mobileSignal;
     wifiConnected.value = Boolean(response?.connected);
+    // A reachable daemon means any earlier recovery attempt is moot.
+    resolveRigConnectionFailure();
   } catch (error) {
     console.error('Failed to load WiFi status:', error);
     wifiStatus.value = null;
+    wifiMode.value = null;
     mobileWifiSignal.value = await loadMobileWifiSignal();
     wifiConnected.value = false;
   }
@@ -1218,11 +1232,72 @@ function requestDisableWifi() {
 
 function confirmDisableWifi() {
   showDisconnectWifiModal.value = false;
-  setNetworkMode('hotspot');
+  // Switching to the field hotspot needs /wifi/mode; older daemons only know
+  // the plain disable call, which is what this screen used before 6.0.
+  if (supportsNetworkMode.value) {
+    setNetworkMode('hotspot');
+  } else {
+    disableWifi();
+  }
+}
+
+async function disableWifi() {
+  if (status.value === 'Running') return;
+
+  const ip = getIp();
+  if (!ip) {
+    appendLog(t('plugins.pins.logs.noIp'));
+    return;
+  }
+
+  status.value = 'Running';
+  pinsStore.setActiveOperation('wifi');
+  pinsStore.clearTerminalLogs();
+  appendLog(t('plugins.pins.logs.init', { ip }));
+  appendLog(t('plugins.pins.logs.wifiDisabling'));
+
+  try {
+    const returnedJobId = parseJobIdFromResponse(await apiPinsService.disablePinsWifi());
+
+    if (returnedJobId) {
+      jobId.value = returnedJobId;
+      wifiConnected.value = false;
+      appendLog(t('plugins.pins.logs.jobCreated', { jobId: returnedJobId }));
+      connectWebSocket(ip, returnedJobId);
+    } else {
+      appendLog(t('plugins.pins.logs.wifiDisabled'));
+      await loadWifiStatus();
+      status.value = 'Success';
+    }
+  } catch (error) {
+    console.error(error);
+    status.value = 'Failed';
+    appendLog(
+      t('plugins.pins.logs.error', { message: 'Wifi Disconnect Failed: ' + error.message })
+    );
+
+    if (error.response) {
+      appendLog(
+        t('plugins.pins.logs.serverError', {
+          status: error.response.status,
+          data: JSON.stringify(error.response.data),
+        })
+      );
+    }
+  }
 }
 
 async function setNetworkMode(desiredMode) {
   if (status.value === 'Running') return;
+
+  if (!supportsNetworkMode.value) {
+    appendLog(
+      t('plugins.pins.logs.error', {
+        message: 'This PINS daemon does not support network mode switching. Please update it.',
+      })
+    );
+    return;
+  }
 
   const ip = getIp();
   if (!ip) {
@@ -1365,6 +1440,8 @@ async function startUpgrade() {
   pinsStore.setActiveOperation('upgrade');
   pinsStore.clearTerminalLogs();
   resetUpgradeForNewRun();
+  // An upgrade can add endpoints this daemon did not have, so forget what we learned.
+  resetPinsDaemonCapabilities();
   appendLog(t('plugins.pins.logs.init', { ip }));
 
   try {

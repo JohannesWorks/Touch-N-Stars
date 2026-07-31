@@ -41,6 +41,33 @@ const getUrls = () => {
   };
 };
 
+// PINSdaemon capability cache. Daemons older than the 6.x network-mode API do not
+// expose /wifi/mode at all; a missing endpoint is a version difference, not a failure,
+// so it is remembered per daemon URL and the WiFi tab falls back to the legacy flow.
+const UNSUPPORTED_ENDPOINT_STATUS = [404, 405, 501];
+let capabilityCacheKey = '';
+let networkModeSupported = null;
+
+function trackCapabilityDaemon(baseUrl) {
+  if (capabilityCacheKey === baseUrl) return;
+  capabilityCacheKey = baseUrl;
+  networkModeSupported = null;
+}
+
+function isUnsupportedEndpointError(error) {
+  return UNSUPPORTED_ENDPOINT_STATUS.includes(error?.response?.status);
+}
+
+/** true / false once known, null while undetermined. */
+export function supportsPinsNetworkMode() {
+  return networkModeSupported;
+}
+
+export function resetPinsDaemonCapabilities() {
+  capabilityCacheKey = '';
+  networkModeSupported = null;
+}
+
 export default {
   //-------------------System Time Sync------------------------
   async fetchSystemTime() {
@@ -803,6 +830,26 @@ export default {
       baseUrl: PINSDAEMON_URL,
       timeout: 5000,
     });
+  },
+
+  // Returns the mode payload, or null when this daemon predates /wifi/mode.
+  // Real failures (timeout, auth, 5xx) still reject so callers can report them.
+  async getPinsWifiModeIfSupported() {
+    const { PINSDAEMON_URL } = getUrls();
+    trackCapabilityDaemon(PINSDAEMON_URL);
+    if (networkModeSupported === false) return null;
+
+    try {
+      const mode = await this.getPinsWifiMode();
+      networkModeSupported = true;
+      return mode;
+    } catch (error) {
+      if (isUnsupportedEndpointError(error)) {
+        networkModeSupported = false;
+        return null;
+      }
+      throw error;
+    }
   },
 
   setPinsWifiMode(desiredMode) {

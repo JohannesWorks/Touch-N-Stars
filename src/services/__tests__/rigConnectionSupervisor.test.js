@@ -39,7 +39,42 @@ test('pinsdaemon recovery is inert for a non-PINS backend', async (t) => {
   assert.equal(result, null);
   assert.equal(healthProbes, 0);
   assert.equal(backendSwitches, 0);
-  await assert.rejects(() => identifySelectedRig(), /unavailable for this backend/);
+  assert.equal(await identifySelectedRig(), '');
+  assert.equal(healthProbes, 0);
+});
+
+test('identifySelectedRig stays quiet when the daemon reports no rig identity', async (t) => {
+  const originalFetch = globalThis.fetch;
+  t.after(() => {
+    globalThis.fetch = originalFetch;
+  });
+  globalThis.fetch = async () => ({
+    ok: true,
+    json: async () => ({ status: 'ok', service: 'pinsdaemon' }),
+  });
+
+  const instance = { id: 'legacy-rig', ip: '192.168.178.50', port: 5000 };
+  const settingsStore = {
+    selectedInstanceId: instance.id,
+    connection: { ip: instance.ip, port: instance.port },
+    getInstance: () => instance,
+    promoteInstanceEndpoint(_id, { host }) {
+      instance.ip = host;
+      this.connection.ip = host;
+    },
+  };
+  const backendStore = reactive({
+    isPINS: true,
+    isBackendReachable: false,
+    async switchBackend() {},
+  });
+
+  await initializeRigConnectionSupervisor({ settingsStore, backendStore });
+
+  // An older daemon has no rigId, but WiFi actions must still go through.
+  assert.equal(await identifySelectedRig(), '');
+  const result = await recoverRigConnection({ timeoutMs: 1000 });
+  assert.equal(result.host, '192.168.178.50');
 });
 
 test('recovery keeps a healthy active endpoint instead of racing its aliases', async (t) => {

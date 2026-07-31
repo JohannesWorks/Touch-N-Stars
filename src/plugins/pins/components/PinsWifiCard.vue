@@ -49,7 +49,9 @@
       </div>
     </div>
 
+    <!-- Only daemons exposing /wifi/mode can switch modes or report one. -->
     <div
+      v-if="supportsNetworkMode"
       class="w-full relative z-10 border border-gray-700 rounded-lg bg-gray-900/40 p-4 flex flex-col gap-3"
     >
       <div>
@@ -674,6 +676,10 @@ const props = defineProps({
     required: false,
     default: null,
   },
+  supportsNetworkMode: {
+    type: Boolean,
+    default: true,
+  },
   connectionState: {
     type: Object,
     required: true,
@@ -832,8 +838,10 @@ const desiredNetworkMode = computed(
 const observedNetworkMode = computed(
   () => props.wifiMode?.observedMode || props.wifiStatus?.observedMode || 'unknown'
 );
-const networkTransitionActive = computed(() =>
-  ['network-transition', 'probing', 'reconnecting'].includes(props.connectionState.phase)
+const networkTransitionActive = computed(
+  () =>
+    props.supportsNetworkMode &&
+    ['network-transition', 'probing', 'reconnecting'].includes(props.connectionState.phase)
 );
 
 const wifiStatusLabel = computed(() => {

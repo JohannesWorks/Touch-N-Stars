@@ -7,6 +7,7 @@
       :wifi-list="wifiList"
       :wifi-status="wifiStatus"
       :wifi-mode="wifiMode"
+      :supports-network-mode="supportsNetworkMode"
       :connection-state="connectionState"
       :mobile-wifi-signal="mobileWifiSignal"
       :selected-ssid="selectedSsid"
@@ -90,6 +91,10 @@ defineProps({
     type: Object,
     required: false,
     default: null,
+  },
+  supportsNetworkMode: {
+    type: Boolean,
+    default: true,
   },
   connectionState: {
     type: Object,
