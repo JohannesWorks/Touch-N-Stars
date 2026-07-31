@@ -4,6 +4,7 @@ import {
   buildPinsEndpointCandidates,
   discoverPinsDaemonHosts,
   healthRigId,
+  isLoopbackHost,
   normalizeCandidateHost,
   probePinsHealth,
   resolvePinsEndpoint,
@@ -49,6 +50,19 @@ function delay(ms, signal) {
     if (signal?.aborted) return onAbort();
     signal?.addEventListener?.('abort', onAbort, { once: true });
   });
+}
+
+// Rejects once `ms` have elapsed, whatever `promise` is still waiting on. Guards
+// the recovery loop against a probe round that never settles.
+function withDeadline(promise, ms) {
+  if (!(ms > 0)) return Promise.reject(new Error('PINS recovery deadline reached'));
+  let timer;
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error('PINS recovery deadline reached')), ms);
+    }),
+  ]).finally(() => clearTimeout(timer));
 }
 
 function readTransition() {
@@ -114,6 +128,8 @@ function modeReached(status, requestedMode) {
 async function promoteEndpoint(result) {
   const instance = selectedInstance();
   if (!instance) return;
+  // Persisting loopback would permanently point the instance at the WebView itself.
+  if (isLoopbackHost(result.host)) return;
   const currentHost = settingsStoreRef.connection.ip;
   const rigId = healthRigId(result.health);
   settingsStoreRef.promoteInstanceEndpoint(instance.id, { host: result.host, rigId });
@@ -149,9 +165,11 @@ export async function identifySelectedRig() {
 
 async function probeRound({ expectedRigId, includeFieldFallback, signal }) {
   const instance = selectedInstance();
-  const currentHost = normalizeCandidateHost(
-    settingsStoreRef.connection.ip || window.location.hostname
-  );
+  // Deliberately no window.location.hostname fallback: with an empty connection.ip
+  // that resolved to the WebView's own "localhost", which was then probed and
+  // reported as the attempted host on every failure.
+  const activeHost = normalizeCandidateHost(settingsStoreRef.connection.ip);
+  const currentHost = isLoopbackHost(activeHost) ? '' : activeHost;
   rigConnectionState.attemptedHosts = currentHost ? [currentHost] : [];
 
   // Probe the configured endpoint by itself first. Racing aliases for the same
@@ -169,7 +187,7 @@ async function probeRound({ expectedRigId, includeFieldFallback, signal }) {
     }
   }
 
-  const mdnsHosts = await discoverPinsDaemonHosts();
+  const mdnsHosts = await discoverPinsDaemonHosts({ signal });
   const candidates = buildPinsEndpointCandidates({
     instance,
     currentHost,
@@ -206,59 +224,75 @@ export async function recoverRigConnection({
     error: '',
   });
 
-  let attempt = 0;
-  while (Date.now() < deadline && myGeneration === generation && !signal.aborted) {
-    if (isAppBackgrounded.value) {
-      await delay(1000, signal);
-      continue;
-    }
+  // The deadline is only re-read between rounds, so a round that never settles
+  // would keep this promise pending forever - and every caller awaiting it would
+  // leave its UI stuck in the running state. Bound each round explicitly.
+  const abortAtDeadline = setTimeout(() => activeController?.abort(), Math.max(0, timeoutMs));
 
-    try {
-      const result = await probeRound({ expectedRigId, includeFieldFallback, signal });
-      await promoteEndpoint(result);
+  try {
+    return await runRecoveryLoop();
+  } finally {
+    clearTimeout(abortAtDeadline);
+  }
 
-      if (requestedMode) {
-        const { default: apiPinsService } = await import('@/services/apiPinsService');
-        if (operationId) {
-          const job = await apiPinsService.getPinsDaemonJob(operationId);
-          if (job?.status === 'failed' || (job?.exitCode != null && job.exitCode !== 0)) {
-            throw new Error(`Network operation ${operationId} failed`);
+  async function runRecoveryLoop() {
+    let attempt = 0;
+    while (Date.now() < deadline && myGeneration === generation && !signal.aborted) {
+      if (isAppBackgrounded.value) {
+        await delay(1000, signal);
+        continue;
+      }
+
+      try {
+        const result = await withDeadline(
+          probeRound({ expectedRigId, includeFieldFallback, signal }),
+          deadline - Date.now()
+        );
+        await promoteEndpoint(result);
+
+        if (requestedMode) {
+          const { default: apiPinsService } = await import('@/services/apiPinsService');
+          if (operationId) {
+            const job = await apiPinsService.getPinsDaemonJob(operationId);
+            if (job?.status === 'failed' || (job?.exitCode != null && job.exitCode !== 0)) {
+              throw new Error(`Network operation ${operationId} failed`);
+            }
+            if (job?.status !== 'success' && job?.exitCode !== 0) {
+              throw new Error(
+                `Network operation ${operationId} is still ${job?.status || 'running'}`
+              );
+            }
           }
-          if (job?.status !== 'success' && job?.exitCode !== 0) {
+          const status = await apiPinsService.getPinsWifiStatus();
+          if (!modeReached(status, requestedMode)) {
             throw new Error(
-              `Network operation ${operationId} is still ${job?.status || 'running'}`
+              `PINS is reachable but network mode is still ${status?.observedMode || 'unknown'}`
             );
           }
         }
-        const status = await apiPinsService.getPinsWifiStatus();
-        if (!modeReached(status, requestedMode)) {
-          throw new Error(
-            `PINS is reachable but network mode is still ${status?.observedMode || 'unknown'}`
-          );
-        }
+
+        rigConnectionState.phase = 'connected';
+        rigConnectionState.error = '';
+        clearNetworkTransition();
+        return result;
+      } catch (error) {
+        rigConnectionState.phase = 'reconnecting';
+        rigConnectionState.error = error?.message || String(error);
       }
 
-      rigConnectionState.phase = 'connected';
-      rigConnectionState.error = '';
-      clearNetworkTransition();
-      return result;
-    } catch (error) {
-      rigConnectionState.phase = 'reconnecting';
-      rigConnectionState.error = error?.message || String(error);
+      attempt += 1;
+      const backoff =
+        Math.min(5000, 750 * 2 ** Math.min(attempt, 3)) + Math.floor(Math.random() * 250);
+      await delay(backoff, signal);
     }
 
-    attempt += 1;
-    const backoff =
-      Math.min(5000, 750 * 2 ** Math.min(attempt, 3)) + Math.floor(Math.random() * 250);
-    await delay(backoff, signal);
+    if (myGeneration === generation) {
+      rigConnectionState.phase = 'failed';
+      rigConnectionState.error =
+        rigConnectionState.error || 'Could not reconnect to the selected PINS rig before timeout';
+    }
+    throw new Error(rigConnectionState.error);
   }
-
-  if (myGeneration === generation) {
-    rigConnectionState.phase = 'failed';
-    rigConnectionState.error =
-      rigConnectionState.error || 'Could not reconnect to the selected PINS rig before timeout';
-  }
-  throw new Error(rigConnectionState.error);
 }
 
 export function beginNetworkTransition({ requestedMode, operationId = '' }) {

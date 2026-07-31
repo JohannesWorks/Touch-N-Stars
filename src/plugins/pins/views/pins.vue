@@ -1222,6 +1222,7 @@ async function connectWifi() {
   } finally {
     // Network credentials are deliberately session-only and are discarded after submission.
     wifiPassword.value = '';
+    releaseRunningStatus();
   }
 }
 
@@ -1347,7 +1348,16 @@ async function setNetworkMode(desiredMode) {
         })
       );
     }
+  } finally {
+    releaseRunningStatus();
   }
+}
+
+// `status === 'Running'` disables every control on this screen, including the
+// switch that re-enables WiFi scanning. If an awaited call never settles the user
+// is locked out with no way back, so no path may leave it running.
+function releaseRunningStatus() {
+  if (status.value === 'Running') status.value = 'Failed';
 }
 
 async function retryNetworkRecovery() {
@@ -1364,6 +1374,8 @@ async function retryNetworkRecovery() {
   } catch (error) {
     status.value = 'Failed';
     appendLog(`Rig rediscovery failed: ${error.message}`);
+  } finally {
+    releaseRunningStatus();
   }
 }
 

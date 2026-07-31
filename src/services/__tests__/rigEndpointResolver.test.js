@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   buildPinsEndpointCandidates,
+  isLoopbackHost,
   probePinsHealth,
   resolvePinsEndpoint,
 } from '@/services/rigEndpointResolver';
@@ -92,6 +93,25 @@ test('resolver rejects a reachable different rig and selects the matching identi
 
   assert.equal(result.host, '10.42.0.1');
   assert.match(result.attempts[0].error, /identity mismatch/i);
+});
+
+test('loopback is never offered as a PINS endpoint', () => {
+  // Under Capacitor window.location.hostname is always "localhost"; probing it
+  // produced the "Tried: localhost" dead end instead of looking for the rig.
+  const candidates = buildPinsEndpointCandidates({
+    instance: { ip: '192.168.1.44', candidateHosts: ['127.0.0.1'] },
+    currentHost: 'localhost',
+    pageHost: 'localhost',
+    mdnsHosts: ['::1'],
+    includeFieldFallback: true,
+  });
+
+  assert.deepEqual(
+    candidates.map(({ host }) => host),
+    ['192.168.1.44', '10.42.0.1']
+  );
+  assert.equal(isLoopbackHost('LocalHost'), true);
+  assert.equal(isLoopbackHost('192.168.1.44'), false);
 });
 
 test('a daemon without a rigId is still a valid endpoint', async () => {

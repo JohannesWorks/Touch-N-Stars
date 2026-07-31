@@ -77,6 +77,35 @@ test('identifySelectedRig stays quiet when the daemon reports no rig identity', 
   assert.equal(result.host, '192.168.178.50');
 });
 
+test('a probe round that never settles cannot outlive the recovery deadline', async (t) => {
+  const originalFetch = globalThis.fetch;
+  t.after(() => {
+    globalThis.fetch = originalFetch;
+  });
+  // A native mDNS scan or a socket that never reports back used to keep this
+  // promise pending forever, which left the PINS screen disabled for good.
+  globalThis.fetch = () => new Promise(() => {});
+
+  const instance = { id: 'stuck-rig', ip: '192.168.178.77', port: 5000, rigId: 'pins-stuck' };
+  const settingsStore = {
+    selectedInstanceId: instance.id,
+    connection: { ip: instance.ip, port: instance.port },
+    getInstance: () => instance,
+    promoteInstanceEndpoint: () => {},
+  };
+  const backendStore = reactive({
+    isPINS: true,
+    isBackendReachable: false,
+    async switchBackend() {},
+  });
+
+  await initializeRigConnectionSupervisor({ settingsStore, backendStore });
+
+  const startedAt = Date.now();
+  await assert.rejects(() => recoverRigConnection({ timeoutMs: 300 }));
+  assert.ok(Date.now() - startedAt < 5000, 'recovery must settle at its deadline');
+});
+
 test('recovery keeps a healthy active endpoint instead of racing its aliases', async (t) => {
   let backendSwitches = 0;
   const probedUrls = [];

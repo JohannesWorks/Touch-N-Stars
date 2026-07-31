@@ -30,6 +30,15 @@ export function normalizeCandidateHost(value) {
   return candidate;
 }
 
+// Under Capacitor window.location.hostname is always the WebView's own origin.
+// A PINS daemon can never live there, so loopback must not enter the candidate
+// list, become the "current host", or be promoted into the stored instance.
+const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '0.0.0.0', '::1', '[::1]']);
+
+export function isLoopbackHost(value) {
+  return LOOPBACK_HOSTS.has(normalizeCandidateHost(value));
+}
+
 export function rigMdnsHost(rigId) {
   const normalized = normalizeCandidateHost(rigId);
   if (!normalized || normalized.includes(':') || normalized.endsWith('.local')) return normalized;
@@ -38,7 +47,7 @@ export function rigMdnsHost(rigId) {
 
 function appendCandidate(target, seen, host, source) {
   const normalized = normalizeCandidateHost(host);
-  if (!normalized || seen.has(normalized)) return;
+  if (!normalized || seen.has(normalized) || isLoopbackHost(normalized)) return;
   seen.add(normalized);
   target.push({ host: normalized, source });
 }
@@ -187,16 +196,39 @@ function hostsFromMdnsService(service) {
   return [txt.ip, ...hosts].map(normalizeCandidateHost).filter(Boolean);
 }
 
-export async function discoverPinsDaemonHosts({ timeout = 3500 } = {}) {
+// Resolves to `fallback` once `ms` have passed or `signal` aborts, whichever comes
+// first. Never rejects: the caller wants to move on, not to handle another error.
+function settleAfter(ms, signal, fallback) {
+  return new Promise((resolve) => {
+    const done = () => {
+      clearTimeout(timer);
+      signal?.removeEventListener?.('abort', done);
+      resolve(fallback);
+    };
+    const timer = setTimeout(done, ms);
+    if (signal?.aborted) return done();
+    signal?.addEventListener?.('abort', done, { once: true });
+  });
+}
+
+// The native mDNS plugin owns its own timeout, but a scan that is cancelled by a
+// concurrent one can stop reporting back entirely. Discovery is an optimisation,
+// so it is raced against a hard deadline - a stuck scan must never stall the
+// recovery loop, which would leave the PINS screen disabled indefinitely.
+export async function discoverPinsDaemonHosts({ timeout = 3500, signal } = {}) {
   if (!Capacitor.isNativePlatform()) return [];
 
-  try {
-    const { mDNS } = await import('@acovanconis/capacitor-mdns');
-    const result = await mDNS.discover({ type: PINS_MDNS_SERVICE_TYPE, timeout });
-    if (result?.error || !Array.isArray(result?.services)) return [];
-    return Array.from(new Set(result.services.flatMap(hostsFromMdnsService)));
-  } catch (error) {
-    console.warn('[RigEndpointResolver] PINS mDNS discovery failed:', error?.message || error);
-    return [];
-  }
+  const discover = (async () => {
+    try {
+      const { mDNS } = await import('@acovanconis/capacitor-mdns');
+      const result = await mDNS.discover({ type: PINS_MDNS_SERVICE_TYPE, timeout });
+      if (result?.error || !Array.isArray(result?.services)) return [];
+      return Array.from(new Set(result.services.flatMap(hostsFromMdnsService)));
+    } catch (error) {
+      console.warn('[RigEndpointResolver] PINS mDNS discovery failed:', error?.message || error);
+      return [];
+    }
+  })();
+
+  return Promise.race([discover, settleAfter(timeout + 1500, signal, [])]);
 }
