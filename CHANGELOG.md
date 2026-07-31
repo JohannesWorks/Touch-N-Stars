@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - WiFi (PINS): A failed rig search no longer leaves its error banner on screen permanently
 - WiFi (PINS): The network tab showed the hotspot view - DHCP leases, no network status and no disconnect button - even while the rig was connected to your WiFi as a client. Which controls are shown now follows the mode the rig actually reports, and the "WiFi Configuration" switch is turned on automatically when the rig is in client mode
 - WiFi (PINS): The tab no longer switches back and forth between its client and hotspot layout when a status request to the rig times out; the last known mode is kept until a new one arrives
+- WiFi (PINS): The "Disconnect WiFi" button was only shown after a network scan had produced a list of networks. It is now available whenever the rig is connected
+- WiFi (PINS): Turning the "WiFi Configuration" switch off no longer gets undone a few seconds later by the status poll
 
 ## [App6.1.0-beta1] - 2026-07-30
 ### Added

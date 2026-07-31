@@ -466,24 +466,22 @@
               : $t('plugins.pins.wifiConnect')
           }}
         </button>
-
-        <button
-          class="w-full py-3 font-bold rounded-lg transition-all disabled:opacity-50"
-          :class="
-            wifiIsConnected
-              ? 'bg-gray-800 border border-red-700/70 text-red-200 hover:bg-red-900/30'
-              : 'bg-gradient-to-r from-red-700 to-red-800 hover:from-red-600 hover:to-red-700 text-white shadow-lg shadow-red-900/20'
-          "
-          :disabled="disabled"
-          @click="$emit('disconnect-wifi')"
-        >
-          {{ $t('plugins.pins.wifiDisconnect') }}
-        </button>
       </div>
 
       <div v-else class="text-gray-400 italic py-4 text-center">
         {{ $t('plugins.pins.noNetworks') }}
       </div>
+
+      <!-- Deliberately outside the scan results: an existing connection can be
+           dropped whether or not a scan has been run in this session. -->
+      <button
+        v-if="wifiIsConnected"
+        class="w-full py-3 font-bold rounded-lg transition-all disabled:opacity-50 bg-gray-800 border border-red-700/70 text-red-200 hover:bg-red-900/30"
+        :disabled="disabled"
+        @click="$emit('disconnect-wifi')"
+      >
+        {{ $t('plugins.pins.wifiDisconnect') }}
+      </button>
     </div>
 
     <div class="w-full relative z-10 border-t border-gray-700 pt-4 mt-1 flex flex-col gap-3">

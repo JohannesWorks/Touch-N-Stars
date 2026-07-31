@@ -285,7 +285,7 @@ import {
   parseIndiInstallJobId,
 } from '../composables/indiInstallUtils';
 import { createHotspotSettingsApi } from '../composables/hotspotSettingsApi';
-import { isClientModeActive } from '../composables/networkModeState';
+import { hasNetworkModeInfo, isClientModeActive } from '../composables/networkModeState';
 import { WifiSignal } from '@/utils/wifiSignal';
 import { PINS_PORT as PORT, DEFAULT_PINS_DAEMON_API_TOKEN as TOKEN } from '@/services/pinsConfig';
 import { usePolling } from '@/composables/usePolling';
@@ -336,6 +336,7 @@ const wifiMode = ref(null);
 // Daemons older than the 6.x network-mode API have no /wifi/mode. Assume support
 // until a probe proves otherwise, so the card does not flicker on first load.
 const supportsNetworkMode = ref(true);
+let stationaryModeSynced = false;
 const mobileWifiSignal = ref(null);
 const selectedIndi3rdpartyAsset = ref('');
 const showIndi3rdpartyInstallModal = ref(false);
@@ -1115,6 +1116,22 @@ async function scanWifi() {
   }
 }
 
+// A rig in client mode is by definition in stationary mode, so the switch starts
+// out matching it instead of contradicting the controls below. Strictly once per
+// session: re-applying this on every poll would silently undo the user turning it
+// off, which reads as a switch that cannot be pressed.
+function syncStationaryModeOnce() {
+  if (stationaryModeSynced) return;
+  if (!hasNetworkModeInfo(wifiStatus.value, wifiMode.value)) return;
+
+  stationaryModeSynced = true;
+  if (stationaryMode.value || !isClientModeActive(wifiStatus.value, wifiMode.value)) return;
+
+  stationaryMode.value = true;
+  // Without this the section opens on an empty list and claims there are no networks.
+  scanWifi();
+}
+
 async function loadWifiStatus() {
   const ip = getIp();
   if (!ip) return;
@@ -1132,11 +1149,7 @@ async function loadWifiStatus() {
     supportsNetworkMode.value = supportsPinsNetworkMode() !== false;
     mobileWifiSignal.value = mobileSignal;
     wifiConnected.value = Boolean(response?.connected);
-    // A rig that is in client mode is by definition in stationary mode; leaving the
-    // switch off would contradict the controls shown right below it.
-    if (!stationaryMode.value && isClientModeActive(wifiStatus.value, wifiMode.value)) {
-      stationaryMode.value = true;
-    }
+    syncStationaryModeOnce();
     // A reachable daemon means any earlier recovery attempt is moot.
     resolveRigConnectionFailure();
   } catch (error) {
