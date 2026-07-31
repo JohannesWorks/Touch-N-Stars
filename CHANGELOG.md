@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [App6.1.0-beta3] - 2026-07-31
+
+### Fixed
+
+- WiFi (PINS): The network tab could freeze completely - every control including the "WiFi Configuration" switch stayed greyed out and a "The rig could not be found after the network change" banner remained on screen. A rig search that never finished kept the whole tab in its busy state, with no way to get out of it
+- WiFi (PINS): The app could look for the rig at its own address ("localhost") instead of the rig's. WiFi status, network name and signal strength then stayed empty, the network mode showed "unknown", and every reconnect attempt failed
+- WiFi (PINS): The network tab stayed unusable when the PINS daemon on the rig was older than the app. Status, scanning, connecting and disconnecting work again in that case; the rig network mode section is now only shown when the rig actually supports switching modes
+- WiFi (PINS): An ordinary WiFi change on the phone no longer starts a rig search that blocks the network tab
+- WiFi (PINS): A failed rig search no longer leaves its error banner on screen permanently
+
 ## [App6.1.0-beta1] - 2026-07-30
 ### Added
 - Livestack (PINS): New "RGB combination" section in the livestack settings that combines three mono stacks (e.g. LRGB or SHO) of a target into a colour image, with the filter-to-channel mapping pre-filled and editable. The result appears as the "RGB" filter next to the individual channels and can be removed again. On Windows this is unchanged and still done through the plugin's own wizard, so the section only appears on PINS
@@ -30,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Celestia Atlas: Defer engine/catalogue loading until first open, retain one paused warm viewer after that, split the compact OpenNGC, supplemental DSO, Abell planetary-nebula, HYG and curated bright-sky payloads into first-open chunks, and reduce mobile panorama, search, FOV sampling and lifecycle work
 - Celestia Atlas: Make the shared selected-target panel safe-area aware and independently scrollable on short mobile landscape screens; its favorite dialog now renders at the application root instead of inside the sky overlay
 - Logfile collector plugin: Description is now mandatory
+- WiFi (PINS): WiFi passwords are no longer stored on the device. They are kept for the current connection attempt only and have to be entered again next time
 
 ### Fixed
 
