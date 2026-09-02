@@ -118,6 +118,11 @@ async function promoteEndpoint(result) {
   settingsStoreRef.promoteInstanceEndpoint(instance.id, {
     host: result.host,
     rigId: result.health.rigId,
+    // Only confirmed mismatches, never timeouts: a host that did not answer is
+    // merely offline right now, a host that answered as another rig is wrong.
+    rejectedHosts: (result.attempts || [])
+      .filter((attempt) => attempt?.reason === 'identity-mismatch')
+      .map((attempt) => attempt.host),
   });
   rigConnectionState.rigId = result.health.rigId;
   rigConnectionState.activeHost = result.host;
@@ -163,13 +168,19 @@ async function probeRound({ expectedRigId, includeFieldFallback, signal }) {
     }
   }
 
-  const mdnsHosts = await discoverPinsDaemonHosts();
+  // Without a confirmed rigId, an mDNS sweep hands us every PINS rig on the
+  // network and the fastest stranger would win the race. Skip the scan and stay
+  // on the addresses the user configured until the identity is learned from one
+  // of them.
+  const identityKnown = Boolean(expectedRigId);
+  const mdnsHosts = identityKnown ? await discoverPinsDaemonHosts() : [];
   const candidates = buildPinsEndpointCandidates({
     instance,
     currentHost,
     pageHost: window.location.hostname,
     mdnsHosts,
     includeFieldFallback,
+    identityKnown,
   }).filter((candidate) => candidate.host !== currentHost);
   rigConnectionState.attemptedHosts = candidates.map((candidate) => candidate.host);
   return resolvePinsEndpoint({ candidates, expectedRigId, signal });

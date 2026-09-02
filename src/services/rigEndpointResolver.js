@@ -43,12 +43,31 @@ function appendCandidate(target, seen, host, source) {
   target.push({ host: normalized, source });
 }
 
+/**
+ * Candidate sources that are safe to race while the rig identity is still
+ * unknown: the live endpoint, the address on the instance, the host the page
+ * was served from, and the hotspot address - a phone can be attached to exactly
+ * one rig's access point at a time.
+ *
+ * Everything else may point at a *different* machine. `mdns` returns every PINS
+ * rig on the network, and `remembered` plus `preferred` are written by
+ * promoteInstanceEndpoint(), so an earlier mis-promotion can have left another
+ * rig's address there.
+ */
+export const USER_CONFIRMED_CANDIDATE_SOURCES = new Set([
+  'active',
+  'instance',
+  'page',
+  'field-hotspot',
+]);
+
 export function buildPinsEndpointCandidates({
   instance = null,
   currentHost = '',
   pageHost = '',
   mdnsHosts = [],
   includeFieldFallback = true,
+  identityKnown = true,
 } = {}) {
   const candidates = [];
   const seen = new Set();
@@ -56,15 +75,21 @@ export function buildPinsEndpointCandidates({
   // Never replace a healthy live endpoint just because an alias for the same
   // Pi responds a few milliseconds faster.
   appendCandidate(candidates, seen, currentHost, 'active');
-  appendCandidate(candidates, seen, instance?.preferredEndpoint?.host, 'preferred');
+  if (identityKnown) {
+    appendCandidate(candidates, seen, instance?.preferredEndpoint?.host, 'preferred');
+  }
   appendCandidate(candidates, seen, instance?.ip, 'instance');
-  for (const host of instance?.candidateHosts || []) {
-    appendCandidate(candidates, seen, host, 'remembered');
+  if (identityKnown) {
+    for (const host of instance?.candidateHosts || []) {
+      appendCandidate(candidates, seen, host, 'remembered');
+    }
   }
   appendCandidate(candidates, seen, pageHost, 'page');
-  appendCandidate(candidates, seen, rigMdnsHost(instance?.rigId), 'rig-mdns');
-  for (const host of mdnsHosts) {
-    appendCandidate(candidates, seen, host, 'mdns');
+  if (identityKnown) {
+    appendCandidate(candidates, seen, rigMdnsHost(instance?.rigId), 'rig-mdns');
+    for (const host of mdnsHosts) {
+      appendCandidate(candidates, seen, host, 'mdns');
+    }
   }
 
   if (includeFieldFallback) {
@@ -153,6 +178,10 @@ export async function resolvePinsEndpoint({
         if (expectedRigId && result.health.rigId !== expectedRigId) {
           errors.push({
             host: result.host,
+            // Machine-readable: callers prune these hosts from the instance, and
+            // must not do that for a plain timeout.
+            reason: 'identity-mismatch',
+            rigId: result.health.rigId,
             error: `Rig identity mismatch: expected ${expectedRigId}, received ${result.health.rigId}`,
           });
           continue;

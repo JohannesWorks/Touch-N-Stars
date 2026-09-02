@@ -520,6 +520,17 @@ export const useSettingsStore = defineStore('settings', {
         instance.port
       );
       if (existingInstance) {
+        // A fresh scan is the more trustworthy source: adopt its identity and
+        // replace the remembered addresses instead of keeping a list that an
+        // earlier mis-promotion may have polluted with another rig's address.
+        if (instance.rigId) {
+          existingInstance.rigId = instance.rigId;
+        }
+        if (instance.candidateHosts?.length) {
+          existingInstance.candidateHosts = Array.from(
+            new Set([instance.ip, ...instance.candidateHosts].filter(Boolean))
+          );
+        }
         this.setSelectedInstanceId(existingInstance.id, options);
       } else {
         const newInstance = {
@@ -586,10 +597,13 @@ export const useSettingsStore = defineStore('settings', {
       );
     },
 
-    promoteInstanceEndpoint(id, { host, rigId }) {
+    promoteInstanceEndpoint(id, { host, rigId, rejectedHosts = [] }) {
       const instance = this.getInstance(id);
       if (!instance || !host) return false;
 
+      // Hosts that answered as a different rig are not aliases of this one and
+      // must not stay in the pool - otherwise they keep being raced forever.
+      const rejected = new Set(rejectedHosts.filter(Boolean));
       const candidateHosts = Array.from(
         new Set(
           [
@@ -599,7 +613,7 @@ export const useSettingsStore = defineStore('settings', {
             ...(instance.candidateHosts || []),
           ].filter(Boolean)
         )
-      );
+      ).filter((candidate) => candidate === host || !rejected.has(candidate));
 
       instance.rigId = rigId || instance.rigId || '';
       instance.ip = host;

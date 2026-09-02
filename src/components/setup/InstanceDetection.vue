@@ -171,7 +171,7 @@ import { ref, watch } from 'vue';
 import { Capacitor } from '@capacitor/core';
 import { mDNS } from '@acovanconis/capacitor-mdns';
 import { useI18n } from 'vue-i18n';
-import { probePinsHealth } from '@/services/rigEndpointResolver';
+import { resolvePinsEndpoint } from '@/services/rigEndpointResolver';
 
 const MDNS_SERVICE_TYPES = ['_touchnstars._tcp', '_pinsdaemon._tcp'];
 const PINS_DAEMON_SERVICE_TYPE = '_pinsdaemon._tcp';
@@ -256,14 +256,22 @@ async function handleInstanceSelected(instance) {
   instanceName.value = instance.label;
   instanceIP.value = instance.ip;
   instancePort.value = instance.port;
-  instanceCandidateHosts.value = Array.from(new Set([instance.ip, ...(instance.hosts || [])]));
-  if (instance.sourceType === PINS_DAEMON_SERVICE_TYPE) {
-    try {
-      const result = await probePinsHealth({ host: instance.ip });
-      instanceRigId.value = result.health.rigId;
-    } catch (error) {
-      console.warn('PINS identity probe failed:', error?.message || error);
-    }
+  const hosts = Array.from(new Set([instance.ip, ...(instance.hosts || [])].filter(Boolean)));
+  instanceCandidateHosts.value = hosts;
+  // The rigId is what later stops the connection supervisor from promoting a
+  // different rig's address onto this instance, so it is worth getting right
+  // here. Probe every address of the find, not just the displayed one - they all
+  // come from the SAME mDNS service, so racing them cannot pick a foreign rig.
+  // A PINS rig also announces _touchnstars._tcp (NINA runs on it), so the probe
+  // must not be limited to the pinsdaemon service type.
+  try {
+    const result = await resolvePinsEndpoint({
+      candidates: hosts.map((host) => ({ host, source: 'discovery' })),
+    });
+    instanceRigId.value = result.health.rigId;
+  } catch (error) {
+    // Expected for a plain NINA/WPF instance: it has no pinsdaemon.
+    console.warn('PINS identity probe failed:', error?.message || error);
   }
   detectionSuccess.value = true;
   detectionMessage.value = t('components.instanceDetection.selectionSuccess', {

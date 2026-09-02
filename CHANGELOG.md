@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Observation planner: Redesigned target cards - name, preview, values and actions no longer overlap or get cut off on narrow screens
 - Telescopius: Target lists can now be imported from a Telescopius CSV export, including the position angle as framing rotation, and imported targets can be edited afterwards
 
+### Fixed
+- Instances: A scanned PINS rig no longer switches itself to the address of another rig on the same network
+
 ## [App6.3.0-beta1] - 2026-08-30
 
 ### Added

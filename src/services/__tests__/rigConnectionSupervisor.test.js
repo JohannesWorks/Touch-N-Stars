@@ -138,3 +138,119 @@ test('failed PINS Wi-Fi job stops recovery immediately with its classified reaso
     /MISSING_CREDENTIALS/
   );
 });
+
+// Regression: with several PINS rigs on one network, a scanned instance used to
+// inherit the address of a *different* rig. The identity check existed but was
+// skipped whenever instance.rigId was still empty, so the fastest stranger in
+// the candidate race won and was written to the instance for good.
+test('an instance without a rigId never adopts another reachable rig', async (t) => {
+  const probedUrls = [];
+  const originalFetch = globalThis.fetch;
+  t.after(() => {
+    globalThis.fetch = originalFetch;
+  });
+  globalThis.fetch = async (url) => {
+    probedUrls.push(String(url));
+    if (String(url).includes('192.168.2.50')) {
+      return {
+        ok: true,
+        json: async () => ({ status: 'ok', service: 'pinsdaemon', rigId: 'pins-other' }),
+      };
+    }
+    throw new Error('Rig is not reachable right now');
+  };
+
+  const instance = {
+    id: 'scanned-rig',
+    ip: '192.168.2.129',
+    port: 5000,
+    // No rigId yet - the identity probe during the scan did not get an answer.
+    // A previous mis-promotion left the other rig in the remembered hosts.
+    candidateHosts: ['192.168.2.129', '192.168.2.50'],
+  };
+  let promotions = 0;
+  let backendSwitches = 0;
+  const settingsStore = {
+    selectedInstanceId: instance.id,
+    connection: { ip: instance.ip, port: instance.port },
+    getInstance: () => instance,
+    promoteInstanceEndpoint(_id, { host }) {
+      promotions += 1;
+      instance.ip = host;
+      this.connection.ip = host;
+    },
+  };
+  const backendStore = reactive({
+    isPINS: true,
+    isBackendReachable: false,
+    async switchBackend() {
+      backendSwitches += 1;
+    },
+  });
+
+  await initializeRigConnectionSupervisor({ settingsStore, backendStore });
+  await assert.rejects(() => recoverRigConnection({ timeoutMs: 500 }));
+
+  assert.equal(instance.ip, '192.168.2.129');
+  assert.equal(settingsStore.connection.ip, '192.168.2.129');
+  assert.equal(promotions, 0);
+  assert.equal(backendSwitches, 0);
+  assert.ok(
+    probedUrls.every((url) => !url.includes('192.168.2.50')),
+    `the foreign rig must not be probed at all, got ${probedUrls.join(', ')}`
+  );
+});
+
+test('a known rigId still recovers a moved rig and reports the foreign host for pruning', async (t) => {
+  const originalFetch = globalThis.fetch;
+  t.after(() => {
+    globalThis.fetch = originalFetch;
+  });
+  globalThis.fetch = async (url) => {
+    const target = String(url);
+    if (target.includes('192.168.2.50')) {
+      return {
+        ok: true,
+        json: async () => ({ status: 'ok', service: 'pinsdaemon', rigId: 'pins-other' }),
+      };
+    }
+    if (target.includes('192.168.2.77')) {
+      return {
+        ok: true,
+        json: async () => ({ status: 'ok', service: 'pinsdaemon', rigId: 'pins-mine' }),
+      };
+    }
+    throw new Error('Rig is not reachable at its old address');
+  };
+
+  const instance = {
+    id: 'moved-rig',
+    ip: '192.168.2.129',
+    port: 5000,
+    rigId: 'pins-mine',
+    candidateHosts: ['192.168.2.50', '192.168.2.77'],
+  };
+  let rejected = null;
+  const settingsStore = {
+    selectedInstanceId: instance.id,
+    connection: { ip: instance.ip, port: instance.port },
+    getInstance: () => instance,
+    promoteInstanceEndpoint(_id, { host, rejectedHosts }) {
+      rejected = rejectedHosts;
+      instance.ip = host;
+      this.connection.ip = host;
+    },
+  };
+  const backendStore = reactive({
+    isPINS: true,
+    isBackendReachable: false,
+    async switchBackend() {},
+  });
+
+  await initializeRigConnectionSupervisor({ settingsStore, backendStore });
+  const result = await recoverRigConnection({ timeoutMs: 2000 });
+
+  assert.equal(result.host, '192.168.2.77');
+  assert.equal(instance.ip, '192.168.2.77');
+  assert.deepEqual(rejected, ['192.168.2.50']);
+});
