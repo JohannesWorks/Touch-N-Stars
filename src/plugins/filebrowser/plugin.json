@@ -2,9 +2,9 @@
   "id": "filebrowser",
   "name": "Filebrowser",
   "description": "File management",
-  "version": "1.0.1",
-  "author": "Christian Wöhrle",
+  "version": "2.0.0",
+  "author": "Christian Wöhrle, Johannes Maier",
   "defaultEnabled": false,
   "enabled": true,
-  "isPins": true
+  "isPins": false
 }

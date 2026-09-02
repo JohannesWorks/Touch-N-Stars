@@ -5,13 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [App6.3.0-beta2] - 2026-08-31 
+## [App6.3.0-beta2] - 2026-08-31
 
 ### Added
+
+- File browser: Files can be saved to the device, lists can be sorted and searched, and several entries can be selected for downloading or deleting at once
+- File browser: The plugin is now available in NINA mode as well, not only on PINS
 - Sky chart: The time axis now always runs from midday to midday with midnight in the middle, so a whole night is visible at a glance and the "now" marker sits at its real time
 - Sky chart: A moon button shows the moon's altitude curve plus its illumination and distance to the target
 
 ### Changed
+
+- File browser: Image previews are now rendered on the server with NINA's own stretch settings, so FITS, XISF and raw files open faster and look like they do in NINA - stretch factor, black clipping, unlinked stretch and debayer can be adjusted directly in the preview. In NINA mode this needs Touch'N'Stars plugin 1.4.0.0 or newer; older versions get a notice instead of a broken preview
+- File browser: Renaming files works again, and WebP and BMP files are now counted as images by the images-only filter
 - Observation planner: Redesigned target cards - name, preview, values and actions no longer overlap or get cut off on narrow screens
 - Telescopius: Target lists can now be imported from a Telescopius CSV export, including the position angle as framing rotation, and imported targets can be edited afterwards
 
@@ -21,10 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [App6.3.0-beta1] - 2026-08-30
 
 ### Added
+
 - Sequence editor: A deep sky object container can now be loaded into the framing assistant with one tap
 - Framing assistant: "set to sequence target" now lets you pick which sequence target to overwrite, or add a new one at a chosen position
 
 ### Changed
+
 - Haptics: Every button, switch and navigation entry now gives haptic feedback, switchable under Settings > General
 - Guider (Dither): Max dither pixel value increased from 100 to 1000
 
@@ -33,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Summary of all changes since 6.1.2 (released in beta1-beta9, see below for the individual beta releases).
 
 ### Added
+
 - Plugin Screen lock: The app's controls can now be locked from the status bar so nothing gets changed by accident - in the dark, with the device in a pocket, or when handing it to someone else. Everything stays visible and keeps updating while locked; unlocking requires a 2 s long press
 - Sequence editor: Items can now be saved directly from the editor
 - Guiding (PHD2): The ZFilter guide algorithm is now available for the Dec axis
@@ -52,6 +61,7 @@ Summary of all changes since 6.1.2 (released in beta1-beta9, see below for the i
 - Setup wizard: On PINS, every device step can install a missing 3rd party INDI driver without leaving the wizard, and the camera step lists natively supported cameras first - an INDI driver is only needed if the camera does not appear there
 
 ### Changed
+
 - TPPA: Exposure time, gain and filter now apply to the whole rig instead of to one device - every client connected to the same instance sees the same values
 - Settings: The General tab was split into Connection & Location, Interface and System, so related settings are easier to find
 - Sequence: The item that is currently running can no longer be edited, disabled, reset, deleted or moved
@@ -65,6 +75,7 @@ Summary of all changes since 6.1.2 (released in beta1-beta9, see below for the i
 - Pinsdaemon: Rework of Wifi handling
 
 ### Fixed
+
 - Sequence editor: The save, clear and manage-sequences buttons no longer appear when connected to NINA - they only work with PINS
 - Guiding: Manual VNC guide cameras now correctly set the PHD2Camera profile value
 - Atlas: Camera rotation now matches NINA
@@ -83,64 +94,77 @@ Summary of all changes since 6.1.2 (released in beta1-beta9, see below for the i
 ## [App6.1.4-beta9] - 2026-08-26
 
 ### Added
+
 - Plugin Screen lock: The app's controls can now be locked from the status bar so nothing gets changed by accident - in the dark, with the device in a pocket, or when handing it to someone else. Everything stays visible and keeps updating while locked; unlocking requires a 2 s long press
 - Framing: The camera rotation from every plate solve is shown in the Framing Assistant and on the rotator page
 - Atlas: A second field-of-view frame shows the solved camera rotation next to the target frame
 
 ### Fixed
+
 - Framing: The sky chart labels are now translated instead of always English
 
 ### Fixed
+
 - Sequence editor: The save, clear and manage-sequences buttons no longer appear when connected to NINA - they only work with PINS
 
 ## [App6.1.4-beta8] - 2026-08-24
 
 ### Added
+
 - Sequence editor: Items can now be saved directly from the editor
 - Guiding (PHD2): The ZFilter guide algorithm is now available for the Dec axis
 - Guiding: The PHD2 settings modal was replaced by a SubNav tab on the guider page
 
 ### Fixed
+
 - Guiding: Manual VNC guide cameras now correctly set the PHD2Camera profile value
 - Atlas: Camera rotation now matches NINA
 
 ## [App6.1.4-beta7] - 2026-08-19
 
 ### Added
+
 - Settings: The app settings stored on this device (language, saved instances, layout, plugin settings) can now be exported to a file and restored on another device. Equipment settings kept in the NINA/PINS profile are not included and need a separate backup
 
 ### Changed
+
 - TPPA: Exposure time, gain and filter now apply to the whole rig instead of to one device - every client connected to the same instance sees the same values
 - Settings: The General tab was split into Connection & Location, Interface and System, so related settings are easier to find
 
 ## [App6.1.4-beta6] - 2026-08-19
 
 ### Added
-- PINS: Voltage Status & Undervoltage notification 
+
+- PINS: Voltage Status & Undervoltage notification
 
 ## [App6.1.4-beta5] - 2026-08-18
 
 ### Added
+
 - Hardware Compatibility plugin: Look up which hardware works with which driver, and report your own findings to a shared, crowdsourced database
 
 ### Fixed
+
 - Equipment: INDI devices that only get power after the driver started (e.g. a rotator on a power box port) were listed as OFFLINE and could not be connected. The driver is now reloaded automatically instead of requiring a manual reselect in the INDI setup dialog
 - Equipment: A device selection now goes straight into the profile instead of being reset by the next device list refresh, so "No device" can finally be selected
 
 ## [App6.1.4-beta4] - 2026-08-16
 
 ### Added
+
 - Guiding (PHD2): The Predictive PEC period length can now be set
 - Status bar: Entries can be reordered and hidden under Settings > General, just like the navigation bar
 - Mount: The target search under Slew now also finds stars, not just DSOs
-- Nightsummary Plugin: is now also supported in NINA 
+- Nightsummary Plugin: is now also supported in NINA
 
 ### Changed
+
 - Sequence: The item that is currently running can no longer be edited, disabled, reset, deleted or moved
 - Sequence: Loading a sequence now closes the dialog right away and shows a spinner until the sequence is loaded
 - Status bar: Entries no longer jump to the front when something needs attention, and Progress, Log and Instance are no longer pinned to the right edge
 
 ### Fixed
+
 - Guiding (PHD2): On narrow screens the guiding status covered the star image and the star profile. The status is now shown at the bottom left, and both tiles adapt their size to the available width instead of being cut off
 - Status bar: Panels opened from the status bar covered the lower edge of the page including its rounded corners
 - Mount: With drivers that keep reporting "slewing" after a park has finished (e.g. ZWO AM5N), the mount status stayed on a red "Slewing" with an endlessly turning spinner instead of "Parked", and the slew button stayed a red stop button. A parked mount is now never shown as slewing. During a real slew the status stays green with the spinner instead of turning yellow
@@ -148,41 +172,50 @@ Summary of all changes since 6.1.2 (released in beta1-beta9, see below for the i
 ## [App6.1.4-beta3] - 2026-08-15
 
 ### Changed
+
 - Image history: Thumbnails load in batches while scrolling, several at a time, and are kept when you leave the tab
 
 ### Fixed
+
 - Image history: Filtering (e.g. to lights only) took very long on large sessions - all images were downloaded regardless of the filter, oldest first. Only the filtered images are fetched now, starting with the ones on screen
 
 ## [App6.1.4-beta2] - 2026-08-11
+
 ### Added
+
 - Sequence: The PHD2 Tools trigger "Interrupt and retry when RMS above" can now be configured in the app — threshold, mode, how long the guiding has to stay calm, the recovery timeout and the maximum number of repetitions
 - PINS setup and settings: Configure the rig's system locale, Wi-Fi country, timezone and keyboard layout. The setup assistant reads the current Pi values and places this step before Wi-Fi; the same live settings remain available under General Settings on every client, with searchable lists of the values supported by the Pi
 
 ### Changed
+
 - Sequence: Cameras that only accept a fixed set of gain values (most Canon/Nikon DSLRs) now offer those values as a list instead of a free number field, in every exposure and flat item
 
 ### Fixed
+
 - Webcam: Layout and settings dialog on iOS, and snapshots that stayed "Disconnected" in the app
 - Livestack: The zoom and image controls could be hidden behind the status bar at the bottom of the screen
 
 ## [App6.1.4-beta1] - 2026-08-08
+
 ### Added
+
 - Setup wizard: The first-run setup and the equipment configuration are now one guided assistant that opens automatically on first start. It covers language, the connection to your rig, and then the equipment: mount, location, telescope, camera, focuser and filter wheel. On PINS it additionally covers the rig's Wi-Fi, its software updates, the maximum slew speed and guiding. Every step writes its values straight to the profile, so nothing is lost if you leave in between
 - Setup wizard: The camera step reads the sensor size from the connected camera and offers to write it into the profile if it differs from what is stored there. Cameras that do not report a sensor size - DSLRs typically - get input fields instead. Together with the pixel size, which no driver reports and which therefore always has to be entered by hand, the resulting image scale in arcsec/px is shown directly, so a mistyped value is obvious right away
 - Setup wizard: The guiding step converts the dither distance for you. NINA stores it in guide camera pixels while the usual recommendations (10-15 px) are given in pixels of the imaging camera, and the two differ by a factor of 2-5 depending on the guide scope. The step shows both image scales, the resulting offset on sky and what is currently in the profile, and warns if PHD2 itself is working with a different focal length or pixel size
 - Setup wizard: On PINS, every device step can install a missing 3rd party INDI driver without leaving the wizard, and the camera step lists natively supported cameras first - an INDI driver is only needed if the camera does not appear there
 
 ### Changed
+
 - Setup: The initial setup is no longer mandatory and can be cancelled at any point. Previously every screen redirected back to the setup page until an instance had been configured; now the app stays usable and the connection can be added later under Settings. The wizard can be reopened at any time from Settings, and on PINS also from the PINS page
 - 3rd party INDI drivers (PINS): Camera drivers can now be installed as well. The driver registry has always accepted the camera type, only the install dialog rejected it
 - Guiding: The dither distance can now be set in steps of 0.5 pixels instead of whole pixels, because converting from imaging pixels rarely lands on a round number
 - Pinsdaemon: Rework of Wifi handling
 
 ### Fixed
+
 - 3rd party INDI drivers (PINS): When a search returned no packages, the driver selection and the "Edit config" button disappeared along with the results, so there was no way back without reloading. Both now stay in place and the selection is simply disabled
 - Dialogs: On narrow screens content that did not fit the dialog was centred, so its left edge was cut off and could not be reached by scrolling either - in the settings dialog headings and input labels appeared clipped ("onnection Settings"). Dialog content now shrinks to the dialog width, and content that genuinely cannot shrink starts at the left edge and stays scrollable
 - Celestia Atlas: Fix star constellation - Western skycultures
-
 
 ## [App6.1.2] - 2026-07-31
 

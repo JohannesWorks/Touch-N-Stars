@@ -6,12 +6,12 @@
       @click.self="$emit('close')"
     >
       <div
-        class="w-full max-w-md bg-[#1a1f2e] border border-[#2e3650] rounded-lg overflow-hidden shadow-xl"
+        class="w-full max-w-md bg-surface-1 border border-line rounded-card overflow-hidden shadow-xl"
       >
-        <div class="flex items-center justify-between px-4 py-3 border-b border-[#2e3650]">
-          <p class="text-sm font-semibold text-slate-200">{{ title }}</p>
+        <div class="flex items-center justify-between px-4 py-3 border-b border-line">
+          <p class="text-sm font-semibold text-content">{{ title }}</p>
           <button
-            class="text-slate-500 text-sm px-2 py-1 rounded hover:text-slate-200 hover:bg-[#2e3650] transition-colors"
+            class="text-content-faint text-sm px-2 py-1 rounded-chip hover:text-content hover:bg-surface-3 transition-colors"
             @click="$emit('close')"
           >
             ✕
@@ -19,19 +19,19 @@
         </div>
 
         <div class="p-4 flex flex-col gap-3">
-          <label class="text-xs text-slate-400">{{ $t('common.name') }}</label>
+          <label class="text-xs text-content-muted">{{ $t('common.name') }}</label>
           <input
             ref="renameInput"
             v-model="inputModel"
             type="text"
-            class="w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-sm text-gray-100 placeholder-gray-500 outline-none focus:border-cyan-600"
+            class="tns-input"
             @keydown.enter="$emit('confirm')"
             @keydown.esc="$emit('close')"
           />
-          <p v-if="error" class="text-xs text-red-400">{{ error }}</p>
+          <p v-if="error" class="text-xs text-status-danger">{{ error }}</p>
         </div>
 
-        <div class="flex justify-end gap-2 px-4 py-3 border-t border-[#2e3650]">
+        <div class="flex justify-end gap-2 px-4 py-3 border-t border-line">
           <button class="tns-btn-secondary" @click="$emit('close')">
             {{ $t('common.cancel') }}
           </button>

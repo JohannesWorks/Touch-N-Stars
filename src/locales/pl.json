@@ -2293,7 +2293,7 @@
       "initializing": "Inicjalizacja...",
       "outdated": {
         "title": "Wtyczka przestarzała",
-        "message": "Wtyczka TouchNStars w NINA jest przestarzała i wymaga aktualizacji.",
+        "message": "Wtyczka TouchNStars w {host} jest przestarzała i wymaga aktualizacji.",
         "required": "Wymagana wersja",
         "current": "Aktualna wersja"
       }
@@ -4520,7 +4520,6 @@
       "goUp": "Up",
       "refresh": "Refresh",
       "imagesOnly": "Images/FITS only",
-      "currentPath": "Current Path",
       "directoriesCount": "Directories: {count}",
       "filesCount": "Files: {count}",
       "newFolderPlaceholder": "New folder name",
@@ -4536,15 +4535,51 @@
       "modified": "Modified",
       "isImage": "Image/FITS",
       "selectEntryHint": "Select a file or directory to see details.",
-      "onHoldTitle": "On Hold",
-      "onHoldMessage": "Rename and file open actions are intentionally on hold for now.",
       "loadError": "Failed to load directory contents.",
       "createError": "Failed to create directory.",
       "deleteError": "Failed to delete entry.",
       "deleteDirectoryTitle": "Delete Directory",
       "deleteDirectoryMessage": "Delete directory \"{name}\" recursively?",
       "deleteFileTitle": "Delete File",
-      "deleteFileMessage": "Delete file \"{name}\"?"
+      "deleteFileMessage": "Delete file \"{name}\"?",
+      "searchPlaceholder": "Szukaj w tym folderze…",
+      "noMatches": "Żadne pozycje nie pasują do filtra.",
+      "sortBy": "Sortuj według",
+      "sortName": "Nazwa",
+      "sortModified": "Data modyfikacji",
+      "sortSize": "Rozmiar",
+      "sortAsc": "Rosnąco",
+      "sortDesc": "Malejąco",
+      "selectAll": "Zaznacz wszystko",
+      "clearSelection": "Wyczyść zaznaczenie",
+      "selectedCount": "Zaznaczono: {count}",
+      "toggleSelection": "Zaznacz {name}",
+      "renameError": "Nie udało się zmienić nazwy.",
+      "renameEmptyName": "Wprowadź nazwę.",
+      "deleteSelectedTitle": "Usuń zaznaczenie",
+      "deleteSelectedMessage": "Usunąć {count} pozycji? {directories} z nich to katalogi, usuwane rekurencyjnie.",
+      "download": {
+        "action": "Zapisz na urządzeniu",
+        "progress": "{current}/{total}",
+        "doneTitle": "Pobieranie zakończone",
+        "doneMessage": "Zapisano {count} plik(ów) na urządzeniu.",
+        "failedTitle": "Pobieranie nie powiodło się",
+        "failedMessage": "Nie udało się zapisać {failed} plik(ów) ({succeeded} pomyślnie). {error}"
+      },
+      "fits": {
+        "debugTitle": "Diagnostyka obrazu",
+        "clipStrength": "Przycięcie czerni",
+        "stretchStrength": "Współczynnik rozciągania",
+        "unlinked": "Niezależne rozciąganie",
+        "debayer": "Debayer",
+        "pattern": "Wzorzec Bayera",
+        "none": "brak",
+        "size": "Rozmiar",
+        "bitDepth": "Głębia bitowa",
+        "header": "Nagłówek (główne klucze)",
+        "unsupportedFile": "Tego typu pliku nie można podejrzeć, zamiast tego zostanie zapisany na urządzeniu.",
+        "previewFailed": "Nie udało się wygenerować podglądu. Użyj przycisku pobierania, aby zapisać plik."
+      }
     },
     "phd2logviewer": {
       "cal": {

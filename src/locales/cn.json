@@ -2293,7 +2293,7 @@
       "initializing": "初始化中...",
       "outdated": {
         "title": "插件已过时",
-        "message": "NINA中的TouchNStars插件已过时，需要更新。",
+        "message": "{host}中的TouchNStars插件已过时，需要更新。",
         "required": "所需版本",
         "current": "当前版本"
       }
@@ -4520,7 +4520,6 @@
       "goUp": "Up",
       "refresh": "Refresh",
       "imagesOnly": "Images/FITS only",
-      "currentPath": "Current Path",
       "directoriesCount": "Directories: {count}",
       "filesCount": "Files: {count}",
       "newFolderPlaceholder": "New folder name",
@@ -4536,15 +4535,51 @@
       "modified": "Modified",
       "isImage": "Image/FITS",
       "selectEntryHint": "Select a file or directory to see details.",
-      "onHoldTitle": "On Hold",
-      "onHoldMessage": "Rename and file open actions are intentionally on hold for now.",
       "loadError": "Failed to load directory contents.",
       "createError": "Failed to create directory.",
       "deleteError": "Failed to delete entry.",
       "deleteDirectoryTitle": "Delete Directory",
       "deleteDirectoryMessage": "Delete directory \"{name}\" recursively?",
       "deleteFileTitle": "Delete File",
-      "deleteFileMessage": "Delete file \"{name}\"?"
+      "deleteFileMessage": "Delete file \"{name}\"?",
+      "searchPlaceholder": "在此文件夹中搜索…",
+      "noMatches": "没有符合筛选条件的条目。",
+      "sortBy": "排序方式",
+      "sortName": "名称",
+      "sortModified": "修改日期",
+      "sortSize": "大小",
+      "sortAsc": "升序",
+      "sortDesc": "降序",
+      "selectAll": "全选",
+      "clearSelection": "清除选择",
+      "selectedCount": "已选择 {count} 项",
+      "toggleSelection": "选择 {name}",
+      "renameError": "重命名失败。",
+      "renameEmptyName": "请输入名称。",
+      "deleteSelectedTitle": "删除所选",
+      "deleteSelectedMessage": "要删除 {count} 个条目吗？其中 {directories} 个是目录，将被递归删除。",
+      "download": {
+        "action": "保存到设备",
+        "progress": "{current}/{total}",
+        "doneTitle": "下载完成",
+        "doneMessage": "已将 {count} 个文件保存到设备。",
+        "failedTitle": "下载失败",
+        "failedMessage": "{failed} 个文件保存失败（{succeeded} 个成功）。{error}"
+      },
+      "fits": {
+        "debugTitle": "图像诊断",
+        "clipStrength": "黑场裁剪",
+        "stretchStrength": "拉伸系数",
+        "unlinked": "独立通道拉伸",
+        "debayer": "去拜耳",
+        "pattern": "拜耳阵列",
+        "none": "无",
+        "size": "尺寸",
+        "bitDepth": "位深",
+        "header": "头信息（主要关键字）",
+        "unsupportedFile": "此文件类型无法预览，将改为保存到设备。",
+        "previewFailed": "无法渲染预览。请使用下载按钮保存文件。"
+      }
     },
     "phd2logviewer": {
       "cal": {

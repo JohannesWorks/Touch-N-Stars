@@ -2,85 +2,126 @@
   <div class="container py-4 sm:py-8 px-3 sm:px-4">
     <div class="mx-auto max-w-6xl">
       <div class="mb-4 flex flex-col gap-2">
-        <h1 class="text-xl sm:text-2xl font-bold text-white">
+        <h1 class="text-xl sm:text-2xl font-bold text-content">
           {{ $t('plugins.filebrowser.title') }}
         </h1>
-        <p class="text-sm text-gray-400">
+        <p class="text-sm text-content-muted">
           {{ $t('plugins.filebrowser.subtitle') }}
         </p>
       </div>
 
-      <div class="rounded-xl border border-gray-700 bg-gray-900/70 overflow-hidden">
+      <div v-if="!isPluginVersionSupported" class="tns-card p-6 text-center">
+        <h3 class="text-lg font-bold text-red-400 mb-2">
+          {{ $t('plugins.common.outdated.title') }}
+        </h3>
+        <p class="text-content-muted mb-3">
+          {{ $t('plugins.common.outdated.message', { host: store.isPINS ? 'PINS' : 'NINA' }) }}
+        </p>
+        <p class="text-sm text-content-muted">
+          {{ $t('plugins.common.outdated.required') }}: v{{ MIN_TNS_PLUGIN_VERSION }}
+        </p>
+        <p class="text-sm text-content-muted">
+          {{ $t('plugins.common.outdated.current') }}: {{ store.currentTnsPluginVersion || '-' }}
+        </p>
+      </div>
+
+      <div v-else class="tns-card p-0 overflow-hidden">
         <FilebrowserTopControls
+          :show-images-only="showImagesOnly"
+          :new-folder-name="newFolderName"
+          :search-query="searchQuery"
+          :sort-key="sortKey"
           :current-path="currentPath"
           :can-go-up="canGoUp"
           :is-loading="isLoading"
-          :show-images-only="showImagesOnly"
-          :directories-count="directories.length"
-          :files-count="filteredFiles.length"
-          :new-folder-name="newFolderName"
+          :sort-dir="sortDir"
+          :directories-count="visibleDirectories.length"
+          :files-count="visibleFiles.length"
           :breadcrumbs="breadcrumbs"
           @update:show-images-only="showImagesOnly = $event"
           @update:new-folder-name="newFolderName = $event"
+          @update:search-query="searchQuery = $event"
+          @update:sort-key="sortKey = $event"
           @jump-to-image-path="jumpToImageSavePath"
           @go-up="goUp"
           @refresh="refreshCurrent"
           @create-directory="createDirectory"
           @browse="browse"
+          @select-all="selectAllVisible"
+          @toggle-sort-dir="toggleSortDir"
         />
 
         <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] min-h-[460px]">
           <FilebrowserListPanel
             :is-loading="isLoading"
             :error-message="errorMessage"
-            :directories="directories"
-            :files="filteredFiles"
-            :selected-path="selectedPath"
+            :is-filtered="isFiltered"
+            :directories="visibleDirectories"
+            :files="visibleFiles"
+            :is-selected="isSelected"
             :format-size="formatSize"
+            :format-date-time="formatDateTime"
             :get-file-extension="getFileExtension"
             @open-directory="openDirectory"
-            @select-file="selectFile"
-            @open-file="openFile"
-            @rename-entry="openRenameDialog"
-            @delete-directory="deleteDirectory"
-            @delete-file="deleteFile"
+            @toggle-selection="toggle"
           />
 
           <FilebrowserDetailsPanel
-            :selected-entry="selectedEntry"
-            :selected-entry-type="selectedEntryType"
+            :selected-entry="singleSelection"
+            :selected-entry-type="singleSelection?.entryType || null"
             :selected-entry-type-label="selectedEntryTypeLabel"
             :is-selected-entry-image="isSelectedEntryImage"
+            :selection-count="selectionCount"
+            :is-downloading="isDownloading"
             :format-size="formatSize"
             :format-date-time="formatDateTime"
             @open-file="openFile"
             @rename-entry="openRenameDialog"
+            @download-entry="downloadOne"
           />
         </div>
       </div>
+
+      <!-- Room for the sticky action bar so it never covers the last row. -->
+      <div v-if="selectionCount" class="h-24" />
     </div>
+
+    <FilebrowserSelectionBar
+      :selection-count="selectionCount"
+      :can-open="!!singleSelection && singleSelection.entryType === 'file'"
+      :can-rename="!!singleSelection"
+      :can-download="selectedFiles.length > 0"
+      :download-progress="downloadProgress"
+      @open="openSelected"
+      @download="downloadSelected"
+      @rename="renameSelected"
+      @delete="deleteSelected"
+      @clear="clearSelection"
+      @cancel="cancelDownload"
+    />
 
     <FilebrowserPreviewModal
       :visible="previewVisible"
       :loading="previewLoading"
+      :image-loading="previewImageLoading"
       :error="previewError"
-      :mode="previewMode"
       :url="previewUrl"
       :file-name="previewFileName"
-      :stats="fitsStats"
-      :perf="fitsPerf"
-      :header-entries="fitsHeaderEntries"
-      :auto-stretch="fitsAutoStretch"
-      :stretch-mode="fitsStretchMode"
-      :stretch-strength="fitsStretchStrength"
-      :auto-white-balance="fitsAutoWhiteBalance"
+      :is-downloading="isDownloading"
+      :info="previewInfo"
+      :header-entries="previewHeaderEntries"
+      :stretch-factor="previewStretchFactor"
+      :black-clipping="previewBlackClipping"
+      :unlinked="previewUnlinked"
+      :debayer="previewDebayer"
       @close="closePreview"
+      @download="downloadPreviewEntry"
+      @image-load="handleImageLoad"
       @image-error="handlePreviewError"
-      @update:auto-stretch="fitsAutoStretch = $event"
-      @update:stretch-mode="fitsStretchMode = $event"
-      @update:stretch-strength="fitsStretchStrength = $event"
-      @update:auto-white-balance="fitsAutoWhiteBalance = $event"
-      @set-canvas-ref="setFitsCanvasRef"
+      @update:stretch-factor="previewStretchFactor = $event"
+      @update:black-clipping="previewBlackClipping = $event"
+      @update:unlinked="previewUnlinked = $event"
+      @update:debayer="previewDebayer = $event"
     />
 
     <FilebrowserRenameDialog
@@ -104,27 +145,31 @@ import { useToastStore } from '@/store/toastStore';
 import FilebrowserTopControls from '@/plugins/filebrowser/components/FilebrowserTopControls.vue';
 import FilebrowserListPanel from '@/plugins/filebrowser/components/FilebrowserListPanel.vue';
 import FilebrowserDetailsPanel from '@/plugins/filebrowser/components/FilebrowserDetailsPanel.vue';
+import FilebrowserSelectionBar from '@/plugins/filebrowser/components/FilebrowserSelectionBar.vue';
 import FilebrowserPreviewModal from '@/plugins/filebrowser/components/FilebrowserPreviewModal.vue';
 import FilebrowserRenameDialog from '@/plugins/filebrowser/components/FilebrowserRenameDialog.vue';
-import { useFitsPreview } from '@/plugins/filebrowser/composables/useFitsPreview';
+import { useImagePreview } from '@/plugins/filebrowser/composables/useImagePreview';
+import {
+  getFileExtension,
+  isImageFile,
+  useFilebrowserList,
+} from '@/plugins/filebrowser/composables/useFilebrowserList';
+import { useFilebrowserSelection } from '@/plugins/filebrowser/composables/useFilebrowserSelection';
+import { useFilebrowserDownload } from '@/plugins/filebrowser/composables/useFilebrowserDownload';
+
+// The filesystem controller's imageinfo/preview/download/rename endpoints ship with plugin
+// 1.4.0.0. PINS serves them from its own daemon, so only NINA mode needs the gate.
+const MIN_TNS_PLUGIN_VERSION = '1.4.0.0';
 
 const { t } = useI18n();
 const store = apiStore();
-const toastStore = useToastStore();
 
-const IMAGE_FILE_EXTENSIONS = [
-  'png',
-  'jpg',
-  'jpeg',
-  'gif',
-  'webp',
-  'bmp',
-  'tif',
-  'tiff',
-  'fit',
-  'fits',
-  'fts',
-];
+const isPluginVersionSupported = computed(
+  () =>
+    store.isPINS ||
+    store.checkVersionNewerOrEqual(store.currentTnsPluginVersion, MIN_TNS_PLUGIN_VERSION)
+);
+const toastStore = useToastStore();
 
 const currentPath = ref('');
 const parentPath = ref('');
@@ -133,10 +178,6 @@ const files = ref([]);
 const isLoading = ref(false);
 const errorMessage = ref('');
 const newFolderName = ref('');
-const selectedPath = ref('');
-const showImagesOnly = ref(true);
-const selectedEntry = ref(null);
-const selectedEntryType = ref(null);
 
 const renameDialogVisible = ref(false);
 const renameDialogError = ref('');
@@ -144,52 +185,72 @@ const renameInputValue = ref('');
 const renameTarget = ref(null);
 
 const {
+  searchQuery,
+  sortKey,
+  sortDir,
+  showImagesOnly,
+  visibleDirectories,
+  visibleFiles,
+  isFiltered,
+  toggleSortDir,
+  clearSearch,
+} = useFilebrowserList(directories, files);
+
+const {
+  selectedList,
+  selectedFiles,
+  selectionCount,
+  singleSelection,
+  isSelected,
+  toggle,
+  selectOnly,
+  selectAll,
+  clear: clearSelection,
+} = useFilebrowserSelection();
+
+const {
+  progress: downloadProgress,
+  isDownloading,
+  downloadOne,
+  downloadMany,
+  cancel: cancelDownload,
+} = useFilebrowserDownload();
+
+const {
   previewVisible,
   previewUrl,
+  previewEntry,
   previewFileName,
-  previewMode,
   previewLoading,
+  previewImageLoading,
   previewError,
-  fitsAutoStretch,
-  fitsStretchMode,
-  fitsStretchStrength,
-  fitsAutoWhiteBalance,
-  fitsStats,
-  fitsHeaderEntries,
-  fitsPerf,
+  previewInfo,
+  previewHeaderEntries,
+  previewStretchFactor,
+  previewBlackClipping,
+  previewUnlinked,
+  previewDebayer,
   closePreview,
   openFile,
   handlePreviewError,
-  setFitsCanvasRef,
-} = useFitsPreview({ apiService });
-
-const filteredFiles = computed(() => {
-  if (!showImagesOnly.value) {
-    return files.value;
-  }
-
-  return files.value.filter((file) => IMAGE_FILE_EXTENSIONS.includes(getFileExtension(file.name)));
-});
+  handleImageLoad,
+} = useImagePreview({ apiService, downloadFile: (file) => downloadOne(file) });
 
 const selectedEntryTypeLabel = computed(() => {
-  if (selectedEntryType.value === 'directory') {
+  if (singleSelection.value?.entryType === 'directory') {
     return t('plugins.filebrowser.directory');
   }
 
-  if (selectedEntryType.value === 'file') {
+  if (singleSelection.value?.entryType === 'file') {
     return t('plugins.filebrowser.file');
   }
 
   return '—';
 });
 
-const isSelectedEntryImage = computed(() => {
-  if (selectedEntryType.value !== 'file' || !selectedEntry.value) {
-    return false;
-  }
-
-  return IMAGE_FILE_EXTENSIONS.includes(getFileExtension(selectedEntry.value.name));
-});
+const isSelectedEntryImage = computed(
+  () => singleSelection.value?.entryType === 'file' && isImageFile(singleSelection.value.name)
+);
 
 const renameDialogTitle = computed(() => {
   if (!renameTarget.value) {
@@ -236,13 +297,6 @@ const breadcrumbs = computed(() => {
   });
 });
 
-function getFileExtension(name) {
-  return String(name || '')
-    .split('.')
-    .pop()
-    ?.toLowerCase();
-}
-
 function formatSize(bytes) {
   if (bytes == null) {
     return '—';
@@ -268,12 +322,6 @@ function formatDateTime(isoDate) {
   return date.toLocaleString();
 }
 
-function clearSelection() {
-  selectedEntry.value = null;
-  selectedEntryType.value = null;
-  selectedPath.value = '';
-}
-
 function openRenameDialog(entry, entryType) {
   if (!entry?.path || !entry?.name) {
     return;
@@ -297,22 +345,11 @@ function closeRenameDialog() {
   renameTarget.value = null;
 }
 
-function setSelectedDirectory(path) {
-  if (!path) {
-    clearSelection();
-    return;
-  }
-
-  const name = String(path).split(/[/\\]/).filter(Boolean).pop() || path;
-  selectedEntry.value = { name, path };
-  selectedEntryType.value = 'directory';
-  selectedPath.value = path;
-}
-
 async function browse(path = '') {
   errorMessage.value = '';
   isLoading.value = true;
   closePreview();
+  clearSelection();
 
   try {
     const response = await apiService.browseFilesystem(path || '');
@@ -324,12 +361,10 @@ async function browse(path = '') {
     parentPath.value = response.parentPath || '';
     directories.value = Array.isArray(response.directories) ? response.directories : [];
     files.value = Array.isArray(response.files) ? response.files : [];
-    setSelectedDirectory(currentPath.value);
   } catch (error) {
     errorMessage.value = error?.message || t('plugins.filebrowser.loadError');
     directories.value = [];
     files.value = [];
-    clearSelection();
   } finally {
     isLoading.value = false;
   }
@@ -348,13 +383,36 @@ function goUp() {
 }
 
 function openDirectory(directory) {
+  clearSearch();
   browse(directory.path);
 }
 
-function selectFile(file) {
-  selectedEntry.value = file;
-  selectedEntryType.value = 'file';
-  selectedPath.value = file.path;
+function selectAllVisible() {
+  selectAll(visibleDirectories.value, visibleFiles.value);
+}
+
+function openSelected() {
+  const entry = singleSelection.value;
+  if (entry?.entryType === 'file') {
+    openFile(entry);
+  }
+}
+
+function downloadSelected() {
+  downloadMany(selectedFiles.value);
+}
+
+function downloadPreviewEntry() {
+  if (previewEntry.value) {
+    downloadOne(previewEntry.value);
+  }
+}
+
+function renameSelected() {
+  const entry = singleSelection.value;
+  if (entry) {
+    openRenameDialog(entry, entry.entryType);
+  }
 }
 
 function buildSiblingPath(sourcePath, newName) {
@@ -383,7 +441,7 @@ async function confirmRenameDialog() {
 
   const nextName = renameInputValue.value.trim();
   if (!nextName) {
-    renameDialogError.value = t('plugins.filebrowser.loadError');
+    renameDialogError.value = t('plugins.filebrowser.renameEmptyName');
     return;
   }
 
@@ -393,22 +451,21 @@ async function confirmRenameDialog() {
   }
 
   const targetPath = buildSiblingPath(target.path, nextName);
+  const entryType = target.entryType;
 
   try {
     await apiService.renameFilesystemEntry(target.path, targetPath);
     closeRenameDialog();
     await browse(currentPath.value);
 
-    if (target.entryType === 'file') {
-      const renamedFile = files.value.find((file) => file.path === targetPath);
-      if (renamedFile) {
-        selectFile(renamedFile);
-      }
-    } else {
-      setSelectedDirectory(targetPath);
+    // Keep the renamed entry selected so the action bar stays where the user left it.
+    const source = entryType === 'file' ? files.value : directories.value;
+    const renamed = source.find((entry) => entry.path === targetPath);
+    if (renamed) {
+      selectOnly(renamed, entryType);
     }
   } catch (error) {
-    renameDialogError.value = error?.message || t('plugins.filebrowser.loadError');
+    renameDialogError.value = error?.message || t('plugins.filebrowser.renameError');
   }
 }
 
@@ -431,10 +488,26 @@ async function createDirectory() {
   }
 }
 
-async function deleteDirectory(directory) {
+async function deleteSelected() {
+  const entries = selectedList.value;
+  if (!entries.length) {
+    return;
+  }
+
+  const directoryCount = entries.filter((entry) => entry.entryType === 'directory').length;
+  const message =
+    entries.length === 1
+      ? entries[0].entryType === 'directory'
+        ? t('plugins.filebrowser.deleteDirectoryMessage', { name: entries[0].name })
+        : t('plugins.filebrowser.deleteFileMessage', { name: entries[0].name })
+      : t('plugins.filebrowser.deleteSelectedMessage', {
+          count: entries.length,
+          directories: directoryCount,
+        });
+
   const confirmed = await toastStore.showConfirmation(
-    t('plugins.filebrowser.deleteDirectoryTitle'),
-    t('plugins.filebrowser.deleteDirectoryMessage', { name: directory.name }),
+    t('plugins.filebrowser.deleteSelectedTitle'),
+    message,
     t('common.delete'),
     t('common.cancel')
   );
@@ -443,31 +516,27 @@ async function deleteDirectory(directory) {
     return;
   }
 
-  try {
-    await apiService.deleteFilesystemDirectory(directory.path);
-    await browse(currentPath.value);
-  } catch (error) {
-    errorMessage.value = error?.message || t('plugins.filebrowser.deleteError');
-  }
-}
+  let failed = 0;
+  let lastError = '';
 
-async function deleteFile(file) {
-  const confirmed = await toastStore.showConfirmation(
-    t('plugins.filebrowser.deleteFileTitle'),
-    t('plugins.filebrowser.deleteFileMessage', { name: file.name }),
-    t('common.delete'),
-    t('common.cancel')
-  );
-
-  if (!confirmed) {
-    return;
+  for (const entry of entries) {
+    try {
+      if (entry.entryType === 'directory') {
+        await apiService.deleteFilesystemDirectory(entry.path);
+      } else {
+        await apiService.deleteFilesystemFile(entry.path);
+      }
+    } catch (error) {
+      failed += 1;
+      lastError = error?.message || '';
+      console.error('[Filebrowser] Delete failed:', entry.path, error);
+    }
   }
 
-  try {
-    await apiService.deleteFilesystemFile(file.path);
-    await browse(currentPath.value);
-  } catch (error) {
-    errorMessage.value = error?.message || t('plugins.filebrowser.deleteError');
+  await browse(currentPath.value);
+
+  if (failed) {
+    errorMessage.value = lastError || t('plugins.filebrowser.deleteError');
   }
 }
 
@@ -485,6 +554,10 @@ async function jumpToImageSavePath() {
 }
 
 onMounted(() => {
+  if (!isPluginVersionSupported.value) {
+    return;
+  }
+
   jumpToImageSavePath();
 });
 </script>

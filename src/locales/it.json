@@ -2293,7 +2293,7 @@
       "initializing": "Inizializzazione...",
       "outdated": {
         "title": "Plugin obsoleto",
-        "message": "Il plugin TouchNStars in NINA è obsoleto e deve essere aggiornato.",
+        "message": "Il plugin TouchNStars in {host} è obsoleto e deve essere aggiornato.",
         "required": "Versione richiesta",
         "current": "Versione attuale"
       }
@@ -4525,7 +4525,6 @@
       "goUp": "Up",
       "refresh": "Refresh",
       "imagesOnly": "Images/FITS only",
-      "currentPath": "Current Path",
       "directoriesCount": "Directories: {count}",
       "filesCount": "Files: {count}",
       "newFolderPlaceholder": "New folder name",
@@ -4541,15 +4540,51 @@
       "modified": "Modified",
       "isImage": "Image/FITS",
       "selectEntryHint": "Select a file or directory to see details.",
-      "onHoldTitle": "On Hold",
-      "onHoldMessage": "Rename and file open actions are intentionally on hold for now.",
       "loadError": "Failed to load directory contents.",
       "createError": "Failed to create directory.",
       "deleteError": "Failed to delete entry.",
       "deleteDirectoryTitle": "Delete Directory",
       "deleteDirectoryMessage": "Delete directory \"{name}\" recursively?",
       "deleteFileTitle": "Delete File",
-      "deleteFileMessage": "Delete file \"{name}\"?"
+      "deleteFileMessage": "Delete file \"{name}\"?",
+      "searchPlaceholder": "Cerca in questa cartella…",
+      "noMatches": "Nessuna voce corrisponde al filtro.",
+      "sortBy": "Ordina per",
+      "sortName": "Nome",
+      "sortModified": "Data di modifica",
+      "sortSize": "Dimensione",
+      "sortAsc": "Crescente",
+      "sortDesc": "Decrescente",
+      "selectAll": "Seleziona tutto",
+      "clearSelection": "Annulla selezione",
+      "selectedCount": "{count} selezionati",
+      "toggleSelection": "Seleziona {name}",
+      "renameError": "Rinomina non riuscita.",
+      "renameEmptyName": "Inserisci un nome.",
+      "deleteSelectedTitle": "Elimina selezione",
+      "deleteSelectedMessage": "Eliminare {count} voci? {directories} sono cartelle e vengono eliminate ricorsivamente.",
+      "download": {
+        "action": "Salva sul dispositivo",
+        "progress": "{current}/{total}",
+        "doneTitle": "Download completato",
+        "doneMessage": "{count} file salvati sul dispositivo.",
+        "failedTitle": "Download non riuscito",
+        "failedMessage": "Impossibile salvare {failed} file ({succeeded} riusciti). {error}"
+      },
+      "fits": {
+        "debugTitle": "Diagnostica immagine",
+        "clipStrength": "Clipping dei neri",
+        "stretchStrength": "Fattore di stretch",
+        "unlinked": "Stretch non collegato",
+        "debayer": "Debayer",
+        "pattern": "Pattern Bayer",
+        "none": "nessuno",
+        "size": "Dimensione",
+        "bitDepth": "Profondità di bit",
+        "header": "Header (chiavi principali)",
+        "unsupportedFile": "Questo tipo di file non può essere visualizzato in anteprima, verrà salvato sul dispositivo.",
+        "previewFailed": "Impossibile generare l'anteprima. Usa il pulsante di download per salvare il file."
+      }
     },
     "phd2logviewer": {
       "cal": {
