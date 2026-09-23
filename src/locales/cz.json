@@ -1694,11 +1694,6 @@
       "indi": {
         "settings": "Nastavení zaostřovače"
       },
-      "duration_seconds": "Trvání",
-      "estimated": "odhad",
-      "filter": "Filtr",
-      "focuser_position": "Pozice",
-      "hfr": "HFR",
       "BoardTemperature": "Teplota desky:",
       "DcPower": "DC napájení",
       "HeatingPower": "Topný výkon:",

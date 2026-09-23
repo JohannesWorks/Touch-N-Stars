@@ -1694,11 +1694,6 @@
       "indi": {
         "settings": "Ustawienia focusera"
       },
-      "duration_seconds": "Czas trwania",
-      "estimated": "zał.",
-      "filter": "Filtr",
-      "focuser_position": "Pozycja",
-      "hfr": "HFR",
       "BoardTemperature": "Temperatura płyty:",
       "DcPower": "Zasilanie prądem stałym",
       "HeatingPower": "Moc grzewcza:",

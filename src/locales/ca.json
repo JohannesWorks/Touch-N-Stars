@@ -1683,16 +1683,11 @@
         "value": "Valor",
         "invalidDate": "Data no vàlida"
       },
-      "hfr": "HFR",
-      "focuser_position": "Posició",
       "IsStalled": "Blocat",
       "HeatingPower": "Potència de calefacció:",
       "BoardTemperature": "Temperatura del circuit:",
       "DcPower": "Alimentació DC",
       "StepSize": "Mida del pas",
-      "duration_seconds": "Durada",
-      "filter": "Filtre",
-      "estimated": "est.",
       "settings": {
         "AutoFocusInitialOffsetSteps": "Passos de desplaçament inicial",
         "AutoFocusStepSize": "Mida del pas",

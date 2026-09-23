@@ -1671,16 +1671,11 @@
         "FocuserAlias": "Псевдонім фокусера",
         "deviceSpecific": "Налаштування пристрою"
       },
-      "hfr": "HFR",
-      "focuser_position": "Позиція",
       "IsStalled": "Заблоковано",
       "HeatingPower": "Потужність нагріву:",
       "BoardTemperature": "Температура плати:",
       "DcPower": "Живлення DC",
       "StepSize": "Розмір кроку",
-      "duration_seconds": "Тривалість",
-      "filter": "Фільтр",
-      "estimated": "оцін.",
       "indi": {
         "settings": "Налаштування фокусера"
       }

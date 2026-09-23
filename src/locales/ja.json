@@ -1651,16 +1651,11 @@
         "value": "値",
         "invalidDate": "無効な日付"
       },
-      "hfr": "HFR",
-      "focuser_position": "位置",
       "IsStalled": "ストール",
       "HeatingPower": "ヒーター出力：",
       "BoardTemperature": "ボード温度：",
       "DcPower": "DC電源",
       "StepSize": "ステップサイズ",
-      "duration_seconds": "時間",
-      "filter": "フィルター",
-      "estimated": "推定",
       "settings": {
         "AutoFocusInitialOffsetSteps": "初期オフセットステップ数",
         "AutoFocusStepSize": "ステップサイズ",

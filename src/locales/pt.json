@@ -1694,11 +1694,6 @@
       "indi": {
         "settings": "Configurações do focalizador"
       },
-      "duration_seconds": "Duração",
-      "estimated": "Husa.",
-      "filter": "Filtro",
-      "focuser_position": "Posição",
-      "hfr": "HFR",
       "BoardTemperature": "Temperatura da placa:",
       "DcPower": "Alimentação CC",
       "HeatingPower": "Potência de aquecimento:",

@@ -1694,11 +1694,6 @@
       "indi": {
         "settings": "Impostazioni del focheggiatore"
       },
-      "duration_seconds": "Durata",
-      "estimated": "est.",
-      "filter": "Filtro",
-      "focuser_position": "Posizione",
-      "hfr": "HFR",
       "BoardTemperature": "Temperatura della scheda:",
       "DcPower": "Alimentazione CC",
       "HeatingPower": "Potenza di riscaldamento:",

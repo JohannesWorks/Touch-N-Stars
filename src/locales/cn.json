@@ -1694,11 +1694,6 @@
       "indi": {
         "settings": "对焦设置"
       },
-      "duration_seconds": "期间",
-      "estimated": "东部",
-      "filter": "筛选",
-      "focuser_position": "位置",
-      "hfr": "高频率响应",
       "BoardTemperature": "电路板温度：",
       "DcPower": "直流电源",
       "HeatingPower": "加热功率：",

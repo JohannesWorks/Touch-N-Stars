@@ -1683,16 +1683,11 @@
         "value": "값",
         "invalidDate": "잘못된 날짜"
       },
-      "hfr": "HFR",
-      "focuser_position": "위치",
       "IsStalled": "멈춤",
       "HeatingPower": "가열 출력:",
       "BoardTemperature": "보드 온도:",
       "DcPower": "DC 전원",
       "StepSize": "스텝 크기",
-      "duration_seconds": "시간",
-      "filter": "필터",
-      "estimated": "추정",
       "settings": {
         "AutoFocusInitialOffsetSteps": "초기 오프셋 스텝",
         "AutoFocusStepSize": "스텝 크기",

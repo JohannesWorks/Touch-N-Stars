@@ -1735,11 +1735,6 @@
       "indi": {
         "settings": "Focuser Settings"
       },
-      "duration_seconds": "Dauer",
-      "estimated": "est.",
-      "filter": "Filter",
-      "focuser_position": "Position",
-      "hfr": "HFR",
       "BoardTemperature": "Platinentemperatur:",
       "DcPower": "Gleichstrom",
       "HeatingPower": "Heizleistung:",

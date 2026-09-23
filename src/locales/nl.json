@@ -1694,11 +1694,6 @@
       "indi": {
         "settings": "Focuser-instellingen"
       },
-      "duration_seconds": "Duur",
-      "estimated": "est.",
-      "filter": "Filter",
-      "focuser_position": "Positie",
-      "hfr": "HFR",
       "BoardTemperature": "Raadstemperatuur:",
       "DcPower": "Gelijkstroomvoeding",
       "HeatingPower": "Verwarmingsvermogen:",

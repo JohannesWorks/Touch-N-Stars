@@ -1694,11 +1694,6 @@
       "indi": {
         "settings": "Paramètres du porte-oculaire"
       },
-      "duration_seconds": "Durée",
-      "estimated": "HNE.",
-      "filter": "Filtre",
-      "focuser_position": "Position",
-      "hfr": "HFR",
       "BoardTemperature": "Température de la carte :",
       "DcPower": "Alimentation CC",
       "HeatingPower": "Puissance de chauffage :",

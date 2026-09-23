@@ -1694,11 +1694,6 @@
       "indi": {
         "settings": "Configuración del enfocador"
       },
-      "duration_seconds": "Duración",
-      "estimated": "est.",
-      "filter": "Filtrar",
-      "focuser_position": "Posición",
-      "hfr": "HFR",
       "BoardTemperature": "Temperatura del tablero:",
       "DcPower": "Alimentación CC",
       "HeatingPower": "Potencia de calefacción:",
