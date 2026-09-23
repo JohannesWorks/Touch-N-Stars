@@ -23,8 +23,10 @@ const isHocusFocus = ref(false);
 // While HocusFocus runs the auto-focus, draw its live chart: every measured point arrives with its
 // error bar, the current fit and the outliers it rejects so far. Once seen, keep following that run to
 // its end so the finished curve replaces the live one without switching back to the plain graph.
+// PINS only: the chart reads HocusFocus v4 internals that a stock NINA's HocusFocus may not have.
 const hfRun = ref(null);
 usePolling(async () => {
+  if (!store.isPINS) return;
   const data = await apiService.hocusfocus.getLastAutoFocusRun();
   if (data?.Success && data.IsActiveAutoFocuser && (data.InProgress || hfRun.value)) {
     hfRun.value = data;

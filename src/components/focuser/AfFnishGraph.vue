@@ -87,7 +87,8 @@ function parseHyperbolicFormula(formula) {
 async function fetchLastAf() {
   try {
     // While HocusFocus is the auto-focuser, its last run is the newest AF: show it the way its own panel does.
-    const hfData = await apiService.hocusfocus.getLastAutoFocusRun();
+    // PINS only: the view reads HocusFocus v4 internals that a stock NINA's HocusFocus may not have.
+    const hfData = store.isPINS ? await apiService.hocusfocus.getLastAutoFocusRun() : null;
     hfRun.value =
       hfData?.Success && hfData.IsActiveAutoFocuser && !hfData.InProgress ? hfData : null;
     if (hfRun.value) return;
