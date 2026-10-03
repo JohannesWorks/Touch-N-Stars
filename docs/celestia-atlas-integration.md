@@ -26,6 +26,10 @@ documentation before the host pin moves.
 
 ## Runtime boundary
 
+The existing compass also toggles native device sky pointing. See
+[sky pointing](sky-pointing.md) for sensor conventions, permissions, lifecycle,
+local builds, and the physical validation checklist.
+
 `src/views/CelestiaAtlasView.vue` creates the viewer only after first use. The
 warm instance remains mounted, is paused while hidden or while the native app is
 backgrounded, and is resized/resumed when visible. Permanent unmount destroys
@@ -64,7 +68,7 @@ runtime orbital elements, and caches the last valid payload for offline reuse.
 
 Touch'N'Stars composes the package's normalized base catalogue with the A66 and
 Stellarium supplement layers. The resulting offline catalogue contains 21,192
-deep-sky markers and exposes ten catalogue filters, including `messier`.
+deep-sky markers and exposes ten deep-sky source filters, including `messier`.
 
 Stellar layers use the public `composeStarCatalog` helper with HYG curated
 cross-identifiers/search-only entries, SAO cross-identifiers and WR data. This
@@ -74,6 +78,14 @@ HD/SAO surveys. Star-group filters are independent of the DSO visibility switch,
 persist in settings, and support overlapping group membership. The magnitude
 slider reaches 20; unknown-magnitude stars appear only when selected from search.
 Search remains unfiltered, and only catalogue-backed photographic stars are clickable.
+
+The host also passes the package's compact GCVS 5.1 asset to `variableStars`.
+Its 63,291 positioned named-variable entries are searchable offline by
+designation, GCVS number, and matched familiar names such as Mira. They are
+search-only targets, so they do not duplicate plotted stars or imply a
+time-dependent brightness prediction. GCVS appears as the eleventh **Catalogue
+sources** option; disabling it excludes GCVS results from search while leaving
+ordinary stars searchable.
 
 The search-to-selection adapter must retain `uid`, `searchOnly` and
 `crossIdSources`. The renderer supports the adapter's nested `coordinates`

@@ -15,6 +15,7 @@
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		7A51A0002D2F100000000001 /* WifiSignalPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A51A0002D2F100000000002 /* WifiSignalPlugin.swift */; };
+		7A51A0002D2F100000000006 /* SkyOrientationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A51A0002D2F100000000007 /* SkyOrientationPlugin.swift */; };
 		7A51A0002D2F100000000004 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A51A0002D2F100000000005 /* MainViewController.swift */; };
 		A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
 		7A51A0002D2F100000000002 /* WifiSignalPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifiSignalPlugin.swift; sourceTree = "<group>"; };
+		7A51A0002D2F100000000007 /* SkyOrientationPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyOrientationPlugin.swift; sourceTree = "<group>"; };
 		7A51A0002D2F100000000003 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		7A51A0002D2F100000000005 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +84,7 @@
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				7A51A0002D2F100000000005 /* MainViewController.swift */,
 				7A51A0002D2F100000000002 /* WifiSignalPlugin.swift */,
+				7A51A0002D2F100000000007 /* SkyOrientationPlugin.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -220,6 +223,7 @@
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				7A51A0002D2F100000000004 /* MainViewController.swift in Sources */,
 				7A51A0002D2F100000000001 /* WifiSignalPlugin.swift in Sources */,
+				7A51A0002D2F100000000006 /* SkyOrientationPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

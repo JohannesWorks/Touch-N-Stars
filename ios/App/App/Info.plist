@@ -45,6 +45,8 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSMotionUsageDescription</key>
+	<string>Use device motion to point Celestia Atlas at the sky when you tap its compass.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 		<string>Sync current coordinates to the mount</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

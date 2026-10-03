@@ -5,9 +5,14 @@ import {
   DEFAULT_DSS_SKY_SURVEY_SOURCE,
   equatorialToHorizontal,
   horizontalToEquatorial,
+  decodeVariableStars,
+  createCatalogSearchIndex,
+  searchCatalogIndex,
 } from '@acocalypso/celestia-atlas';
+import { atlasSearchResultToTarget } from '../contracts.js';
+import { atlasSelectionToCommandModel } from '../selectionModel.js';
 
-const ATLAS_REVISION = '27bf2634ad834fb9e027ccc1baa4d0d1d50631f6';
+const ATLAS_REVISION = '4a3d728936832b37dcd920f9854e2a7552ffb1d6';
 const TOLERANCE_DEG = 1e-10;
 
 function angularErrorDeg(actual, expected) {
@@ -35,6 +40,24 @@ test('uses the corrected pinned J2000 observed-frame transform', () => {
 test('pins the Atlas build that provides the default photographic survey', () => {
   assert.equal(DEFAULT_DSS_SKY_SURVEY_SOURCE.key, 'dss2-color');
   assert.equal(DEFAULT_DSS_SKY_SURVEY_SOURCE.frame, 'ICRS');
+});
+
+test('the embedded Atlas can search and select bundled variable stars', async () => {
+  const source = await readFile(
+    new URL(import.meta.resolve('@acocalypso/celestia-atlas/variable-star-data')),
+    'utf8'
+  );
+  const data = JSON.parse(source);
+  const stars = decodeVariableStars(data);
+  assert.equal(stars.length, 63291);
+  const index = createCatalogSearchIndex(stars);
+  const [mira] = searchCatalogIndex(index, 'Mira');
+  assert.equal(mira.name, 'omi Cet');
+  assert.equal(mira.variabilityType, 'M');
+  const target = atlasSearchResultToTarget(mira);
+  assert.equal(target.searchOnly, true);
+  assert.equal(target.coordinates.frame, 'J2000');
+  assert.equal(atlasSelectionToCommandModel(target).names[0], 'omi Cet');
 });
 
 test('keeps the host package and lockfile on the same immutable HTTPS revision', async () => {

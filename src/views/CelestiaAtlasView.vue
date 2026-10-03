@@ -1,6 +1,14 @@
 <template>
   <div class="celestia-atlas-container" :class="containerClasses">
-    <div ref="viewerContainer" class="celestia-atlas-viewer" @pointermove="updateCompass" />
+    <div
+      ref="viewerContainer"
+      class="celestia-atlas-viewer"
+      @pointerdown.capture="skyPan.down"
+      @pointermove.capture="skyPan.move"
+      @pointerup.capture="skyPan.end"
+      @pointercancel.capture="skyPan.end"
+      @pointermove="updateCompass"
+    />
     <canvas ref="secondaryFovCanvas" class="celestia-atlas-secondary-fov" />
 
     <!-- Header: search and settings. Everything else lives in the toolbar below. -->
@@ -36,7 +44,15 @@
 
     <!-- One message slot above the toolbar: survey offer / progress, else landscape errors -->
     <div
-      v-if="surveyBannerMode"
+      v-if="orientationMessage"
+      class="celestia-atlas-toast"
+      role="status"
+      data-testid="atlas-orientation-status"
+    >
+      {{ orientationMessage }}
+    </div>
+    <div
+      v-else-if="surveyBannerMode"
       class="celestia-atlas-toast"
       role="status"
       data-testid="atlas-survey-offer"
@@ -180,11 +196,19 @@
       <AtlasLayersPanel v-else-if="activeSheet === 'layers'" />
     </AtlasSheet>
 
-    <div
+    <button
       v-if="ready && settingsStore.celestiaAtlas.compassVisible !== false"
       class="celestia-atlas-compass"
-      role="img"
-      :aria-label="`View centre bearing ${compassHeading}`"
+      type="button"
+      :class="{
+        'is-tracking': orientationState === 'ACTIVE',
+        'is-requesting': orientationState === 'REQUESTING_PERMISSION',
+      }"
+      :aria-label="`${t('components.celestiaAtlas.orientation.toggle')}: ${compassHeading}`"
+      :aria-pressed="['ACTIVE', 'REQUESTING_PERMISSION', 'SUSPENDED'].includes(orientationState)"
+      :aria-busy="orientationState === 'REQUESTING_PERMISSION'"
+      :title="t('components.celestiaAtlas.orientation.toggle')"
+      @click="toggleSkyOrientation"
       data-testid="atlas-compass"
     >
       <div class="celestia-atlas-compass-dial" aria-hidden="true">
@@ -193,7 +217,7 @@
         <span class="compass-needle" :style="{ transform: `rotate(${compassBearing}deg)` }" />
       </div>
       <strong class="celestia-atlas-compass-heading">{{ compassHeading }}</strong>
-    </div>
+    </button>
 
     <AtlasToolbar
       v-if="ready"
@@ -228,6 +252,10 @@ import {
 import { Capacitor } from '@capacitor/core';
 import { useI18n } from 'vue-i18n';
 import { useOrientation } from '@/composables/useOrientation';
+import { createOrientationSensorService } from '@/services/orientationSensorService';
+import { createSkyOrientationController } from '@/integrations/celestiaAtlas/skyOrientationController';
+import { createSkyObserverResolver } from '@/integrations/celestiaAtlas/skyOrientationLocation';
+import { createSkyPanDetector } from '@/integrations/celestiaAtlas/skyOrientationGesture';
 import { apiStore } from '@/store/store';
 import { useFramingStore } from '@/store/framingStore';
 import { useSettingsStore } from '@/store/settingsStore';
@@ -306,6 +334,57 @@ const clockPaused = ref(false);
 const clockLabel = ref('');
 const clockLabelShort = ref('');
 const compassBearing = ref(0);
+const orientationState = ref('DISABLED');
+const orientationMessage = ref('');
+let orientationMessageTimer = null;
+const skyOrientation = createSkyOrientationController({
+  sensor: createOrientationSensorService(),
+  getViewer: () => viewer,
+  resolveObserver: createSkyObserverResolver(() => store.profileInfo?.AstrometrySettings),
+  utcNow: () => timeSync.getServerTime(),
+  onDirection: (direction) => {
+    compassBearing.value = direction.azimuthDeg;
+  },
+  onStatus: ({ state, reason, lowAccuracy }) => {
+    const previous = orientationState.value;
+    orientationState.value = state;
+    if (orientationMessageTimer !== null) clearTimeout(orientationMessageTimer);
+    orientationMessage.value = '';
+    let key = '';
+    if (state === 'ACTIVE')
+      key = lowAccuracy ? 'low_accuracy' : previous !== 'ACTIVE' ? 'hint' : '';
+    if (state === 'UNAVAILABLE') key = 'unavailable';
+    if (state === 'ERROR')
+      key =
+        reason === 'LOCATION_REQUIRED'
+          ? 'location_required'
+          : reason === 'PERMISSION_DENIED'
+            ? 'permission_denied'
+            : 'sensor_error';
+    if (key) {
+      orientationMessage.value = t(`components.celestiaAtlas.orientation.${key}`);
+      if (key !== 'low_accuracy')
+        orientationMessageTimer = setTimeout(() => {
+          orientationMessage.value = '';
+        }, 8000);
+    }
+  },
+});
+const skyPan = createSkyPanDetector(() => {
+  void skyOrientation.disable();
+});
+
+function toggleSkyOrientation() {
+  if (['ACTIVE', 'REQUESTING_PERMISSION', 'SUSPENDED'].includes(orientationState.value)) {
+    void skyOrientation.disable();
+    return;
+  }
+  mountFollow.value = false;
+  viewer?.setMountFollow(false);
+  clockPaused.value = false;
+  clockSpeedPower.value = 0;
+  void skyOrientation.toggle();
+}
 const compassHeading = computed(() => {
   const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
   return `${directions[Math.round(compassBearing.value / 45) % 8]} ${compassBearing.value.toFixed(1)}°`;
@@ -376,7 +455,22 @@ function getAtlasViewCenter() {
 
 function updateObserver() {
   if (!viewer || !store.profileInfo?.AstrometrySettings) return;
-  viewer.setObserver(ninaObserverToAtlas(store.profileInfo.AstrometrySettings));
+  void skyOrientation.disable();
+  try {
+    viewer.setObserver(ninaObserverToAtlas(store.profileInfo.AstrometrySettings));
+  } catch (error) {
+    console.warn('[Celestia Atlas] Invalid observer:', error.message);
+  }
+}
+
+function initialObserver() {
+  try {
+    return ninaObserverToAtlas(store.profileInfo?.AstrometrySettings);
+  } catch {
+    // Manual browsing remains available before a profile has loaded. Sky
+    // pointing separately requires a validated site or foreground GPS fix.
+    return { latitudeDeg: 0, longitudeDeg: 0, elevationM: 0 };
+  }
 }
 
 // Camera field of view from the active NINA profile; null while the profile
@@ -505,6 +599,7 @@ let framingFocusPending = false;
 
 function focusFramingTarget() {
   if (!viewer) return;
+  void skyOrientation.disable();
   let center;
   try {
     center = toAtlasCoordinates({
@@ -538,15 +633,18 @@ function applyFramingReload() {
 }
 
 function toggleMountFollow() {
+  void skyOrientation.disable();
   mountFollow.value = !mountFollow.value;
   viewer?.setMountFollow(mountFollow.value);
 }
 
 function focusMount() {
+  void skyOrientation.disable();
   viewer?.focusMount();
 }
 
 function toggleClock() {
+  void skyOrientation.disable();
   clockPaused.value = !clockPaused.value;
   viewer?.setTimeRate(clockPaused.value ? 0 : Math.pow(2, clockSpeedPower.value));
   updateClockLabel();
@@ -562,6 +660,7 @@ function updateClockInputs() {
 
 function applyClockInput() {
   if (!viewer || !clockDate.value || !clockTime.value) return;
+  void skyOrientation.disable();
   const value = new Date(`${clockDate.value}T${clockTime.value}:00`);
   if (!Number.isNaN(value.getTime())) viewer.setTime(value.getTime());
   updateClockLabel();
@@ -794,6 +893,7 @@ function runSearch() {
 }
 
 function selectSearchResult(result) {
+  void skyOrientation.disable();
   if (searchTimer !== null) clearTimeout(searchTimer);
   searchTimer = null;
   searchResults.value = [];
@@ -831,7 +931,9 @@ async function refreshCometData() {
 
 function updateVisibility() {
   if (!viewer) return;
-  if (store.showSkyAtlas && !document.hidden && !isAppBackgrounded.value) {
+  const visible = store.showSkyAtlas && !document.hidden && !isAppBackgrounded.value;
+  void skyOrientation.setVisible(visible);
+  if (visible) {
     viewer.resume();
     startClockDisplay();
     startSecondaryFovTimer();
@@ -868,9 +970,16 @@ watch(
 );
 watch(() => framingStore.framingReloadKey, applyFramingReload);
 watch(() => store.showSkyAtlas, updateVisibility);
-watch(() => settingsStore.celestiaAtlas.compassVisible, updateCompass);
+watch(
+  () => settingsStore.celestiaAtlas.compassVisible,
+  (visible) => {
+    if (visible === false) void skyOrientation.disable();
+    updateCompass();
+  }
+);
 watch(isAppBackgrounded, updateVisibility);
 watch(clockSpeedPower, (value) => {
+  if (Number(value) !== 0) void skyOrientation.disable();
   if (!clockPaused.value) viewer?.setTimeRate(Math.pow(2, Number(value)));
 });
 watch(() => store.mountInfo, updateMount, { deep: true });
@@ -941,6 +1050,7 @@ onMounted(async () => {
       westernConstellationsModule,
       saoCrossIdsModule,
       wrStarsModule,
+      variableStarsModule,
     ] = await Promise.all([
       import('@acocalypso/celestia-atlas/viewer-catalog-data'),
       import('@acocalypso/celestia-atlas/abell-pn-data'),
@@ -950,6 +1060,7 @@ onMounted(async () => {
       import('@acocalypso/celestia-atlas/western-constellation-data'),
       import('@acocalypso/celestia-atlas/sao-star-crossids'),
       import('@acocalypso/celestia-atlas/wr-star-data'),
+      import('@acocalypso/celestia-atlas/variable-star-data'),
     ]);
     if (disposed) return;
     const { catalog, stars, constellations } = buildEmbeddedAtlasCatalog({
@@ -963,17 +1074,18 @@ onMounted(async () => {
       wrStars: wrStarsModule.default,
     });
     catalogFacets.value = {
-      ...buildAtlasCatalogFacets(catalog),
+      ...buildAtlasCatalogFacets(catalog, variableStarsModule.default),
       starCatalogueGroups: buildAtlasStarFacets(stars),
     };
     synchronizeCatalogFilterSettings();
     const cachedCometCatalog = loadCachedCometCatalog();
     viewer = createCelestiaAtlasViewer({
       container: viewerContainer.value,
-      observer: ninaObserverToAtlas(store.profileInfo.AstrometrySettings),
+      observer: initialObserver(),
       utcMs: timeSync.getServerTime(),
       catalog,
       stars,
+      variableStars: variableStarsModule.default,
       constellations,
       ...(cachedCometCatalog ? { cometElements: cachedCometCatalog.objects } : {}),
       milkyWayPanoramaUrl: null,
@@ -984,6 +1096,7 @@ onMounted(async () => {
       },
       onViewChange: (viewState) => {
         updateCompass();
+        if (orientationState.value === 'ACTIVE') return;
         queueViewPersistence(viewState);
         drawSecondaryFieldOfView();
       },
@@ -1024,6 +1137,9 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   disposed = true;
+  void skyOrientation.destroy();
+  skyPan.reset();
+  if (orientationMessageTimer !== null) clearTimeout(orientationMessageTimer);
   document.removeEventListener('visibilitychange', handleVisibilityChange);
   if (viewSaveTimer !== null) clearTimeout(viewSaveTimer);
   if (searchTimer !== null) clearTimeout(searchTimer);
@@ -1080,7 +1196,21 @@ onBeforeUnmount(() => {
   background: rgb(10 18 30 / 88%);
   border: 1px solid rgb(112 151 180 / 34%);
   border-radius: 0.875rem;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
+  text-align: left;
+}
+.celestia-atlas-compass:focus-visible {
+  outline: 2px solid #7bdcff;
+  outline-offset: 3px;
+}
+.celestia-atlas-compass.is-tracking {
+  border-color: #7bdcff;
+  background: rgb(15 55 65 / 95%);
+  box-shadow: 0 0 0 2px rgb(123 220 255 / 18%);
+}
+.celestia-atlas-compass.is-requesting {
+  border-style: dashed;
 }
 .celestia-atlas-compass-dial {
   position: relative;

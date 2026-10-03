@@ -70,6 +70,7 @@ export async function getCurrentLocation() {
     longitude.value = pos.coords.longitude.toFixed(3);
     altitude.value = pos.coords.altitude != null ? pos.coords.altitude.toFixed(1) : 0;
     gpsError.value = null;
+    return pos;
   } catch (error) {
     gpsError.value = error.message || 'Failed to get GPS location';
   }

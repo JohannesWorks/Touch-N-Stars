@@ -1,6 +1,6 @@
 {
   "name": "touch-n-stars",
-  "version": "6.3.1-beta7",
+  "version": "6.3.1-beta8",
   "private": true,
   "type": "module",
   "engines": {
@@ -29,6 +29,7 @@
     "test:coverage": "c8 --reporter=text --reporter=lcov node --import ./scripts/test-loader.mjs --test \"src/**/__tests__/*.test.js\"",
     "ionic:build": "npm run lint:eslint  && node scripts/generate-whats-new.js && npm run build:native",
     "ionic:serve": "npm run serve",
+    "ios:run": "node scripts/run-ios.mjs",
     "locale:entry": "node scripts/add-locale-entry.js",
     "locale:entry:all": "node scripts/add-locale-entry-all.js",
     "locale:find-missing-keys": "node scripts/find-missing-keys.js",
@@ -40,17 +41,17 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@acocalypso/celestia-atlas": "git+https://github.com/acocalypso/celestia_atlas.git#27bf2634ad834fb9e027ccc1baa4d0d1d50631f6",
+    "@acocalypso/celestia-atlas": "git+https://github.com/acocalypso/celestia_atlas.git#4a3d728936832b37dcd920f9854e2a7552ffb1d6",
     "@acovanconis/capacitor-mdns": "0.0.4",
     "@capacitor-community/keep-awake": "8.0.1",
     "@capacitor-community/media": "9.1.0",
-    "@capacitor/android": "8.4.1",
+    "@capacitor/android": "8.5.2",
     "@capacitor/app": "8.1.0",
-    "@capacitor/core": "8.4.1",
+    "@capacitor/core": "8.5.2",
     "@capacitor/filesystem": "8.1.2",
-    "@capacitor/geolocation": "8.2.0",
+    "@capacitor/geolocation": "8.2.3",
     "@capacitor/haptics": "8.0.2",
-    "@capacitor/ios": "8.4.1",
+    "@capacitor/ios": "8.5.2",
     "@capacitor/keyboard": "8.0.5",
     "@capacitor/status-bar": "8.0.2",
     "@capawesome/capacitor-android-edge-to-edge-support": "8.0.8",
@@ -67,6 +68,7 @@
     "chart.js": "4.5.1",
     "date-fns": "4.4.0",
     "file-saver": "^2.0.5",
+    "geomagnetism": "0.2.0",
     "jszip": "^3.10.1",
     "papaparse": "5.5.4",
     "pinia": "3.0.4",
@@ -80,7 +82,8 @@
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
-    "@capacitor/cli": "8.4.1",
+    "@capacitor/cli": "8.5.2",
+    "@ionic/cli": "7.2.1",
     "@tailwindcss/vite": "4.3.2",
     "@vitejs/plugin-vue": "6.0.7",
     "c8": "11.0.0",

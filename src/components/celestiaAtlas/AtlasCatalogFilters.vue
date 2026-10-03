@@ -7,9 +7,6 @@
       <p class="font-medium text-gray-200">
         {{ t('components.celestiaAtlas.settings.catalog_filters') }}
       </p>
-      <p class="text-xs leading-5 text-gray-400">
-        {{ t('components.celestiaAtlas.settings.catalog_filter_hint') }}
-      </p>
     </div>
 
     <AtlasFacetGroup
@@ -34,17 +31,16 @@
         @select-none="setSelection('deepSkyObjectTypes', [])"
         @toggle="toggleSelection('deepSkyObjectTypes', objectTypes, $event)"
       />
-
-      <AtlasFacetGroup
-        kind="catalogue-groups"
-        :title="t('components.celestiaAtlas.settings.catalog_filter_sources')"
-        :facets="catalogueGroups"
-        :selection="settingsStore.celestiaAtlas.deepSkyCatalogueGroups"
-        @select-all="setSelection('deepSkyCatalogueGroups', null)"
-        @select-none="setSelection('deepSkyCatalogueGroups', [])"
-        @toggle="toggleSelection('deepSkyCatalogueGroups', catalogueGroups, $event)"
-      />
     </fieldset>
+    <AtlasFacetGroup
+      kind="catalogue-groups"
+      :title="t('components.celestiaAtlas.settings.catalog_filter_sources')"
+      :facets="catalogueGroups"
+      :selection="settingsStore.celestiaAtlas.deepSkyCatalogueGroups"
+      @select-all="setSelection('deepSkyCatalogueGroups', null)"
+      @select-none="setSelection('deepSkyCatalogueGroups', [])"
+      @toggle="toggleSelection('deepSkyCatalogueGroups', catalogueGroups, $event)"
+    />
   </section>
 </template>
 

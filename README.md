@@ -52,11 +52,68 @@ The application makes controlling and configuring NINA- or PINS-based astrophoto
 
 - You can find the app in the [App Store](https://apps.apple.com/us/app/touch-n-stars/id6744902856)
 
+#### Building locally on macOS
+
+With Xcode and CocoaPods installed, run from the repository root:
+
+```sh
+npm ci
+npm run ios:run
+```
+
+`ios:run` uses the Ionic CLI to build the web app and sync native plugins, then
+Xcode to compile, sign, install, and launch the **App** scheme on the connected
+iPhone. Unlock the phone and enable Developer Mode. If multiple devices are
+connected, select one with `npm run ios:run -- "iPhone name"` or its UDID.
+This also handles devices visible to Xcode/CoreDevice but missing from Ionic's
+`native-run` device list. Build products are kept in `ios/DerivedData`.
+
+To open the workspace manually instead:
+
+```sh
+npx ionic capacitor build ios --no-open
+npx cap open ios
+```
+
+If the geolocation dependency needs refreshing:
+
+```sh
+cd ios/App
+pod update CapacitorGeolocation IONGeolocationLib --repo-update
+cd ../..
+npx cap sync ios
+```
+
+Build the **App** scheme in `App.xcworkspace`. After updating native plugins,
+use Xcode's **Product → Clean Build Folder** before rebuilding. Geolocation
+is pinned to `8.2.3` with `IONGeolocationLib 3.0.0`. If Xcode reports missing
+`trueHeading`, `magneticHeading`, or `headingAccuracy` in
+`IONGLOCPositionModel+JSONTransformer`, refresh the native pods with the command
+above; `cap copy` alone does not update native dependencies. If that error
+persists, run `pod cache clean IONGeolocationLib --all` inside `ios/App`, repeat
+the pod update, and clean the Xcode build folder again.
+
 ### 🧪 **What does the Version offer?**
 
 - **Mobile Operation**: Easily access NINA through your smartphone or tablet.
 - **User-Friendly Design**: Simple and intuitive interface specifically optimized for mobile devices.
 - **Focus on Practical Features**: Support for essential steps in setting up your equipment.
+
+### Celestia Atlas sky pointing (native apps)
+
+Tap the Atlas compass to follow the direction your phone is aimed, looking
+through the back of its screen. Tap again or drag the map to stop. Pinch zoom
+keeps your chosen field of view. The compass is highlighted while tracking.
+
+Sky pointing uses your configured observing site, or requests foreground location
+only if no valid site exists. iOS may request motion access. Sensor readings are
+processed locally. Magnetic interference can affect alignment: move away from
+metal and magnets and calibrate the compass with a figure-eight motion.
+Browsers and devices without a north-referenced motion sensor retain manual
+navigation. Enable **Show compass** in Atlas settings if the control is hidden.
+
+This feature requires a rebuilt native app; a web asset update alone is insufficient.
+See [local build instructions, accuracy limits, and validation status](docs/sky-pointing.md).
 
 ### 💙 **Acknowledgements**
 
@@ -66,8 +123,9 @@ The application makes controlling and configuring NINA- or PINS-based astrophoto
 - OpenNGC catalogue data by Mattia Verga and contributors, licensed under CC-BY-SA-4.0
 - Stellarium v26.2 deep-sky catalogue cross-index data, used for the bundled Abell/ACO, Barnard, LBN, LDN, RCW, Sharpless 2 and vdB supplement, licensed under GPL-2.0-or-later
 - HYG Database v4.1 by David Nash/Astronomy Nexus, used for the bundled HYG star layer, licensed under CC-BY-SA-4.0
+- General Catalogue of Variable Stars 5.1 by the GCVS team, used for 63,291 offline searchable named-variable entries; see the pinned Atlas notice for attribution and source terms.
 - SIMBAD A66/Abell planetary-nebula catalogue data, licensed under ODbL-1.0. This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.
-- Detailed source, transformation and redistribution notices are retained in the pinned [Celestia Atlas third-party notices](https://github.com/acocalypso/celestia_atlas/blob/27bf2634ad834fb9e027ccc1baa4d0d1d50631f6/THIRD_PARTY_NOTICES.md)
+- Detailed source, transformation and redistribution notices are retained in the pinned [Celestia Atlas third-party notices](https://github.com/acocalypso/celestia_atlas/blob/777b2a6b9a23de04d4a4c4effc8384eff1cb7566/THIRD_PARTY_NOTICES.md)
 
 ### 🔍 Further information
 

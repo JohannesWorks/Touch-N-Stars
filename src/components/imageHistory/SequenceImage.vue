@@ -141,17 +141,22 @@
     </div>
   </div>
 
-  <ImageModal
-    :showModal="showModal"
-    :imageData="fullResImage"
-    :imageDate="stats.Date"
-    :isLoading="isLoadingModal"
-    :index="index"
-    :statistics="stats"
-    :deletable="deletable"
-    @close="closeModal"
-    @delete="onModalDelete"
-  />
+  <!-- Teleported: the history grid wraps each tile in an isolated stacking
+       context, which would otherwise trap the fullscreen modal below the
+       fixed SubNav and the following tiles. -->
+  <Teleport to="body">
+    <ImageModal
+      :showModal="showModal"
+      :imageData="fullResImage"
+      :imageDate="stats.Date"
+      :isLoading="isLoadingModal"
+      :index="index"
+      :statistics="stats"
+      :deletable="deletable"
+      @close="closeModal"
+      @delete="onModalDelete"
+    />
+  </Teleport>
 </template>
 
 <script setup>

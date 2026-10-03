@@ -80,6 +80,7 @@ export function atlasObjectTypeI18nKey(typeKey) {
 export const ATLAS_CATALOGUE_GROUP_LABELS = Object.freeze({
   abell: 'Abell / ACO galaxy clusters',
   'abell-pn': 'Abell planetary nebulae (A66)',
+  gcvs: 'GCVS variable stars',
   barnard: 'Barnard',
   lbn: 'LBN',
   ldn: 'LDN',
@@ -126,7 +127,7 @@ function availableFacetKeys(availableFacets) {
  * Derives renderer filter facets from the exact catalogue supplied to Atlas.
  * Keys use the same normalized representation as the public Atlas helpers.
  */
-export function buildAtlasCatalogFacets(catalog) {
+export function buildAtlasCatalogFacets(catalog, variableStars = null) {
   if (!Array.isArray(catalog)) throw new TypeError('Atlas catalogue must be an array');
 
   const objectTypeCounts = new Map();
@@ -141,6 +142,10 @@ export function buildAtlasCatalogFacets(catalog) {
     for (const catalogueGroup of deepSkyCatalogueGroupKeys(object)) {
       catalogueGroupCounts.set(catalogueGroup, (catalogueGroupCounts.get(catalogueGroup) ?? 0) + 1);
     }
+  }
+
+  if (variableStars?.rows?.length) {
+    catalogueGroupCounts.set('gcvs', variableStars.rows.length);
   }
 
   return Object.freeze({

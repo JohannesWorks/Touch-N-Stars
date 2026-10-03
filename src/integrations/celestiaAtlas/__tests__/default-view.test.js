@@ -305,7 +305,7 @@ test('persists touch-sized Atlas type and catalogue filters without limiting off
   assert.match(settingsDefaults, /deepSkyCatalogueGroups: null/);
   assert.match(settingsStore, /persist: true/);
   assert.doesNotMatch(settingsStore, /settings-store/);
-  assert.match(view, /buildAtlasCatalogFacets\(catalog\)/);
+  assert.match(view, /buildAtlasCatalogFacets\(catalog, variableStarsModule\.default\)/);
   assert.match(view, /buildAtlasStarFacets\(stars\)/);
   assert.match(view, /starCatalogueGroups: normalizeAtlasFacetSelection/);
   assert.match(settingsDefaults, /starCatalogueGroups: null/);

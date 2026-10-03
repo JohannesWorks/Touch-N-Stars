@@ -70,7 +70,8 @@
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 xl:gap-4 pt-4"
       :class="selectionMode ? 'pb-40' : 'pb-20'"
     >
-      <div v-for="item in visibleImages" :key="item.index" class="relative">
+      <!-- isolate: keeps the tile's z-10 overlay buttons from painting over the fixed SubNav. -->
+      <div v-for="item in visibleImages" :key="item.index" class="relative isolate">
         <SequenceImage
           v-if="item.data"
           :index="item.index"

@@ -11,6 +11,7 @@ public class MainActivity extends BridgeActivity {
         // Register local Capacitor plugins before BridgeActivity initializes the bridge.
         registerPlugin(MediaScannerPlugin.class);
         registerPlugin(WifiSignalPlugin.class);
+        registerPlugin(SkyOrientationPlugin.class);
 
         // Register WifiNetworkBinder plugin to keep the backend reachable on
         // internet-less Wi-Fi (PINS hotspot) while mobile data is active
