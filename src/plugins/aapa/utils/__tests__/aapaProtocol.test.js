@@ -10,7 +10,9 @@ import {
   classifyTppaMessage,
   coerceSettingValue,
   deriveFromLog,
+  getSettingsGroup,
   initialDerivedState,
+  isIpv4,
   resolveRunState,
   supportsCommand,
 } from '@/plugins/aapa/utils/aapaProtocol';
@@ -94,6 +96,29 @@ test('coerceSettingValue enforces the C# types', () => {
   assert.equal(coerceSettingValue('AzimuthSpeed', '3000000000'), null);
   assert.equal(coerceSettingValue('CalibrationSteps', '2500.5'), null);
   assert.equal(coerceSettingValue('NudgeDegrees', '0.25'), 0.25);
+});
+
+test('LastIpAddress is a trimmed IPv4 string', () => {
+  assert.equal(coerceSettingValue('LastIpAddress', ' 192.168.1.5 '), '192.168.1.5');
+  assert.equal(coerceSettingValue('LastIpAddress', 'abc'), null);
+  assert.equal(coerceSettingValue('LastIpAddress', ''), null);
+  assert.equal(isIpv4('10.0.0.1'), true);
+  assert.equal(isIpv4('COM3'), false);
+  assert.equal(isIpv4(undefined), false);
+});
+
+test('getSettingsGroup finds the Auto-Pilot group', () => {
+  assert.deepEqual(
+    getSettingsGroup('autopilot').fields.map((field) => field.key),
+    [
+      'ToleranceDegrees',
+      'SettleTimeSeconds',
+      'MaxIterations',
+      'MaxCorrectionDeg',
+      'MotionTimeoutSeconds',
+    ]
+  );
+  assert.equal(getSettingsGroup('nope'), null);
 });
 
 test('classifyMessage separates state, log and noise', () => {

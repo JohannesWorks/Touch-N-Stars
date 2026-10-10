@@ -5959,7 +5959,6 @@
       },
       "settings": {
         "groups": {
-          "autopilot": "Auto-Pilot",
           "geometry": "Motorgeometrie",
           "motor": "Geschwindigkeit und Beschleunigung",
           "limits": "Höhengrenzen"

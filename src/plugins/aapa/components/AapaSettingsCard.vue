@@ -1,6 +1,6 @@
-<template>
+﻿<template>
   <div class="space-y-3">
-    <section v-for="group in SETTINGS_GROUPS" :key="group.id" class="tns-card space-y-3">
+    <section v-for="group in groups" :key="group.id" class="tns-card space-y-3">
       <h2 class="text-base font-semibold text-content">
         {{ $t(`plugins.aapa.settings.groups.${group.id}`) }}
       </h2>
@@ -69,6 +69,8 @@ import AapaSettingInput from './AapaSettingInput.vue';
 import AapaConfirmModal from './AapaConfirmModal.vue';
 
 const store = useAapaStore();
+// The Auto-Pilot group lives in a modal on the polar alignment card.
+const groups = SETTINGS_GROUPS.filter((group) => group.id !== 'autopilot');
 const confirmSend = ref(false);
 
 function send() {

@@ -5954,7 +5954,6 @@
       },
       "settings": {
         "groups": {
-          "autopilot": "Auto-Pilot",
           "geometry": "モーター構成",
           "motor": "速度と加速度",
           "limits": "高度制限"

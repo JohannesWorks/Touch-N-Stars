@@ -2608,6 +2608,7 @@
         "running": "Running…",
         "stop": "Stop",
         "tppaSettings": "TPPA settings",
+        "autoPilotSettings": "Auto-Pilot settings",
         "tnsPluginRequired": "TPPA needs the Touch'N'Stars plugin in N.I.N.A.; it is not reachable.",
         "phaseLabel": "Status",
         "azError": "Azimuth error",
@@ -2655,7 +2656,6 @@
       },
       "settings": {
         "groups": {
-          "autopilot": "Auto-Pilot",
           "geometry": "Motor geometry",
           "motor": "Speed and acceleration",
           "limits": "Altitude limits"

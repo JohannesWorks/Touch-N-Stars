@@ -61,7 +61,19 @@ export const SETTINGS_GROUPS = [
 export const ACTION_FIELDS = {
   NudgeDegrees: { key: 'NudgeDegrees', type: 'double', step: 0.01, min: 0 },
   CalibrationSteps: { key: 'CalibrationSteps', type: 'int', step: 100 },
+  // Shared with the IP box of N.I.N.A.'s panel; servers before protocol v2 do not report it.
+  LastIpAddress: { key: 'LastIpAddress', type: 'string' },
 };
+
+const IPV4 = /^(\d{1,3})(\.\d{1,3}){3}$/;
+
+export function isIpv4(value) {
+  return IPV4.test(String(value ?? '').trim());
+}
+
+export function getSettingsGroup(id) {
+  return SETTINGS_GROUPS.find((group) => group.id === id) ?? null;
+}
 
 const FIELD_BY_KEY = {
   ...Object.fromEntries(
@@ -82,6 +94,10 @@ export function getSettingField(key) {
 export function coerceSettingValue(key, raw) {
   const type = FIELD_BY_KEY[key]?.type ?? (typeof raw === 'boolean' ? 'bool' : 'double');
   if (type === 'bool') return Boolean(raw);
+  if (type === 'string') {
+    const text = String(raw ?? '').trim();
+    return isIpv4(text) ? text : null;
+  }
 
   // Accept a decimal comma as typed on German/French keyboards.
   const num =

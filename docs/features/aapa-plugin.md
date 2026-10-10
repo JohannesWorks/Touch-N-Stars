@@ -68,7 +68,13 @@ the Auto-Pilot ends.
     axis asks for confirmation. A running calibration can be cancelled.
 13. Given a protocol v2 server, the status shows the last TPPA error with the total error in
     arcseconds, and during the Auto-Pilot the last correction in steps.
-14. Every user-facing string has an `en.json` key; the other 13 locales come in one batch before
+14. Given a server that reports `settings.LastIpAddress`, the Wi-Fi IP field shows that IP and
+    follows changes made in N.I.N.A.'s panel; an IP edited in TNS is sent on blur/Enter and
+    before Connect, so the panel shows it too. Without the key the field stays local.
+15. The Auto-Pilot settings (tolerance, settle time, max iterations, max correction, motion
+    timeout) open from a gear button on the polar alignment card, next to the TPPA settings,
+    and are no longer on the settings tab.
+16. Every user-facing string has an `en.json` key; the other 13 locales come in one batch before
     the commit.
 
 ## Dimensions considered
@@ -82,7 +88,7 @@ the Auto-Pilot ends.
 | Equipment safety | yes     | every motion is an explicit tap; destructive actions confirm; no retries of commands        |
 | Error paths      | yes     | unreachable server, server restart, invalid values (criteria 2, 6, 7)                       |
 | Native           | yes     | plain `ws://` to the N.I.N.A. host, same as the existing NINA sockets                       |
-| Persistence      | yes     | only the WebSocket port, in `localStorage`                                                  |
+| Persistence      | yes     | WebSocket port in `localStorage`; the Wi-Fi IP lives in N.I.N.A. (`LastIpAddress`)          |
 | Tests            | yes     | `src/plugins/aapa/utils/__tests__/aapaProtocol.test.js` (payloads, coercion, log heuristic) |
 
 ## Auto-Pilot and calibration state
@@ -107,6 +113,9 @@ The wishlist handed to Blayzer is implemented:
   `CANCEL_CALIBRATION`. `supportedCommands` lists the Auto-Pilot as `START_AUTOPILOT` /
   `STOP_AUTOPILOT`; TNS keeps sending `StartAutoPilot` / `StopAutoPilot`, which the server still
   accepts.
+- `settings.LastIpAddress` (string) is reported and accepted by `set`; it is the same setting as
+  the IP box in N.I.N.A.'s panel. `ConnectionType` (COM/IP) is not exposed, so TNS preselects
+  Wi-Fi only when the connected port is an IP.
 - `PolarAlignmentError` and `CorrectionResult` format their numbers with the invariant culture.
   Other log lines still follow the N.I.N.A. culture, so the log parser keeps accepting a decimal
   comma.
