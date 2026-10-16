@@ -111,26 +111,30 @@
 
         <div
           v-if="!ready"
-          class="absolute inset-0 flex items-center justify-center px-4 text-center text-xs text-content-faint"
+          class="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center text-xs text-content-faint"
         >
-          <svg
-            v-if="status === 'loading'"
-            class="w-5 h-5 mr-2 animate-spin text-accent"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            />
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-          </svg>
-          <span>{{ statusText }}</span>
+          <div class="flex items-center justify-center">
+            <svg
+              v-if="status === 'loading'"
+              class="w-5 h-5 mr-2 animate-spin text-accent"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              />
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+            </svg>
+            <span>{{ statusText }}</span>
+          </div>
+          <!-- Lets the view offer a fix for the current status, e.g. a settings toggle -->
+          <slot name="status-action" :status="status"></slot>
         </div>
       </div>
     </div>

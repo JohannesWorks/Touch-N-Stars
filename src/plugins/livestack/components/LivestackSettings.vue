@@ -59,6 +59,34 @@
               />
             </div>
 
+            <!-- Livestack's "Save stacked lights": the raw-data histogram reads the saved
+                 stacks. Hidden when the plugin server is too old to report the option. -->
+            <div
+              v-if="store.saveStackedLights !== null"
+              class="flex flex-col gap-1 w-full min-w-28 border border-gray-500 p-2 rounded-lg bg-gray-800/70"
+            >
+              <div class="flex flex-row items-center gap-4 w-full">
+                <label
+                  for="toggle_save_stacked_lights"
+                  class="flex-1 text-xs md:text-sm text-gray-200 pl-2"
+                >
+                  {{ t('plugins.livestack.save_stacked_lights') }}
+                </label>
+                <toggleButton
+                  id="toggle_save_stacked_lights"
+                  @click="
+                    !store.saveStackedLightsBusy &&
+                    store.setSaveStackedLights(!store.saveStackedLights)
+                  "
+                  :status-value="store.saveStackedLights"
+                  class="ml-auto px-3 justify-center z-40"
+                />
+              </div>
+              <p class="text-xs text-gray-400 pl-2">
+                {{ t('plugins.livestack.save_stacked_lights_hint') }}
+              </p>
+            </div>
+
             <!-- RGB combination. Only on PINS - on Windows NINA the livestack plugin
                  provides its own WPF wizard for this. -->
             <div
@@ -182,6 +210,7 @@ function applySuggestion(candidate) {
 
 async function toggleConfiguration() {
   showConfiguration.value = !showConfiguration.value;
+  if (showConfiguration.value) store.loadLivestackSettings();
   if (showConfiguration.value && apiState.isPINS) {
     await store.loadRgbCandidates();
     if (!selectedCandidate.value) {

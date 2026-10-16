@@ -73,7 +73,7 @@
           @image-load="handleImageLoad"
           @image-error="handleImageError"
           @download="handleDownload"
-          @histogram-toggle="showHistogram = !showHistogram"
+          @histogram-toggle="toggleHistogram"
           class="bg-gray-900"
         >
           <!-- Custom placeholder -->
@@ -95,7 +95,27 @@
           v-if="showHistogram && livestackStore.currentImageUrl"
           class="absolute top-60 left-4 landscape:left-(--nav-offset) landscape:top-24 right-4 z-70"
         >
-          <HistogramChart :imageUrl="livestackStore.currentImageUrl" height="100px" />
+          <HistogramChart :imageUrl="livestackStore.currentImageUrl" height="100px">
+            <template #status-action="{ status }">
+              <template v-if="status === 'livestack-save-disabled'">
+                <span v-if="livestackStore.saveStackedLights === null">
+                  {{ t('plugins.livestack.histogram_enable_in_plugin') }}
+                </span>
+                <span v-else-if="livestackStore.saveStackedLights">
+                  {{ t('plugins.livestack.histogram_next_frame') }}
+                </span>
+                <button
+                  v-else
+                  type="button"
+                  class="tns-btn-primary w-auto! px-3! text-xs!"
+                  :disabled="livestackStore.saveStackedLightsBusy"
+                  @click="livestackStore.setSaveStackedLights(true)"
+                >
+                  {{ t('plugins.livestack.save_stacked_lights_enable') }}
+                </button>
+              </template>
+            </template>
+          </HistogramChart>
         </div>
       </div>
 
@@ -148,6 +168,12 @@ const { displayUrl: stretchedImageUrl, rendering: stretchRendering } = useRawStr
   { releaseOnChange: true, releaseOnUnmount: true }
 );
 const livestackRefs = storeToRefs(livestackStore);
+
+// The option may have been changed in NINA or by another client since the page opened.
+const toggleHistogram = () => {
+  showHistogram.value = !showHistogram.value;
+  if (showHistogram.value) livestackStore.loadLivestackSettings();
+};
 const imageAltText = computed(() =>
   t('plugins.livestack.image_alt', { filter: livestackStore.selectedFilter?.label ?? '' })
 );

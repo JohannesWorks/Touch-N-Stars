@@ -19,6 +19,10 @@ export const useLivestackStore = defineStore('livestackStore', {
     rgbCandidates: [],
     rgbBusy: false,
     rgbError: null,
+    // Livestack's "Save stacked lights" option; null while unknown or when the plugin server
+    // is too old to report it. The raw-data histogram only works while it is on.
+    saveStackedLights: null,
+    saveStackedLightsBusy: false,
   }),
   getters: {
     currentCounter: (state) => {
@@ -300,6 +304,32 @@ export const useLivestackStore = defineStore('livestackStore', {
       this.rgbCandidates = [];
       this.rgbError = null;
       this.clearCurrentImageUrl();
+    },
+
+    // ---- Livestack plugin options -----------------------------------------
+
+    async loadLivestackSettings() {
+      try {
+        const settings = await apiService.getLivestackSettings();
+        this.saveStackedLights = settings ? Boolean(settings.SaveStackedLights) : null;
+      } catch (error) {
+        console.error('Error loading livestack settings:', error);
+        this.saveStackedLights = null;
+      }
+      return this.saveStackedLights;
+    },
+
+    async setSaveStackedLights(save) {
+      this.saveStackedLightsBusy = true;
+      try {
+        const settings = await apiService.setLivestackSettings({ saveStackedLights: save });
+        if (settings) this.saveStackedLights = Boolean(settings.SaveStackedLights);
+      } catch (error) {
+        console.error('Error saving livestack settings:', error);
+      } finally {
+        this.saveStackedLightsBusy = false;
+      }
+      return this.saveStackedLights;
     },
 
     // ---- RGB combination -------------------------------------------------

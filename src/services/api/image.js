@@ -151,6 +151,27 @@ export default {
     return getRawImage(`${API_URL}raw-image/livestack`, { target, filter, maxDim }, signal);
   },
 
+  // Livestack plugin options the app toggles itself (plugin server, not the Advanced API).
+  // Resolves null when the plugin server predates the endpoint.
+  async getLivestackSettings() {
+    const { API_URL } = getUrls();
+    try {
+      const response = await rawHttp.get(`${API_URL}livestack/settings`);
+      return response.data?.Success ? response.data.Response : null;
+    } catch (error) {
+      if (error?.response?.status === 404 || error?.response?.status === 405) return null;
+      throw error;
+    }
+  },
+
+  async setLivestackSettings({ saveStackedLights }) {
+    const { API_URL } = getUrls();
+    const response = await rawHttp.post(`${API_URL}livestack/settings`, {
+      SaveStackedLights: saveStackedLights,
+    });
+    return response.data?.Success ? response.data.Response : null;
+  },
+
   async imageAction(index, action) {
     const { BASE_URL } = getUrls();
     return simpleGetRequest(`${BASE_URL}/image/${index}/${action}`);
